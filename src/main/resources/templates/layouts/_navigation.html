@@ -1,0 +1,53 @@
+<nav th:fragment="navigation" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">OmOmFood.pl</a>
+        </div>
+        <div sec:authorize="isAnonymous()" id="navbar" class="navbar-collapse collapse">
+            <a href="/register">
+                <button type="submit" th:text="#{button.signup}" class="navbar-right navbar-btn btn btn-primary">Sing up</button>
+            </a>
+            <form class="navbar-form navbar-right" th:action="@{/login}" method="post">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon glyphicon-envelope"></i>
+                    </span>
+                    <input type="text" name="username" class="form-control" required="true" th:placeholder="#{placeholder.email}" placeholder="Email here..."/>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon glyphicon-lock"></i>
+                    </span>
+                    <input type="password" name="password" class="form-control" required="true" th:placeholder="#{placeholder.password}" placeholder="Password here..."/>
+                </div>
+                <button type="submit" th:text="#{button.signin}" class="btn btn-success">Sign in</button>
+            </form>
+        </div>
+        <div sec:authorize="isAuthenticated()" class="navbar-collapse collapse">
+            <div id="navbar" class="navbar-collapse collapse">
+                <div class="btn-group nav navbar-nav navbar-right navbar-btn">
+                    <button type="button" class="btn btn-primary" sec:authentication="name">Action</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="offers/my">Moje oferty</a></li>
+                        <li><a href="#">Zapisane oferty</a></li>
+                        <li><a href="#">Ustawienia</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,117 @@
+body {
+    background: #2c3e50;
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    margin: 0 auto;
+}
+
+h1, h4 {
+    color:white;
+}
+
+a{
+    text-decoration: none;
+}
+
+.panel{
+    margin-bottom:10px;
+}
+
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px; /* firefox bug fix */
+  width: auto;
+}
+
+.navbar{
+    background: #212f3c;
+    border: none;
+}
+
+.site_box{
+    background:white;
+    padding-top:60px;
+    border-radius: 10px;
+}
+.messages_box{
+    background:white;
+    padding:10px;
+    border-radius: 10px;
+}
+
+.margin-bottom{
+    margin-bottom: 10px;
+}
+
+.btn-social{
+    margin-top:2px;
+    color:white;
+}
+
+.btn-social:hover{
+    color: white;
+    box-shadow: 0 0 0 1px white;
+}
+
+.btn-twitter{
+    background: #3cf;
+}
+
+.btn-facebook{
+    background: #3b5998;
+}
+
+.btn-submit{
+    width:100%;
+}
+
+.no-gutter [class*="col-"] {
+    padding: 2px 5px;
+}
+
+.footer{
+    text-align:center;
+    margin-top:10px;
+}
+
+.footer {
+    color: white;
+}
+.footer a{
+    color: #3498db;
+}
+
+.footer a:hover{
+    color:#3cf;
+    text-decoration:none;
+}
+
+.price{
+    font-size: 30px;
+}
+.preferences{
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.table{
+    border-top: 1px solid #ddd;
+}
+tr{
+    border-bottom: 1px solid #ddd;
+}
+tr:last-child{
+    border-bottom: none;
+}
+td{
+    border: none;
+}
+.client-img{
+    background: url("../images/user.png") no-repeat center center;
+    background-size: 55px 55px;
+}
+.checkbox label{
+    padding-left: 0;
+    color: white;
+}
+
+

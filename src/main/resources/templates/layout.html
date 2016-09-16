@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="layouts/_header :: head" />
+<body>
+
+<nav th:include="layouts/_navigation :: navigation" class="navbar navbar-inverse navbar-fixed-top"/>
+
+<div class="container">
+    <div layout:fragment="content"></div>
+</div>
+
+<footer th:include="layouts/_footer :: footer" class="footer" />
+
+</body>
+</html>

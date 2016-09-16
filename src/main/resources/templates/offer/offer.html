@@ -1,0 +1,17 @@
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<div layout:fragment="content">
+    <div class="container site_box">
+        <div class="col-md-8 col-sm-12">
+            <div th:include="layouts/_offer :: offer(${offer})" class="row"/>
+            <div th:include="layouts/_conversation :: conversation" class="row"/>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="row">
+                <div th:include="layouts/_reservation :: reservation" />
+                <div th:include="layouts/_references :: references"/>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

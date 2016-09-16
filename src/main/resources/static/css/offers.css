@@ -1,0 +1,54 @@
+.panel-heading {
+    border-bottom: none;
+}
+
+.offer_box{
+    padding:0px;
+}
+
+.img-circle{
+    padding-top:5px;
+}
+
+.offer_details{
+    border-left: solid 1px #dddddd;
+}
+
+.offer_filter_box{
+    margin-top:10px;
+    border: solid 1px #dddddd;
+}
+
+.offer_title_box{
+    background: #eeeeee;
+}
+
+.offer_search_box{
+    border-radius: 4px;
+    background: #f1c40f;
+    padding:10px;
+}
+
+.form-group{
+    margin-bottom:5px;
+}
+
+.border{
+    border: solid 1px #dddddd;
+}
+
+p{
+    margin: 0;
+    padding: 10px 20px 10px 20px;
+}
+.table{
+    margin-bottom:0px;
+}
+
+blockquote{
+    font-size:14px;
+}
+
+.bg-info{
+    border-radius: 4px;
+}

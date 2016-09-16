@@ -1,0 +1,21 @@
+server.port=8081
+
+spring.thymeleaf.cache=false
+
+logging.config=classpath:config/log/logback-spring.xml
+
+spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS = false
+
+spring.mail.host=smtp-mail.outlook.com
+spring.mail.username=*
+spring.mail.password=*
+spring.mail.port=587
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+spring.mail.properties.mail.smtp.auth=true;
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2
+
+spring.datasource.data=classpath:data/import.sql
+spring.jpa.show-sql=true

@@ -1,0 +1,51 @@
+.alert{
+    padding: 5px;
+    margin-top:5px;
+    margin-bottom: 0px;
+}
+
+
+.center_box{
+    margin: 0 auto;
+    width: 90%;
+    margin-top:20%;
+}
+
+@media screen and (min-device-width : 540px) and (max-width: 640px) {
+    .center_box{
+        width:60%;
+    }
+    .btn-social{
+        width:100%;
+    }
+    .login_box{
+        width:100%;
+    }
+}
+
+@media screen and (min-device-width : 480px) and (max-width: 540px) {
+    .center_box{
+        width:70%;
+    }
+}
+
+@media screen and (min-device-width : 320px) and (max-width: 480px) {
+    .center_box{
+        width:75%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .center_box{
+        width:95%;
+    }
+
+}
+
+.logo{
+   width:200px;
+   height:200px;
+   margin: 0 auto;
+   background-size: contain;
+   background-image: url("../images/bell-pepper.svg");
+}

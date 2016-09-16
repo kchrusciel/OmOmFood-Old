@@ -1,0 +1,37 @@
+<div th:fragment="search">
+    <div class="col-md-11 col-sm-12 col-md-offset-1 offer_search_box margin-bottom">
+        <form action="/offers" method="post">
+            <div class="form-group">
+                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-map-marker"></i>
+                                    </span>
+                    <input type="text" name="city" class="form-control" th:placeholder="#{placeholder.city}"
+                           placeholder="City here..."/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group date">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                    <input type="text" name="date" class="form-control" th:placeholder="#{placeholder.date}"
+                           placeholder="Choose date..."/>
+                </div>
+            </div>
+            <div class="checkbox-inline">
+                <label>
+                    <input type="checkbox"/> Prywatne
+                </label>
+            </div>
+            <div class="checkbox-inline">
+                <label>
+                    <input type="checkbox"/> Restauracje
+                </label>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-submit">OmOm!</button>
+            </div>
+        </form>
+    </div>
+</div>

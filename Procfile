@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -Dspring.data.mongodb.uri=$DATA_BASE_URL -jar  target/OmOmFood-0.1.0-SNAPSHOT.jar

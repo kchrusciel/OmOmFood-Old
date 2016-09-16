@@ -1,0 +1,50 @@
+<div th:fragment="offer(offer)">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" th:text="${offer.title}">Panel title</h3>
+        </div>
+        <div class="panel-body offer_box">
+            <a th:href="'/offers/' + ${offer.id}" href="#">
+                <div class="col-md-3">
+                    <img th:src="@{/images/} + ${offer.fileName}" class="img-circle"/>
+                    <p>Some info here?</p>
+                </div>
+                <div class="col-md-9 offer_details">
+                    <div class="row">
+                        <p class="text-justify">We can do a lot of things with CSS like build modals, make
+                            beautiful text effects, draw a Viking shield,
+                            and even create a heart shape. There’s also plenty that we can do with CSS3 Box
+                            Shadows,
+                            and in this post we are going to look at how some designers play around with CSS
+                            shadows to some great results.</p>
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <td>When</td>
+                                <td th:text="${#temporals.format(offer.eventDate, 'EEEE d MMMM yyyy - HH:mm')}">
+                                    31/12/2015 15:00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Where</td>
+                                <td th:text="${offer.city}">Where</td>
+                            </tr>
+                            <tr>
+                                <td>Price</td>
+                                <td>100$</td>
+                            </tr>
+                            <tr>
+                                <td>Added by</td>
+                                <td>Jan Nowak</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </a>
+            <div sec:authorize="isAuthenticated()">
+                <p>Tutaj ukryta treść</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+    - $HOME/.m2
+
+deploy:
+  provider: heroku
+  api_key: 3b2dc8a3-67a0-47bc-9783-d05b051a6eea
+
+  app:
+    master: omomfood-prod
+    release: omomfood-staging
+    develop: omomfood-dev 
+    counter: omomfood-counter

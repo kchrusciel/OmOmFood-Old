@@ -1,0 +1,16 @@
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
+    <div layout:fragment="content">
+        <div class="center_box">
+            <div th:include="layouts/_slogan :: slogan"/>
+            <div class="messages_box">
+                <div th:if="${param.error}" class="alert alert-error">
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success">
+                    You have been logged out.
+                </div>
+                <p th:text="${message}">Messages</p>
+            </div>
+        </div>
+    </div>
+</html>

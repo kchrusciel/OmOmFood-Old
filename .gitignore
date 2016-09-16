@@ -1,0 +1,8 @@
+#Idea files:
+.idea
+*.iml
+#Java files:
+target
+
+*.log
+application-dev.properties
