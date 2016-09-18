@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.codecouple.omomfood.account.roles.Role;
+import pl.codecouple.omomfood.messages.Message;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -56,6 +57,9 @@ public class User implements UserDetails {
     private String confirmationId;
 
     private boolean newsletterStatus;
+
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="owner")
+    private List<Message> messages;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

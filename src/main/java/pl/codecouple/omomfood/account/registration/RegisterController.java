@@ -12,7 +12,7 @@ import pl.codecouple.omomfood.account.AccountServiceImpl;
 import pl.codecouple.omomfood.account.PasswordService;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.validator.UserValidator;
-import pl.codecouple.omomfood.utils.MessagesService;
+import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 import javax.validation.Valid;
 
@@ -34,7 +34,7 @@ public class RegisterController extends WebMvcConfigurerAdapter {
     private PasswordService passwordService;
 
     @Autowired
-    private MessagesService messagesService;
+    private ResourceMessagesService resourceMessagesService;
 
     @Autowired
     private UserValidator userValidator;
@@ -72,7 +72,7 @@ public class RegisterController extends WebMvcConfigurerAdapter {
         log.debug("Store user in DB");
         accountService.addUser(user);
 
-        model.addAttribute("message", messagesService.getParametrizedMessages("email.confirm.message", new Object[]{user.getEmail()}));
+        model.addAttribute("message", resourceMessagesService.getParametrizedMessages("email.confirm.message", new Object[]{user.getEmail()}));
         return "messages";
     }
 
@@ -89,7 +89,7 @@ public class RegisterController extends WebMvcConfigurerAdapter {
 
     private void sendConfirmationID(@Valid User user) {
         user.setConfirmationId(createConfirmationID());
-        emailService.sendEmail(messagesService.getMessage("email.confirm.title"),
+        emailService.sendEmail(resourceMessagesService.getMessage("email.confirm.title"),
                 user.getEmail(),
                 "http://OmOmFood.pl/confirm?id=" + user.getConfirmationId());
     }

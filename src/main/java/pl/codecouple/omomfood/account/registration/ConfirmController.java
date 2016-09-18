@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.codecouple.omomfood.account.AccountServiceImpl;
 import pl.codecouple.omomfood.account.users.User;
-import pl.codecouple.omomfood.utils.MessagesService;
+import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 /**
  * Created by krzysztof.chrusciel on 2016-09-09.
@@ -21,7 +21,10 @@ public class ConfirmController {
     private AccountServiceImpl accountService;
 
     @Autowired
-    private MessagesService messagesService;
+    private ResourceMessagesService resourceMessagesService;
+
+    @Autowired
+    private EmailService emailService;
 
     @RequestMapping("/confirm")
     public String confirmID(@RequestParam(value = "id") String confirmId,
@@ -32,23 +35,31 @@ public class ConfirmController {
 
         User user = accountService.getUserByConfirmationId(confirmId);
 
-        String message = "Invalid confirmation id. Contact us or try again.";
-        if(user!=null){
-
-            log.debug("Found user:" + user);
-
-            if(!user.isConfirmationStatus()){
-                user.setConfirmationStatus(true);
-                user.setConfirmationId(null);
-                accountService.addUser(user);
-            }
-            message = user.getUsername() + ", your account has been verified. You may now log in. ";
-        }
-
-        log.debug("No user found during confirmation");
+        String message = activeUser(user);
 
         model.addAttribute("message", message);
         return "messages";
+    }
+
+    public String activeUser(User user){
+        if(user == null){
+            return resourceMessagesService.getMessage("email.confirm.error");
+        }
+
+        log.debug("Found user:" + user);
+
+        if(!user.isConfirmationStatus()){
+            user.setConfirmationStatus(true);
+            user.setConfirmationId(null);
+            accountService.addUser(user);
+            emailService.sendEmail(
+                    resourceMessagesService.getMessage("email.account.title"),
+                    user.getEmail(),
+                    resourceMessagesService.getMessage("email.account.content")
+            );
+        }
+
+        return resourceMessagesService.getParametrizedMessages("email.confirmed.message", new Object[]{user.getUsername()});
     }
 
 }

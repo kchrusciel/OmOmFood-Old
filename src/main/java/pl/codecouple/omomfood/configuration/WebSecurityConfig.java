@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import pl.codecouple.omomfood.account.AccountService;
@@ -47,9 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/register",
                         "/login",
                         "/logout",
-                        "/offers",
                         "/offers/**",
-                        "/offer",
+                        "/offer/**",
                         "/confirm")
                 .permitAll().anyRequest()
                 .authenticated()
@@ -76,8 +74,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
-        SimpleUrlAuthenticationSuccessHandler handler = new SimpleUrlAuthenticationSuccessHandler();
-        handler.setUseReferer(true);
+        AuthenticationSuccessHandler handler = new MySimpleUrlAuthenticationSuccessHandler();
+//        handler.setUseReferer(true);
         return handler;
     }
 
@@ -89,5 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //End of handler
+
+
 
 }

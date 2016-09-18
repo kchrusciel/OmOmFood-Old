@@ -1,8 +1,11 @@
-<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content">
     <div class="container site_box">
         <div class="col-md-8 col-sm-12">
+            <!--/*@thymesVar id="offers" type="java.util.List"*/-->
+            <div class="row margin-bottom" th:if="${offers.isEmpty()}">
+                <div th:include="layouts/_empty_offer :: empty-offer"/>
+            </div>
             <div class="row margin-bottom" th:each="offer:${offers}">
                 <div th:include="layouts/_offer :: offer(${offer})"/>
             </div>

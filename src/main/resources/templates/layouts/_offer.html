@@ -4,7 +4,7 @@
             <h3 class="panel-title" th:text="${offer.title}">Panel title</h3>
         </div>
         <div class="panel-body offer_box">
-            <a th:href="'/offers/' + ${offer.id}" href="#">
+            <a th:href="'/offer/' + ${offer.id}" href="#">
                 <div class="col-md-3">
                     <img th:src="@{/images/} + ${offer.fileName}" class="img-circle"/>
                     <p>Some info here?</p>
@@ -27,11 +27,11 @@
                             </tr>
                             <tr>
                                 <td>Where</td>
-                                <td th:text="${offer.city}">Where</td>
+                                <td th:text="${offer.city}">[offer.city]</td>
                             </tr>
                             <tr>
                                 <td>Price</td>
-                                <td>100$</td>
+                                <td th:text="${offer.price}">[offer.price]</td>
                             </tr>
                             <tr>
                                 <td>Added by</td>

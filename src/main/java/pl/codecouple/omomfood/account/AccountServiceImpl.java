@@ -44,9 +44,9 @@ public class AccountServiceImpl implements UserDetailsService, AccountService{
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-        log.debug("Grant authories");
+        log.debug("Grant authorities");
         for (Role role : user.getRoles()){
-            log.debug("Authories:" + role.getRoleName());
+            log.debug("Authorities:" + role.getRoleName());
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
 

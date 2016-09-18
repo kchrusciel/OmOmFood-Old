@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.codecouple.omomfood.account.users.UserRepository;
-import pl.codecouple.omomfood.utils.MessagesService;
+import org.springframework.web.bind.annotation.RequestParam;
+import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 /**
  * Created by krzysztof.chrusciel on 2016-07-11.
@@ -16,14 +16,10 @@ import pl.codecouple.omomfood.utils.MessagesService;
 public class OmOmFoodController {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private MessagesService messagesService;
+    private ResourceMessagesService resourceMessagesService;
 
     @RequestMapping("/")
     public String showMainPage() {
-        log.debug("USERS:" + userRepository.findAll());
         return "index";
     }
 
@@ -34,16 +30,39 @@ public class OmOmFoodController {
 
     @RequestMapping("/403")
     public String showAccessDeniedPage(Model model) {
-        model.addAttribute("message", messagesService.getMessage("error.access.required"));
+        model.addAttribute("message", resourceMessagesService.getMessage("error.access.required"));
+        return "messages";
+
+    }
+
+    @RequestMapping("/messages")
+    public String showAccessMessagesPage() {
         return "messages";
     }
 
     @RequestMapping("/login")
-    public String showLoginPage(Model model) {
+    public String showLoginPage(Model model,
+                                @RequestParam(value = "error", required = false) String error,
+                                @RequestParam(value = "logout", required = false) String logout) {
         log.debug("Show login page");
-        log.debug("BindingResult: " + model);
-//        model.addAttribute("message", messagesService.getMessage("error.login.required"));
+
+        if (hasParam(error)) {
+            model.addAttribute("message",  resourceMessagesService.getMessage("error.invalid.credentials"));
+        }
+        if (hasParam(logout)) {
+            model.addAttribute("message", resourceMessagesService.getMessage("logout.message"));
+        }
+        if (error == null && logout == null) {
+            model.addAttribute("message", resourceMessagesService.getMessage("error.login.required"));
+        }
+
+        model.addAttribute("badge", "100");
+
         return "messages";
+    }
+
+    private boolean hasParam(String param) {
+        return param != null;
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.Locale;
  * Created by Krzysztof Chruściel.
  */
 @Service
-public class MessagesServiceImpl implements MessagesService{
+public class ResourceMessagesServiceImpl implements ResourceMessagesService {
 
     @Autowired
     private MessageSource messageSource;
