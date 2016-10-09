@@ -48,7 +48,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/logout",
                         "/offers/**",
                         "/offer/**",
-                        "/confirm")
+                        "/confirm",
+                        "/signup/**",
+                        "/signin/**")
                 .permitAll().anyRequest()
                 .authenticated()
                 .and().csrf().disable();

@@ -1,4 +1,4 @@
-<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <div layout:fragment="content">
     <div class="center_box">
     <div th:include="layouts/_slogan :: slogan"/>
@@ -32,7 +32,12 @@
             <div class="col-sm-3 col-md-4"/>
         </div>
     </form>
-    <button th:utext="#{button.twitter.signin}" class="btn btn-social btn-twitter"><i class="fa fa-twitter"></i> Connect with Twitter</button>
-    <button th:utext="#{button.facebook.signin}" class="btn btn-social btn-facebook"><i class="fa fa-facebook"></i> Connect with Facebook</button></div>
+    <form action="/signin/twitter" method="post" sec:authorize="!isAuthenticated()">
+        <button th:utext="#{button.twitter.signin}" class="btn btn-social btn-twitter" type="submit"><i class="fa fa-twitter"></i> Connect with Twitter</button>
+    </form>
+    <form action="/signin/facebook" method="post" sec:authorize="!isAuthenticated()">
+        <button th:utext="#{button.facebook.signin}" class="btn btn-social btn-facebook" type="submit"><i class="fa fa-facebook"></i> Connect with Facebook</button>
+    </form>
+</div>
 </div>
 </html>

@@ -19,3 +19,9 @@ spring.h2.console.path=/h2
 
 spring.datasource.data=classpath:data/import.sql
 spring.jpa.show-sql=true
+
+spring.social.twitter.appId=
+spring.social.twitter.appSecret=
+spring.social.facebook.appId=
+spring.social.facebook.appSecret=
+spring.social.auto-connection-views=false
