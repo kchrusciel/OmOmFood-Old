@@ -1,29 +1,38 @@
 package pl.codecouple.omomfood;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.access.SecurityConfig;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import pl.codecouple.omomfood.configuration.WebSecurityConfig;
+import pl.codecouple.omomfood.offers.OfferService;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(OmOmFood.class)
-@Import(WebSecurityConfig.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class OmOmFoodTest {
 
     @Autowired
-    private MockMvc mvc;
+    private TestRestTemplate restTemplate;
 
-//    @Test
-//    public void shouldReturn200() throws Exception {
-//        this.mvc.perform(get("/login")).andExpect(status().is(200));
-//    }
+    @MockBean
+    private OfferService offerService;
+
+    @Before
+    public void setup() {
+        given(this.offerService.getOfferById(10)
+        ).willReturn(
+                null);
+    }
+
+    @Test
+    public void test() {
+        this.restTemplate.getForEntity("/offer/{id}",
+                String.class, "10");
+    }
+
 }
