@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.validator.OfferValidator;
+import pl.codecouple.omomfood.messages.Message;
 import pl.codecouple.omomfood.storage.StorageService;
 import pl.codecouple.omomfood.utils.UserDetailsService;
 
@@ -76,6 +77,7 @@ public class OfferController {
     @RequestMapping(value = "/offer/{offerID}",
             method = RequestMethod.GET)
     public String getOffer(@PathVariable long offerID,
+                           Message messageForm,
                            Model model) {
         Offer offer = offerService.getOfferById(offerID);
         if (offer == null) {
@@ -83,6 +85,7 @@ public class OfferController {
             return "messages";
         }
         model.addAttribute("offer", offerService.getOfferById(offerID));
+        model.addAttribute("user", userDetailsService.getLoggedUser());
         return "offer/offer";
     }
 
@@ -150,6 +153,17 @@ public class OfferController {
                                 @PathVariable("offerID") long offerID) {
         log.debug("Show edit offer page");
         return "offer/edit";
+    }
+
+    @RequestMapping(value = "offers/{offerID}/message",
+            method = RequestMethod.POST)
+    public String sendMessageToOffer(@Valid Message message,
+                                     @PathVariable("offerID") long offerID){
+        message.isRead();
+        message.getContent();
+        log.debug("sendMessageToOffer");
+        log.debug(message.getContent());
+        return "index";
     }
 
 }

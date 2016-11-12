@@ -8,7 +8,7 @@ import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
-import pl.codecouple.omomfood.utils.AuthUtil;
+import pl.codecouple.omomfood.utils.AuthenticateUtils;
 
 /**
  * Created by Agnieszka on 2016-10-09.
@@ -26,7 +26,7 @@ public class SignUpController {
     public String signup(WebRequest request) {
         Connection<?> connection = signInUtils.getConnectionFromSession(request);
         if (connection != null) {
-            AuthUtil.authenticate(connection);
+            AuthenticateUtils.authenticate(connection);
             signInUtils.doPostSignUp(connection.getDisplayName(), request);
         }
         return "redirect:/";

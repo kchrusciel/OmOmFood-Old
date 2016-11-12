@@ -39,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/login")
                 .successHandler(successHandler())
+                .and().headers().frameOptions().disable()
                 .and().logout().logoutSuccessUrl("/").logoutSuccessHandler(logoutSuccessHandler())
                 .and().authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -47,13 +48,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/login",
                         "/logout",
                         "/offers/**",
-                        "/offer/**",
+                        "/offer/{[0-9]+}",
                         "/confirm",
                         "/signup/**",
                         "/signin/**")
                 .permitAll().anyRequest()
                 .authenticated()
                 .and().csrf().disable();
+                 // for h2
         http.exceptionHandling().accessDeniedPage("/403");
     }
 

@@ -1,7 +1,7 @@
 <div th:fragment="offer(offer)">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title" th:text="${offer.title}">Panel title</h3>
+            <h3 class="panel-title" th:text="${offer.title}">[offer.title]</h3>
         </div>
         <div class="panel-body offer_box">
             <a th:href="'/offer/' + ${offer.id}" href="#">
@@ -22,7 +22,7 @@
                             <tr>
                                 <td>When</td>
                                 <td th:text="${#temporals.format(offer.eventDate, 'EEEE d MMMM yyyy - HH:mm')}">
-                                    31/12/2015 15:00
+                                    [offer.eventDate]
                                 </td>
                             </tr>
                             <tr>
@@ -35,7 +35,7 @@
                             </tr>
                             <tr>
                                 <td>Added by</td>
-                                <td>Jan Nowak</td>
+                                <td th:text="${offer.owner.getFirstAndLastName()}">[offer.owner.getFirstAndLastName]</td>
                             </tr>
                             </tbody>
                         </table>

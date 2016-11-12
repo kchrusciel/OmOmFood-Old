@@ -8,7 +8,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.codecouple.omomfood.account.roles.Role;
+import pl.codecouple.omomfood.account.users.references.Reference;
 import pl.codecouple.omomfood.messages.Message;
+import pl.codecouple.omomfood.offers.Offer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -59,11 +61,25 @@ public class User implements UserDetails {
     private boolean newsletterStatus;
 
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="owner")
+    private List<Offer> offers;
+
+    @ManyToMany(mappedBy = "assignedUser")
+    private List<Offer> assignedOffer;
+
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="author")
+    private List<Reference> writtenReferences;
+
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="about")
+    private List<Reference> references;
+
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="owner")
     private List<Message> messages;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
+
+
 
     @Transient
     private Set<GrantedAuthority> authorities = new HashSet<>();
@@ -109,6 +125,10 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
         this.passwordEncrypted = password;
+    }
+
+    public String getFirstAndLastName(){
+        return getFirstName() + " " + getLastName();
     }
 
     @Override
