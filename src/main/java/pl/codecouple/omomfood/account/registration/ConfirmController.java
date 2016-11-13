@@ -17,14 +17,18 @@ import pl.codecouple.omomfood.utils.ResourceMessagesService;
 @Controller
 public class ConfirmController {
 
-    @Autowired
-    private AccountServiceImpl accountService;
+    private final AccountServiceImpl accountService;
+
+    private final ResourceMessagesService resourceMessagesService;
+
+    private final EmailService emailService;
 
     @Autowired
-    private ResourceMessagesService resourceMessagesService;
-
-    @Autowired
-    private EmailService emailService;
+    public ConfirmController(AccountServiceImpl accountService, ResourceMessagesService resourceMessagesService, EmailService emailService) {
+        this.accountService = accountService;
+        this.resourceMessagesService = resourceMessagesService;
+        this.emailService = emailService;
+    }
 
     @RequestMapping("/confirm")
     public String confirmID(@RequestParam(value = "id") String confirmId,
@@ -52,11 +56,7 @@ public class ConfirmController {
             user.setConfirmationStatus(true);
             user.setConfirmationId(null);
             accountService.addUser(user);
-            emailService.sendEmail(
-                    resourceMessagesService.getMessage("email.account.title"),
-                    user.getEmail(),
-                    resourceMessagesService.getMessage("email.account.content")
-            );
+            emailService.sendWelcomeEmail(user.getEmail());
         }
 
         return resourceMessagesService.getParametrizedMessages("email.confirmed.message", new Object[]{user.getUsername()});

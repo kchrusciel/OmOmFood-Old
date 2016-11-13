@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.validator.OfferValidator;
 import pl.codecouple.omomfood.messages.Message;
+import pl.codecouple.omomfood.messages.MessageService;
 import pl.codecouple.omomfood.storage.StorageService;
 import pl.codecouple.omomfood.utils.UserDetailsService;
 
@@ -32,6 +33,9 @@ public class OfferController {
     private StorageService storageService;
 
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private MessageService messageService;
 
     @Autowired
     public OfferController(OfferService offerService, OfferValidator offerValidator, StorageService storageService, UserDetailsService userDetailsService) {

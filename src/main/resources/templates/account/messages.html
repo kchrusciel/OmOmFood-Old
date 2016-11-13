@@ -1,0 +1,9 @@
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
+    <div layout:fragment="content">
+        <div class="container site_box">
+            <div class="messages_box" th:each="message:${messages}">
+                <p th:text="${message.content}">Messages</p>
+            </div>
+        </div>
+    </div>
+</html>

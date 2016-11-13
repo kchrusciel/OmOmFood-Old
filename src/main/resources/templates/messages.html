@@ -1,10 +1,10 @@
 <html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
-    <div layout:fragment="content">
-        <div class="center_box">
-            <div th:include="layouts/_slogan :: slogan"/>
-            <div class="messages_box">
-                <p th:text="${message}">Messages</p>
-            </div>
+<div layout:fragment="content">
+    <div class="center_box">
+        <div th:include="layouts/_slogan :: slogan"/>
+        <div class="messages_box">
+            <p th:text="${message}">Messages</p>
         </div>
     </div>
+</div>
 </html>

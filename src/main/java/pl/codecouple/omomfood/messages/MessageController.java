@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pl.codecouple.omomfood.utils.UserDetailsService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -32,6 +33,9 @@ public class MessageController {
     public String showMessages(Model model){
 
         log.debug("Show all user messages");
+
+        Message message = new Message("Some message: " + LocalDateTime.now(), 1l, LocalDateTime.now(), userDetailsService.getLoggedUser());
+        messageService.sendMessage(message);
 
         List<Message> messages = messageService.getAllMessages(userDetailsService.getLoggedUser());
         model.addAttribute("messages", messages);

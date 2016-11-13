@@ -26,7 +26,10 @@
                         </ul>
                     </div>
                     <div class="btn-group navbar-btn">
-                        <a href="/my/messages" role="button" class="btn btn-success"><i class="glyphicon glyphicon glyphicon-envelope"></i> <span class="badge" th:text="${badge}">[badge]</span></a>
+                        <a href="/offers/new" role="button" class="btn btn-success"><i class="glyphicon glyphicon glyphicon-plus"></i></a>
+                    </div>
+                    <div class="btn-group navbar-btn">
+                        <a href="/my/messages" role="button" class="btn btn-danger"><i class="glyphicon glyphicon glyphicon-envelope"></i>   <span class="badge" th:text="${@messageService.getNumberOfMessages()}">[messageService.getNumberOfMessages()]</span></a>
                     </div>
                 </li>
             </ul>

@@ -24,21 +24,25 @@ import javax.validation.Valid;
 @RequestMapping("/register")
 public class RegisterController extends WebMvcConfigurerAdapter {
 
-    @Autowired
-    private EmailService emailService;
+    private final EmailService emailService;
+
+
+    private final AccountServiceImpl accountService;
+
+    private final PasswordService passwordService;
+
+    private final ResourceMessagesService resourceMessagesService;
+
+    private final UserValidator userValidator;
 
     @Autowired
-    private AccountServiceImpl accountService;
-
-    @Autowired
-    private PasswordService passwordService;
-
-    @Autowired
-    private ResourceMessagesService resourceMessagesService;
-
-    @Autowired
-    private UserValidator userValidator;
-
+    public RegisterController(EmailService emailService, AccountServiceImpl accountService, PasswordService passwordService, ResourceMessagesService resourceMessagesService, UserValidator userValidator) {
+        this.emailService = emailService;
+        this.accountService = accountService;
+        this.passwordService = passwordService;
+        this.resourceMessagesService = resourceMessagesService;
+        this.userValidator = userValidator;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String showRegisterPage(User userForm){
@@ -89,9 +93,8 @@ public class RegisterController extends WebMvcConfigurerAdapter {
 
     private void sendConfirmationID(@Valid User user) {
         user.setConfirmationId(createConfirmationID());
-        emailService.sendEmail(resourceMessagesService.getMessage("email.confirm.title"),
-                user.getEmail(),
-                "http://OmOmFood.pl/confirm?id=" + user.getConfirmationId());
+        emailService.sendConfirmationEmail(user.getEmail(),
+                "confirm?id=" + user.getConfirmationId());
     }
 
 
