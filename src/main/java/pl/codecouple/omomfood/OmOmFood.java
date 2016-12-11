@@ -85,19 +85,20 @@ public class OmOmFood implements CommandLineRunner{
                                         user,
                                         offerTypes));
 
+        for(int i=0; i<100; i++){
+            offerRepository.save(new Offer("Test",
+                    "Test",
+                    "Katowice",
+                    "500-500-500",
+                    new BigDecimal(50),
+                    1,
+                    "food-150x150.png",
+                    LocalDateTime.now(),
+                    LocalDateTime.now(),
+                    jan,
+                    offerTypes));
+        }
 
-
-        offerRepository.save(new Offer("Test",
-                                        "Test",
-                                        "Katowice",
-                                        "500-500-500",
-                                        new BigDecimal(50),
-                                        1,
-                                        "food-150x150.png",
-                                        LocalDateTime.now(),
-                                        LocalDateTime.now(),
-                                        jan,
-                                        offerTypes));
 
 
 

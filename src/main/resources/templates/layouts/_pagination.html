@@ -1,0 +1,36 @@
+<div th:fragment="pagination" id="paginator">
+    <div class="col-md-12 text-center">
+        <div class='pagination pagination-centered'>
+            <ul class="pagination">
+                <li th:class="${currentIndex == 1}? 'disabled' : ''"><span
+                        th:if='${currentIndex == 1}'>First</span> <a
+                        th:if='${currentIndex != 1}' th:href="@{/products/page/1}">First</a>
+                </li>
+                <li th:class="${currentIndex != 1}? '' : 'disabled'"><span
+                        th:if='${currentIndex == 1}'>«</span> <a
+                        th:if='${currentIndex != 1}'
+                        th:href="@{|${baseURL}${currentIndex - 1}|}"
+                        title='Go to previous page'>«</a></li>
+
+                <li th:each="item : ${#numbers.sequence(beginIndex, endIndex)}"
+                    th:class="${item == currentIndex ? 'active' : '' }"><span
+                        th:if='${item == currentIndex}' th:text='${item}'>1</span> <a
+                        th:if='${item != currentIndex}' th:href="@{|${baseURL}${item}|}">
+                    <span th:text='${item}'>1</span>
+                </a></li>
+
+                <li th:class="${currentIndex != allPagesCount}? '' : 'disabled'">
+                    <span th:if='${currentIndex == allPagesCount}'>»</span> <a
+                        th:if='${currentIndex != allPagesCount}'
+                        th:href="@{|${baseURL}${currentIndex + 1}|}"
+                        title='Go to next page'>»</a>
+                </li>
+                <li th:class="${currentIndex == allPagesCount}? 'disabled' : ''">
+                    <span th:if='${currentIndex == allPagesCount}'>Last</span> <a
+                        th:if='${currentIndex != allPagesCount}'
+                        th:href="@{|${baseURL}${allPagesCount}|}">Last</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
