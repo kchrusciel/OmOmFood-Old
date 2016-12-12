@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.account.registration;
+package pl.codecouple.omomfood.account.registration.email;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

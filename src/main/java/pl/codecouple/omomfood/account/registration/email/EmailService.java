@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.account.registration;
+package pl.codecouple.omomfood.account.registration.email;
 
 /**
  * Created by Krzysztof Chruściel.

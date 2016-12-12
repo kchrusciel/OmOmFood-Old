@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import pl.codecouple.omomfood.account.AccountServiceImpl;
 import pl.codecouple.omomfood.account.PasswordService;
+import pl.codecouple.omomfood.account.registration.email.EmailService;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.validator.UserValidator;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
@@ -38,6 +39,8 @@ public class RegisterController extends WebMvcConfigurerAdapter {
     public static final String EMAIL_CONFIRM_MESSAGE_ID = "email.confirm.message";
     /** Not match password message id.*/
     public static final String NOT_MATCH_PASSWORD_MESSAGE_ID = "notMatch.password";
+    /** Model message id.*/
+    public static final String MODEL_MESSAGE_ID = "message";
 
     /** Template name which is returned after registration.*/
     public static final String TEMPLATE_NAME_MESSAGES = "messages";
@@ -49,7 +52,7 @@ public class RegisterController extends WebMvcConfigurerAdapter {
     /** Password matcher field id from register form.*/
     public static final String PASSWORD_MATCHER_FIELD_ID = "passwordMatcher";
 
-    /** {@link AccountServiceImpl} account service instance. */
+    /** {@link EmailService} email service instance. */
     private final EmailService emailService;
     /** {@link AccountServiceImpl} account service instance. */
     private final AccountServiceImpl accountService;
@@ -265,7 +268,7 @@ public class RegisterController extends WebMvcConfigurerAdapter {
      * @param model for which messages will be bind.
      */
     private void bindMessagesToTemplate(@Valid final User user, final Model model) {
-        model.addAttribute("message", resourceMessagesService.getParametrizedMessages(
+        model.addAttribute(MODEL_MESSAGE_ID, resourceMessagesService.getParametrizedMessages(
                 EMAIL_CONFIRM_MESSAGE_ID,
                 new Object[]{user.getEmail()}));
     }
