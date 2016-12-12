@@ -19,14 +19,22 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class EmailServiceImpl implements EmailService{
 
+    /** Context title id. */
+    public static final String CONTEXT_TITLE_ID = "title";
+    /** Context content id. */
+    public static final String CONTEXT_CONTENT_ID = "content";
+
+    /** {@link JavaMailSender} java mail sender instance. */
     private final JavaMailSender javaMailSender;
-
+    /** {@link TemplateEngine} template engine instance. */
     private final TemplateEngine templateEngine;
-
+    /** {@link ResourceMessagesService} resource messages service instance. */
     private final ResourceMessagesService resourceMessagesService;
 
     @Autowired
-    public EmailServiceImpl(JavaMailSender javaMailSender, TemplateEngine templateEngine, ResourceMessagesService resourceMessagesService) {
+    public EmailServiceImpl(final JavaMailSender javaMailSender,
+                            final TemplateEngine templateEngine,
+                            final ResourceMessagesService resourceMessagesService) {
         this.javaMailSender = javaMailSender;
         this.templateEngine = templateEngine;
         this.resourceMessagesService = resourceMessagesService;
@@ -63,31 +71,31 @@ public class EmailServiceImpl implements EmailService{
     }
 
     @Override
-    public void sendWelcomeEmail(String to) {
+    public void sendWelcomeEmail(final String to) {
         String title = resourceMessagesService.getMessage("email.account.title");
         String content = resourceMessagesService.getMessage("email.account.content");
         sendEmail(title, to, prepareContentForWelcomeEmail(content));
     }
 
-    String prepareContentForConfirmationEmail(String confirm_link_id){
+    private String prepareContentForConfirmationEmail(final String confirm_link_id){
         String title = resourceMessagesService.getMessage("CompanyName");
         String content = resourceMessagesService.getMessage("email.confirm.content");
         String confirm_link = resourceMessagesService.getParametrizedMessages("email.confirm.link", new Object[]{title, confirm_link_id});
         String footer = resourceMessagesService.getParametrizedMessages("email.footer",  new Object[]{title});
         Context context = new Context();
-        context.setVariable("title", title);
-        context.setVariable("content", content);
+        context.setVariable(CONTEXT_TITLE_ID, title);
+        context.setVariable(CONTEXT_CONTENT_ID, content);
         context.setVariable("confirm_link", confirm_link);
         context.setVariable("footer", footer);
         return templateEngine.process("email/email_template", context);
     }
 
-    String prepareContentForWelcomeEmail(String content){
+    private String prepareContentForWelcomeEmail(final String content){
         String title = resourceMessagesService.getMessage("CompanyName");
         String footer = resourceMessagesService.getParametrizedMessages("email.footer",  new Object[]{title});
         Context context = new Context();
-        context.setVariable("title", title);
-        context.setVariable("content", content);
+        context.setVariable(CONTEXT_TITLE_ID, title);
+        context.setVariable(CONTEXT_CONTENT_ID, content);
         context.setVariable("footer", footer);
         return templateEngine.process("email/email_template", context);
     }

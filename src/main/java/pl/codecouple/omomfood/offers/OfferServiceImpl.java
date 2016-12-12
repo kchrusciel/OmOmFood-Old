@@ -1,6 +1,8 @@
 package pl.codecouple.omomfood.offers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.codecouple.omomfood.account.AccountService;
 import pl.codecouple.omomfood.account.users.User;
@@ -23,7 +25,7 @@ public class OfferServiceImpl implements OfferService {
     private OfferRepository offerRepository;
 
     @Autowired
-    public OfferServiceImpl(OfferRepository offerRepository) {
+    public OfferServiceImpl(final OfferRepository offerRepository) {
         this.offerRepository = offerRepository;
     }
 
@@ -43,9 +45,20 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    public Page<Offer> getAllOffers(final Pageable pageable) {
+        return offerRepository.findAll(pageable);
+    }
+
+    @Override
     public List<Offer> getAllOffersByCityAndDate(String city, LocalDateTime eventDate) {
         return offerRepository.findByCityContainingAndEventDateAllIgnoreCaseOrderByEventDateAsc(city, eventDate);
     }
+
+    @Override
+    public Page<Offer> getAllOffersByDateSortedByDate(final LocalDateTime eventDate, final Pageable pageable) {
+        return offerRepository.findByEventDateOrderByEventDateAsc(eventDate, pageable);
+    }
+
 
     @Override
     public List<Offer> getAllOffersByCity(String city) {
