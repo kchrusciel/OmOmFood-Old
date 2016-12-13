@@ -11,46 +11,74 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Created by Krzysztof Chruściel.
+ * This is {@link OfferServiceImpl} class implementation of {@link OfferService}
+ * interface for offers operations.
+ *
+ * @author Krzysztof Chruściel
  */
+
 @Service
 public class OfferServiceImpl implements OfferService {
 
-    private static final String OFFER_COUNTER_KEY = "offer";
 
-
-    @Autowired
+    /** {@link AccountService} account service instance. */
     private AccountService accountService;
-
+    /** {@link OfferRepository} offer repository instance. */
     private OfferRepository offerRepository;
 
+    /**
+     * Constructor of {@link OfferServiceImpl} class.
+     *
+     * @param offerRepository for {@link Offer} DB operations.
+     * @param accountService for account operations.
+     *
+     */
     @Autowired
-    public OfferServiceImpl(final OfferRepository offerRepository) {
+    public OfferServiceImpl(final OfferRepository offerRepository,
+                            final AccountService accountService) {
         this.offerRepository = offerRepository;
+        this.accountService = accountService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void addOffer(Offer offer) {
+    public void addOffer(final Offer offer) {
         offerRepository.save(offer);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void deleteOffers() {
         offerRepository.deleteAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Offer> getAllOffers() {
         return offerRepository.findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Page<Offer> getAllOffers(final Pageable pageable) {
         return offerRepository.findAll(pageable);
     }
 
     @Override
-    public List<Offer> getAllOffersByCityAndDate(String city, LocalDateTime eventDate) {
+    public Page<Offer> getAllOffersByCityAndDate(final String city, final LocalDateTime eventDate, final Pageable pageable) {
+        return offerRepository.findByCityContainingAndEventDateAllIgnoreCaseOrderByEventDateAsc(city, eventDate, pageable);
+    }
+
+    @Override
+    public List<Offer> getAllOffersByCityAndDate(final String city, final LocalDateTime eventDate) {
         return offerRepository.findByCityContainingAndEventDateAllIgnoreCaseOrderByEventDateAsc(city, eventDate);
     }
 
@@ -59,26 +87,58 @@ public class OfferServiceImpl implements OfferService {
         return offerRepository.findByEventDateOrderByEventDateAsc(eventDate, pageable);
     }
 
-
     @Override
-    public List<Offer> getAllOffersByCity(String city) {
+    public List<Offer> getAllOffersByDateSortedByDate(final LocalDateTime eventDate) {
+        return offerRepository.findByEventDateOrderByEventDateAsc(eventDate);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Page<Offer> getAllOffersByCity(final String city, final Pageable pageable) {
+        return offerRepository.findByCityContainingAllIgnoreCaseOrderByEventDateAsc(city, pageable);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Offer> getAllOffersByCity(final String city) {
         return offerRepository.findByCityContainingAllIgnoreCaseOrderByEventDateAsc(city);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Page<Offer> getAllOffersSortedByDate(final Pageable pageable) {
+        return offerRepository.findAllByOrderByEventDateAsc(pageable);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Offer> getAllOffersSortedByDate() {
         return offerRepository.findAllByOrderByEventDateAsc();
     }
 
     @Override
-    public Offer getOfferById(long id) {
+    public Offer getOfferById(final long id) {
         return offerRepository.findOne(id);
     }
 
     @Override
-    public List<Offer> getAllMyOffers(String email) {
+    public List<Offer> getAllMyOffers(final String email) {
         User user = accountService.getUserByEmail(email);
-        return offerRepository.findByOwner(user);
+        return offerRepository.findByOwnerOrderByEventDateAsc(user);
+    }
+
+    @Override
+    public Page<Offer> getAllMyOffers(final String email, final Pageable pageable) {
+        User user = accountService.getUserByEmail(email);
+        return offerRepository.findByOwnerOrderByEventDateAsc(user, pageable);
     }
 }
 

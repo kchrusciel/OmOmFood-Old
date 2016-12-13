@@ -16,7 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     private AccountService accountService;
 
     @Autowired
-    public UserDetailsServiceImpl(AccountService accountService) {
+    public UserDetailsServiceImpl(final AccountService accountService) {
         this.accountService = accountService;
     }
 

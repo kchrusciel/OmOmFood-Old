@@ -2,6 +2,7 @@ package pl.codecouple.omomfood.messages;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.NotEmpty;
 import pl.codecouple.omomfood.account.users.User;
 
 import javax.persistence.*;
@@ -20,6 +21,8 @@ public class Message {
     private Long id;
 
     private String title;
+
+    @NotEmpty
     private String content;
 
     private Long offerID;
