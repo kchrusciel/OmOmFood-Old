@@ -3,6 +3,7 @@ package pl.codecouple.omomfood.offers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import pl.codecouple.omomfood.account.users.User;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by krzysztof.chrusciel on 2016-09-01.
  */
+@Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     List<Offer> findByCityContainingAndEventDateAllIgnoreCaseOrderByEventDateAsc(String city, LocalDateTime eventDate);

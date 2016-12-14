@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.account.registration.email;
+package pl.codecouple.omomfood.account.registration.email.service;
 
 /**
  * This is {@link EmailService} interface for email purposes.
@@ -11,7 +11,7 @@ package pl.codecouple.omomfood.account.registration.email;
 public interface EmailService {
     /**
      * This method send email to specific address, with specific title and content.
-     * @param title of the emial.
+     * @param title of the email.
      * @param to where the email will be send.
      * @param content of the email.
      */

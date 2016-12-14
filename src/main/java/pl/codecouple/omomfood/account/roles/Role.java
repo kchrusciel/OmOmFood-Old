@@ -16,20 +16,25 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String roleName;
+    private RoleEnum role;
 
+    /** {@link User}'s assigned to {@link Role}'s.*/
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
+    /**
+     * Default constructor of {@link Role}.
+     */
     public Role() {
     }
 
-    public Role(String roleName) {
-        this.roleName = roleName;
+    /**
+     * Constructor of {@link Role}.
+     *
+     * @param role enum value.
+     */
+    public Role(final RoleEnum role) {
+        this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "Role";
-    }
 }

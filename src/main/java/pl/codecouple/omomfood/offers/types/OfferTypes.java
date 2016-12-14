@@ -7,7 +7,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public enum OfferTypes {
-    DOG("Dog", true), ALCOHOL("Alcohol", true), MUSIC("Music", false);
+    DOG("Dog", true),
+    ALCOHOL("Alcohol", true),
+    MUSIC("Music", false);
 
     private String type;
     private boolean available;

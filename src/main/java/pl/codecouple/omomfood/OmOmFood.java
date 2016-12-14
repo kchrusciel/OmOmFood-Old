@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import pl.codecouple.omomfood.account.roles.Role;
+import pl.codecouple.omomfood.account.roles.RoleEnum;
 import pl.codecouple.omomfood.account.roles.RoleRepository;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.users.UserRepository;
@@ -54,8 +55,8 @@ public class OmOmFood implements CommandLineRunner{
         storageService.deleteAll();
         storageService.init();
 
-        roleRepository.save(new Role("ROLE_ADMIN"));
-        roleRepository.save(new Role("ROLE_USER"));
+        roleRepository.save(new Role(RoleEnum.ROLE_ADMIN));
+        roleRepository.save(new Role(RoleEnum.ROLE_USER));
 
 
         User user = new User("Jan", "Nowak", "jan@nowak", "password", "password");

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.codecouple.omomfood.account.AccountServiceImpl;
-import pl.codecouple.omomfood.account.registration.email.EmailService;
+import pl.codecouple.omomfood.account.registration.email.service.EmailService;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
 

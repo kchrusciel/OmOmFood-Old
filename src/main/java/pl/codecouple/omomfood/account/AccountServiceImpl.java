@@ -31,7 +31,7 @@ public class AccountServiceImpl implements UserDetailsService, AccountService{
     private RoleRepository roleRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
         log.debug("Load user by email");
 
         User user = userRepository.findByEmail(email);
@@ -46,8 +46,8 @@ public class AccountServiceImpl implements UserDetailsService, AccountService{
 
         log.debug("Grant authorities");
         for (Role role : user.getRoles()){
-            log.debug("Authorities:" + role.getRoleName());
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+            log.debug("Authorities:" + role.getRole().getRoleName());
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole().getRoleName()));
         }
 
         user.setAuthorities(grantedAuthorities);
@@ -56,12 +56,12 @@ public class AccountServiceImpl implements UserDetailsService, AccountService{
     }
 
     @Override
-    public User getUserByConfirmationId(String confirmId) {
+    public User getUserByConfirmationId(final String confirmId) {
         return userRepository.findByConfirmationId(confirmId);
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -71,7 +71,7 @@ public class AccountServiceImpl implements UserDetailsService, AccountService{
     }
 
     @Override
-    public void addUser(User user) {
+    public void addUser(final User user) {
         userRepository.save(user);
     }
 }
