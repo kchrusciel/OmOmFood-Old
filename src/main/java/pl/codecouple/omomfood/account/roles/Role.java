@@ -16,6 +16,8 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column
+    @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
     /** {@link User}'s assigned to {@link Role}'s.*/

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.codecouple.omomfood.account.users.User;
-import pl.codecouple.omomfood.offers.types.OfferTypes;
+import pl.codecouple.omomfood.offers.types.OfferTypesEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -64,9 +64,9 @@ public class Offer {
     private List<User> assignedUser = new ArrayList<>();
 
     @Column
-    @Enumerated
-    @ElementCollection(targetClass = OfferTypes.class)
-    private List<OfferTypes> offerTypes;
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = OfferTypesEnum.class)
+    private List<OfferTypesEnum> offerType;
 
     /**
      * This is default empty constructor for {@link Offer}.
@@ -115,7 +115,7 @@ public class Offer {
      * @param createdDate
      * @param eventDate
      * @param owner
-     * @param offerTypes
+     * @param offerTypeEna
      */
     public Offer(String title,
                  String description,
@@ -127,7 +127,7 @@ public class Offer {
                  LocalDateTime createdDate,
                  LocalDateTime eventDate,
                  User owner,
-                 List<OfferTypes> offerTypes) {
+                 List<OfferTypesEnum> offerType) {
 
         this.title = title;
         this.description = description;
@@ -139,7 +139,7 @@ public class Offer {
         this.createdDate = createdDate;
         this.eventDate = eventDate;
         this.owner = owner;
-        this.offerTypes = offerTypes;
+        this.offerType = offerType;
     }
 
 

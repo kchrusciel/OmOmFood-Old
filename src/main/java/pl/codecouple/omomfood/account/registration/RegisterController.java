@@ -5,17 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import pl.codecouple.omomfood.account.AccountServiceImpl;
 import pl.codecouple.omomfood.account.PasswordService;
 import pl.codecouple.omomfood.account.registration.email.service.EmailService;
+import pl.codecouple.omomfood.account.roles.RoleEnum;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.validator.UserValidator;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 import javax.validation.Valid;
+import java.util.Collections;
 
 /**
  * This is {@link RegisterController} for registration purposes.
@@ -95,7 +98,7 @@ public class RegisterController extends WebMvcConfigurerAdapter {
      * @param userForm for binding with register form
      * @return <code>String</code> with template name.
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String showRegisterPage(final User userForm){
         log.debug("Show register page");
         return TEMPLATE_NAME_REGISTER;
@@ -111,7 +114,7 @@ public class RegisterController extends WebMvcConfigurerAdapter {
      * @param model object which takes return values.
      * @return <code>String</code> with template name.
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public String registerUser(@Valid final User user,
                                final BindingResult bindingResult,
                                final Model model) {
@@ -218,13 +221,13 @@ public class RegisterController extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * This method sets roles to specified user.
+     * This method sets roles to specified {@link User}.
+     * As default {@link User} has {@link RoleEnum#ROLE_USER} value.
      *
      * @param user for which roles will be set.
      */
     private void setRolesToUser(@Valid final User user) {
-        //TODO change setting to specific role
-        user.setRoles(accountService.getAllRoles());
+        user.setRoles(Collections.singletonList(RoleEnum.ROLE_USER));
     }
 
     /**

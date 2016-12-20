@@ -1,24 +1,41 @@
 package pl.codecouple.omomfood.account.registration.email.templates;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 /**
- * Created by Krzysztof Chruściel.
+ * This is {@link ConfirmEmail} class as confirm email.
+ * Base email has three fields, with title, content and footer.
+ * In this class is extra filed with information about confirm link content.
+ * This class is used for confirmation email.
+ *
+ * @author Krzysztof Chruściel
  */
 @Data
 public class ConfirmEmail extends BaseEmail {
 
+    /** Email confirm content. */
     public static final String EMAIL_CONFIRM_CONTENT = "email.confirm.content";
+    /** Email confirm link content. */
     public static final String EMAIL_CONFIRM_LINK = "email.confirm.link";
 
+    /** Email confirm link. */
     private String confirmLink;
 
     /**
      * Constructor of {@link ConfirmEmail} class.
      *
+     * @param confirmLinkID with confirmation ID.
+     *
      */
-    public ConfirmEmail(final String confirmLinkID) {
-        super(EMAIL_CONFIRM_CONTENT);
-        this.confirmLink = resourceMessagesService.getParametrizedMessages(EMAIL_CONFIRM_LINK, new Object[]{title, confirmLinkID});
+    @Autowired
+    public ConfirmEmail(final ResourceMessagesService resourceMessagesService,
+                        final String confirmLinkID) {
+        super(resourceMessagesService, EMAIL_CONFIRM_CONTENT);
+        this.confirmLink = getResourceMessagesService().getParametrizedMessages(EMAIL_CONFIRM_LINK,
+                                                                                new Object[]{getTitle(),
+                                                                                confirmLinkID});
     }
 }

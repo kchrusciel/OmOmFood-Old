@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.configuration;
+package pl.codecouple.omomfood.configuration.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import pl.codecouple.omomfood.account.AccountService;
 import pl.codecouple.omomfood.account.AccountServiceImpl;
+import pl.codecouple.omomfood.configuration.MySimpleUrlAuthenticationSuccessHandler;
 
 /**
  * Created by krzysztof.chrusciel on 2016-07-08.
@@ -44,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/",
+                        "/h2/**",
                         "/register",
                         "/login",
                         "/logout",

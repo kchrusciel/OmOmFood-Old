@@ -13,18 +13,36 @@ import java.util.Locale;
 @Service
 public class ResourceMessagesServiceImpl implements ResourceMessagesService {
 
-    @Autowired
-    private MessageSource messageSource;
+    /** {@link Locale} object instance. */
+    private final Locale locale;
 
+    /** {@link MessageSource} message source instance. */
+    private final MessageSource messageSource;
+
+    /**
+     * Constructor of {@link ResourceMessagesServiceImpl} class.
+     *
+     * @param messageSource with messages from properties.
+     */
+    @Autowired
+    public ResourceMessagesServiceImpl(final MessageSource messageSource) {
+        this.messageSource = messageSource;
+        this.locale = LocaleContextHolder.getLocale();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getMessage(String id) {
-        Locale locale = LocaleContextHolder.getLocale();
+    public String getMessage(final String id) {
         return messageSource.getMessage(id, null, locale);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getParametrizedMessages(String id, Object[] objects) {
-        Locale locale = LocaleContextHolder.getLocale();
+    public String getParametrizedMessages(final String id, final Object[] objects) {
         return messageSource.getMessage(id, objects, locale);
     }
 }

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
  * Created by Krzysztof Chruściel.
  */
 @Slf4j
-public enum OfferTypes {
+public enum OfferTypesEnum {
     DOG("Dog", true),
     ALCOHOL("Alcohol", true),
     MUSIC("Music", false);
@@ -14,7 +14,7 @@ public enum OfferTypes {
     private String type;
     private boolean available;
 
-    OfferTypes(String type, boolean available) {
+    OfferTypesEnum(String type, boolean available) {
         this.type = type;
         this.available = available;
     }

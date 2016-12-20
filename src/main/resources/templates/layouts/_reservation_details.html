@@ -17,7 +17,7 @@
                 <div class="preferences">
                     <table class="table">
                         <tbody>
-                            <tr th:each="offerType:${offer.offerTypes}">
+                            <tr th:each="offerType:${offer.offerType}">
                                 <td th:inline="text">
                                     <span th:if="${offerType.available}" class="label label-success"><i class="glyphicon glyphicon-ok-sign"></i></span>
                                     <span th:if="${!offerType.available}" class="label label-danger"><i class="glyphicon glyphicon-remove-sign"></i></span>

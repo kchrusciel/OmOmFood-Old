@@ -79,7 +79,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendEmail(final String title, final String to, final String content) {
         log.info("Send email");
-        log.debug("Send email to:" + to);
+        log.debug("Send email to: " + to);
 
         MimeMessage mail = javaMailSender.createMimeMessage();
         try {
@@ -121,7 +121,7 @@ public class EmailServiceImpl implements EmailService {
      * @return <code>String</code> with email content.
      */
     private String prepareContentForConfirmationEmail(final String confirmLinkID){
-        return templateEngine.process(TEMPLATE_NAME_EMAIL, getContextForEmail(new ConfirmEmail(confirmLinkID)));
+        return templateEngine.process(TEMPLATE_NAME_EMAIL, getContextForEmail(new ConfirmEmail(resourceMessagesService, confirmLinkID)));
     }
 
     /**
@@ -130,7 +130,7 @@ public class EmailServiceImpl implements EmailService {
      * @return <code>String</code> with email content.
      */
     private String prepareContentForWelcomeEmail(){
-        return templateEngine.process(TEMPLATE_NAME_EMAIL, getContextForEmail(new WelcomeEmail()));
+        return templateEngine.process(TEMPLATE_NAME_EMAIL, getContextForEmail(new WelcomeEmail(resourceMessagesService)));
     }
 
     /**

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.codecouple.omomfood.account.roles.Role;
+import pl.codecouple.omomfood.account.roles.RoleEnum;
 import pl.codecouple.omomfood.account.roles.RoleRepository;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.users.UserRepository;
@@ -45,9 +46,9 @@ public class AccountServiceImpl implements UserDetailsService, AccountService{
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
         log.debug("Grant authorities");
-        for (Role role : user.getRoles()){
-            log.debug("Authorities:" + role.getRole().getRoleName());
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole().getRoleName()));
+        for (RoleEnum role : user.getRoles()){
+            log.debug("Authorities:" + role.getRoleName());
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
 
         user.setAuthorities(grantedAuthorities);
@@ -66,7 +67,7 @@ public class AccountServiceImpl implements UserDetailsService, AccountService{
     }
 
     @Override
-    public List<Role> getAllRoles() {
+    public List<RoleEnum> getAllRoles() {
         return null;
     }
 

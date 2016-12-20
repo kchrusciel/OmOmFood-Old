@@ -14,7 +14,7 @@ import pl.codecouple.omomfood.account.users.references.Reference;
 import pl.codecouple.omomfood.account.users.references.ReferenceRepository;
 import pl.codecouple.omomfood.offers.Offer;
 import pl.codecouple.omomfood.offers.OfferRepository;
-import pl.codecouple.omomfood.offers.types.OfferTypes;
+import pl.codecouple.omomfood.offers.types.OfferTypesEnum;
 import pl.codecouple.omomfood.storage.StorageProperties;
 import pl.codecouple.omomfood.storage.StorageService;
 
@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @SpringBootApplication
@@ -59,20 +60,8 @@ public class OmOmFood implements CommandLineRunner{
         roleRepository.save(new Role(RoleEnum.ROLE_USER));
 
 
-        User user = new User("Jan", "Nowak", "jan@nowak", "password", "password");
-        User jan = new User("Kamil", "Kowalski", "jan123@nowak", "password", "password");
-        user.setConfirmationStatus(true);
 
-
-        userRepository.save(user);
-        userRepository.save(jan);
-
-        referenceRepository.save(new Reference("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.1", jan, user));
-        referenceRepository.save(new Reference("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.2", jan, user));
-        referenceRepository.save(new Reference("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.3", jan, user));
-
-
-        List<OfferTypes> offerTypes = new ArrayList<>(Arrays.asList(OfferTypes.ALCOHOL, OfferTypes.DOG, OfferTypes.MUSIC));
+        List<OfferTypesEnum> offerTypeEna = new ArrayList<>(Arrays.asList(OfferTypesEnum.ALCOHOL, OfferTypesEnum.DOG, OfferTypesEnum.MUSIC));
 
         offerRepository.save(new Offer("Fajny obiad",
                                        "Opis",
@@ -83,23 +72,22 @@ public class OmOmFood implements CommandLineRunner{
                                        "food-150x150.png",
                                         LocalDateTime.now(),
                                         LocalDateTime.now(),
-                                        user,
-                                        offerTypes));
+                userRepository.findOne(1L),
+                offerTypeEna));
 
         for(int i=0; i<100; i++){
-            offerRepository.save(new Offer("Test",
+            offerRepository.save(new Offer(i+ " :Test",
                     "Test",
                     "Katowice",
                     "500-500-500",
-                    new BigDecimal(50),
+                    new BigDecimal(i),
                     1,
                     "food-150x150.png",
                     LocalDateTime.now(),
-                    LocalDateTime.now(),
-                    jan,
-                    offerTypes));
+                    LocalDateTime.now().plusDays(i),
+                    userRepository.findOne(2L),
+                    offerTypeEna));
         }
-
 
 
 

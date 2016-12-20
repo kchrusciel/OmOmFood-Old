@@ -52,7 +52,7 @@ public class OfferCreatorController {
     @RequestMapping(value = "offers/new",
             method = RequestMethod.GET)
     public String showNewOfferPage(final Offer offerForm) {
-        log.debug("Show new offer page");
+        log.info("Show new offer page");
         return TEMPLATE_NAME_OFFER_NEW;
     }
 
@@ -71,12 +71,15 @@ public class OfferCreatorController {
         log.debug("Validate offer");
         offerValidator.validate(offer, bindingResult);
 
+        User user = userDetailsService.getLoggedUser();
+        log.debug("USER:"+user);
+
         if (bindingResult.hasErrors()) {
-            log.debug("Error during register");
+            log.debug("Error during creating new offer");
             return TEMPLATE_NAME_OFFER_NEW;
         }
 
-        User user = userDetailsService.getLoggedUser();
+//        User user = userDetailsService.getLoggedUser();
 
         offer.setOwner(user);
         offer.setFileName(file.getOriginalFilename());

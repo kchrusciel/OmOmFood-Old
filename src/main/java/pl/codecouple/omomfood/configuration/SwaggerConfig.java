@@ -2,6 +2,7 @@ package pl.codecouple.omomfood.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -32,14 +33,13 @@ public class SwaggerConfig {
      * @return <code>ApiInfo</code> object with API information.
      */
     private ApiInfo getAPIInfoForSwagger() {
-        ApiInfo apiInfo = new ApiInfo(
-                "OmOmFood REST API",
-                "API for OmOmFood",
-                "API 1.0",
-                "Terms of service",
-                new Contact("Krzysztof Chrusciel", "http://codecouple.pl", "test@o2.pl"),
-                "License of API",
-                "https://raw.githubusercontent.com/kchrusciel/OmOmFood/master/LICENSE");
-        return apiInfo;
+        return new ApiInfoBuilder()
+                .title("OmOmFood REST API")
+                .description("API for OmOmFood")
+                .contact(new Contact("Krzysztof Chrusciel", "http://codecouple.pl", "test@o2.pl"))
+                .license("License of API")
+                .licenseUrl("https://raw.githubusercontent.com/kchrusciel/OmOmFood/master/LICENSE")
+                .version("1.0")
+                .build();
     }
 }

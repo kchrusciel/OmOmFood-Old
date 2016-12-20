@@ -7,23 +7,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.codecouple.omomfood.account.users.User;
-import pl.codecouple.omomfood.account.validator.OfferValidator;
 import pl.codecouple.omomfood.messages.Message;
 import pl.codecouple.omomfood.messages.MessageService;
-import pl.codecouple.omomfood.storage.StorageService;
 import pl.codecouple.omomfood.utils.UserDetailsService;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Controller
@@ -43,11 +35,15 @@ public class OfferController {
 
     /** "/offers" endpoint.*/
     public static final String OFFERS_ENDPOINT = "/offers";
+    /** "/offers/my" endpoint.*/
+    public static final String MY_OFFERS_ENDPOINT = "/offers/my";
 
     /** "city" request param key.*/
     public static final String REQUEST_PARAM_CITY = "city";
     /** "date" request param key.*/
     public static final String REQUEST_PARAM_DATE = "date";
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     /** {@link OfferService} offer service instance. */
     private OfferService offerService;
@@ -87,8 +83,7 @@ public class OfferController {
      * @param pageable with page object.
      * @return <code>ModelAndView</code> with model object and view name.
      */
-    @RequestMapping(value = OFFERS_ENDPOINT,
-            method = RequestMethod.POST)
+    @PostMapping(OFFERS_ENDPOINT)
     public ModelAndView showChosenAdverts(final @RequestParam(value = REQUEST_PARAM_CITY) String city,
                                           final @RequestParam(value = REQUEST_PARAM_DATE) String date,
                                           final ModelAndView modelAndView,
@@ -113,12 +108,12 @@ public class OfferController {
     private Page<Offer> getOffersDependsOnParameters(final String city,
                                                      final String date,
                                                      final Pageable pageable) {
-        if (!areCityAndDateEmpty(city, date)) {
-            return offerService.getAllOffersByCityAndDate(city, LocalDateTime.parse(date), pageable);
+        if (areCityAndDateNotEmpty(city, date)) {
+            return offerService.getAllOffersByCityAndDate(city, LocalDateTime.parse(date, formatter), pageable);
         } else if (!city.isEmpty()) {
             return offerService.getAllOffersByCity(city, pageable);
         } else if (!date.isEmpty()) {
-            return offerService.getAllOffersByDateSortedByDate(LocalDateTime.parse(date), pageable);
+            return offerService.getAllOffersByDateSortedByDate(LocalDateTime.parse(date, formatter), pageable);
         }
         return offerService.getAllOffersSortedByDate(pageable);
     }
@@ -130,9 +125,9 @@ public class OfferController {
      * @param date from request.
      * @return <code>true</code> if city and date are not empty, <code>false</code> otherwise.
      */
-    private boolean areCityAndDateEmpty(final String city,
+    private boolean areCityAndDateNotEmpty(final String city,
                                         final String date) {
-        return city.isEmpty() && date.isEmpty();
+        return !city.isEmpty() && !date.isEmpty();
     }
 
     /**
@@ -143,8 +138,7 @@ public class OfferController {
      * @param pageable with page object.
      * @return <code>ModelAndView</code> with model object and view name.
      */
-    @RequestMapping(value = OFFERS_ENDPOINT,
-            method = RequestMethod.GET)
+    @GetMapping(OFFERS_ENDPOINT)
     public ModelAndView showAllOffers(final ModelAndView modelAndView,
                                       final Pageable pageable) {
         Page<Offer> offersPageable = offerService.getAllOffers(pageable);
@@ -160,11 +154,15 @@ public class OfferController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/offers/my",
-            method = RequestMethod.GET)
-    public String showMyOffers(final Model model) {
-        model.addAttribute("offers", offerService.getAllMyOffers("giesem@o2.pl"));
-        return "offer/offers";
+    @GetMapping(MY_OFFERS_ENDPOINT)
+    public ModelAndView showMyOffers(final ModelAndView modelAndView,
+                                     final Pageable pageable) {
+        Page<Offer> offersPageable = offerService.getAllMyOffers(userDetailsService.getLoggedUser().getEmail(), pageable);
+        PageWrapper<Offer> page = new PageWrapper<>(offersPageable, OFFERS_ENDPOINT);
+        modelAndView.addObject(MODEL_OFFERS_ID, offersPageable.getContent());
+        modelAndView.addObject(MODEL_PAGE_ID, page);
+        modelAndView.setViewName(TEMPLATE_NAME_OFFER_OFFERS);
+        return modelAndView;
     }
 
     /**

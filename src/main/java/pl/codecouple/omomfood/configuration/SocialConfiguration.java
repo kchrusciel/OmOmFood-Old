@@ -17,7 +17,7 @@ public class SocialConfiguration {
 
 
     @Bean
-    public SocialConfigurer socialConfigurerAdapter(DataSource dataSource) {
+    public SocialConfigurer socialConfigurerAdapter(final DataSource dataSource) {
         return new DatabaseSocialConfig(dataSource);
     }
 

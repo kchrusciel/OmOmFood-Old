@@ -40,29 +40,5 @@ public class OmOmFoodController {
         return "messages";
     }
 
-    @RequestMapping("/login")
-    public String showLoginPage(Model model,
-                                @RequestParam(value = "error", required = false) String error,
-                                @RequestParam(value = "logout", required = false) String logout) {
-        log.debug("Show login page");
-
-        if (hasParam(error)) {
-            model.addAttribute("message",  resourceMessagesService.getMessage("error.invalid.credentials"));
-        }
-        if (hasParam(logout)) {
-            model.addAttribute("message", resourceMessagesService.getMessage("logout.message"));
-        }
-        if (error == null && logout == null) {
-            model.addAttribute("message", resourceMessagesService.getMessage("error.login.required"));
-        }
-
-        model.addAttribute("badge", "100");
-
-        return "messages";
-    }
-
-    private boolean hasParam(String param) {
-        return param != null;
-    }
 
 }

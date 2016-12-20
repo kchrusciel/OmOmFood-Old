@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pl.codecouple.omomfood.account.roles.Role;
+import pl.codecouple.omomfood.account.roles.RoleEnum;
 import pl.codecouple.omomfood.account.users.references.Reference;
 import pl.codecouple.omomfood.messages.Message;
 import pl.codecouple.omomfood.offers.Offer;
@@ -75,21 +76,26 @@ public class User implements UserDetails {
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="owner")
     private List<Message> messages;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
-
-
+    @Column
+    @Enumerated
+    @ElementCollection(targetClass = RoleEnum.class, fetch = FetchType.EAGER)
+    private List<RoleEnum> roles;
 
     @Transient
     private Set<GrantedAuthority> authorities = new HashSet<>();
 
-    public User(String firstName, String lastName, String email, String password, String passwordMatcher) {
+    public User(final String firstName,
+                final String lastName,
+                final String email,
+                final String password,
+                final String passwordMatcher,
+                final List<RoleEnum> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.passwordMatcher = passwordMatcher;
+        this.roles = roles;
     }
 
     @Override
