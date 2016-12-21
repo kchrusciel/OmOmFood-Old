@@ -31,22 +31,26 @@ public class Message {
 
     private boolean isRead;
 
-//    private User fromUser;
+    private User toUser;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="to_user_id")
+    @ManyToOne(fetch=FetchType.LAZY, optional = false)
+    @JoinColumn(name="owner")
     private User owner;
 
     public Message() {
     }
 
-    public Message(String content, Long offerID, LocalDateTime creationDate, User owner) {
+    public Message(final String content,
+                   final Long offerID,
+                   final LocalDateTime creationDate,
+                   final User owner,
+                   final User toUser) {
         log.debug("Create message");
         this.content = content;
         this.offerID = offerID;
         this.creationDate = creationDate;
         this.isRead = false;
         this.owner = owner;
-//        this.toUser = toUser;
+        this.toUser = toUser;
     }
 }

@@ -34,7 +34,7 @@ public class MessageController {
 
         log.debug("Show all user messages");
 
-        Message message = new Message("Some message: " + LocalDateTime.now(), 1l, LocalDateTime.now(), userDetailsService.getLoggedUser());
+        Message message = new Message("Some message: " + LocalDateTime.now(), 1l, LocalDateTime.now(), userDetailsService.getLoggedUser(), userDetailsService.getLoggedUser());
         messageService.sendMessage(message);
 
         List<Message> messages = messageService.getAllMessages(userDetailsService.getLoggedUser());
@@ -44,8 +44,8 @@ public class MessageController {
 
     @RequestMapping(method = RequestMethod.GET,
                     value = "/my/messages/{messageId}")
-    public String showMessage(Model model,
-                              @PathVariable long messageId){
+    public String showMessage(final Model model,
+                              final @PathVariable long messageId){
 
         log.debug("Show message by ID");
         log.debug("Message ID:" + messageId);
@@ -65,7 +65,7 @@ public class MessageController {
         return "account/message";
     }
 
-    public void changeStatus(Message message){
+    public void changeStatus(final Message message){
         log.debug("Change message status to read");
         if(!message.isRead()){
             message.setRead(true);

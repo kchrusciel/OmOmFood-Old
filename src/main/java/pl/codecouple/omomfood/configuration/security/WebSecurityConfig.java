@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import pl.codecouple.omomfood.account.AccountService;
 import pl.codecouple.omomfood.account.AccountServiceImpl;
-import pl.codecouple.omomfood.configuration.MySimpleUrlAuthenticationSuccessHandler;
 
 /**
  * Created by krzysztof.chrusciel on 2016-07-08.
@@ -49,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/register",
                         "/login",
                         "/logout",
+                        "/forget-password",
                         "/offers/**",
                         "/offer/{[0-9]+}",
                         "/confirm",

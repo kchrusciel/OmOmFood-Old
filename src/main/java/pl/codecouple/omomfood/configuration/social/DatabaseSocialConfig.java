@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.configuration;
+package pl.codecouple.omomfood.configuration.social;
 
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;

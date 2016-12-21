@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.configuration;
+package pl.codecouple.omomfood.configuration.thymeleaf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

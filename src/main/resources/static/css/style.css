@@ -46,6 +46,10 @@ a{
     border: 1px solid black;
 }
 
+.btn-space {
+    margin-right: 3px;
+}
+
 .margin-bottom{
     margin-bottom: 10px;
 }

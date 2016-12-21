@@ -1,10 +1,13 @@
-package pl.codecouple.omomfood.configuration;
+package pl.codecouple.omomfood.configuration.mvc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import pl.codecouple.omomfood.messages.MessageService;
 import pl.codecouple.omomfood.utils.UserDetailsService;
 
@@ -14,7 +17,7 @@ import pl.codecouple.omomfood.utils.UserDetailsService;
 @Slf4j
 @Configuration
 @ComponentScan( basePackages = "pl.codecouple.omomfood" )
-public class WebMvcConfig {
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private MessageService messageService;
@@ -31,5 +34,11 @@ public class WebMvcConfig {
 
     public interface MessagesService {
         String getNumberOfMessages();
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }

@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.configuration;
+package pl.codecouple.omomfood.configuration.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

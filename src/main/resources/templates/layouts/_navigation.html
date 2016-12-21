@@ -15,6 +15,9 @@
             <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <div class="btn-group navbar-btn">
+                        <a href="/offers/new" role="button" class="btn btn-success">Add offer  <i class="glyphicon glyphicon glyphicon-plus"></i></a>
+                    </div>
+                    <div class="btn-group navbar-btn">
                         <button class="btn btn-primary" sec:authentication="name">[User]</button>
                         <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
                         <ul class="dropdown-menu">
@@ -26,35 +29,25 @@
                         </ul>
                     </div>
                     <div class="btn-group navbar-btn">
-                        <a href="/offers/new" role="button" class="btn btn-success"><i class="glyphicon glyphicon glyphicon-plus"></i></a>
-                    </div>
-                    <div class="btn-group navbar-btn">
-                        <a href="/my/messages" role="button" class="btn btn-danger"><i class="glyphicon glyphicon glyphicon-envelope"></i>   <span class="badge" th:text="${@messageService.getNumberOfMessages()}">[messageService.getNumberOfMessages()]</span></a>
+                        <a href="/my/messages" role="button" class="btn btn-danger"><i class="glyphicon glyphicon glyphicon-envelope"></i>   <span class="badge" style="font-size:10px" th:text="${@messageService.getNumberOfMessages()}">[messageService.getNumberOfMessages()]</span></a>
                     </div>
                 </li>
             </ul>
             <div sec:authorize="isAnonymous()">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <form class="navbar-form" th:action="@{/login}" method="post">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="glyphicon glyphicon glyphicon-envelope"></i>
-                                </span>
-                                <input type="text" name="username" class="form-control" required="true" th:placeholder="#{placeholder.email}" placeholder="Email here..."/>
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="glyphicon glyphicon glyphicon-lock"></i>
-                                </span>
-                                <input type="password" name="password" class="form-control" required="true" th:placeholder="#{placeholder.password}" placeholder="Password here..."/>
-                            </div>
-                            <button type="submit" th:text="#{button.signin}" class="btn btn-success">Sign in</button>
-                        </form>
+                        <div class="btn-group navbar-btn">
+                            <a href="/offers/new" role="button" class="btn btn-success btn-space">Add offer  <i class="glyphicon glyphicon glyphicon-plus"></i></a>
+                        </div>
                     </li>
                     <li>
                         <div class="btn-group navbar-btn">
-                            <a href="/register" role="button" class="btn btn-primary" th:text="#{button.signup}">[SignUP]</a>
+                            <a href="/login" role="button" class="btn btn-danger btn-space" th:text="#{button.signin}">[Sign in]</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="btn-group navbar-btn">
+                            <a href="/register" role="button" class="btn btn-primary" th:text="#{button.signup}">[Sign up]</a>
                         </div>
                     </li>
                 </ul>
