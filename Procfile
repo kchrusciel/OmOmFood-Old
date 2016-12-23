@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Dspring.datasource.url=$DATABASE_URL -jar  target/omomfood-0.1.0-SNAPSHOT.jar
+web: java -Dspring.profiles.active=prod -Dserver.port=$PORT -Dspring.datasource.url=$DATABASE_URL -jar  target/omomfood-0.1.0-SNAPSHOT.jar
