@@ -1,7 +1,6 @@
-package pl.codecouple.omomfood.account.registration.email.templates;
+package pl.codecouple.omomfood.email;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 /**
@@ -33,6 +32,7 @@ public class BaseEmail {
      * Constructor of {@link BaseEmail} class.
      *
      * @param content with email content.
+     * @param resourceMessagesService instance.
      */
     public BaseEmail(final ResourceMessagesService resourceMessagesService,
                      final String content) {

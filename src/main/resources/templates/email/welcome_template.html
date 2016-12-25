@@ -1,0 +1,13 @@
+<html layout:decorator="email/email_template" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="email_content">
+    <div class="email_title">
+        <h1 th:text="${title}">OmOmFood.pl</h1>
+    </div>
+    <div class="email_content">
+        <p th:text="${content}">[email.content]</p>
+    </div>
+    <div class="email_footer">
+        <p th:utext="${footer}">[email.footer]</p>
+    </div>
+</div>
+</html>

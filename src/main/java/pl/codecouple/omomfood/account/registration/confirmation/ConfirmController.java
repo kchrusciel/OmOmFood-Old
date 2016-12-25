@@ -7,9 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.codecouple.omomfood.account.AccountServiceImpl;
-import pl.codecouple.omomfood.account.registration.email.service.EmailService;
+import pl.codecouple.omomfood.account.AccountService;
 import pl.codecouple.omomfood.account.users.User;
+import pl.codecouple.omomfood.email.service.EmailService;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 /**
@@ -36,8 +36,8 @@ public class ConfirmController {
     /** Template name which is returned after registration.*/
     public static final String TEMPLATE_NAME_MESSAGES = "messages";
 
-    /** {@link AccountServiceImpl} account service instance. */
-    private final AccountServiceImpl accountService;
+    /** {@link AccountService} account service instance. */
+    private final AccountService accountService;
     /** {@link ResourceMessagesService} resource messages service instance. */
     private final ResourceMessagesService resourceMessagesService;
     /** {@link EmailService} email service instance. */
@@ -52,7 +52,7 @@ public class ConfirmController {
      *
      */
     @Autowired
-    public ConfirmController(final AccountServiceImpl accountService,
+    public ConfirmController(final AccountService accountService,
                              final ResourceMessagesService resourceMessagesService,
                              final EmailService emailService) {
         this.accountService = accountService;

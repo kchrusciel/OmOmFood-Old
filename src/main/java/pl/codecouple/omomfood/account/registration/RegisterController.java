@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import pl.codecouple.omomfood.account.AccountServiceImpl;
 import pl.codecouple.omomfood.account.PasswordService;
-import pl.codecouple.omomfood.account.registration.email.service.EmailService;
+import pl.codecouple.omomfood.email.service.EmailService;
 import pl.codecouple.omomfood.account.roles.RoleEnum;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.validator.UserValidator;

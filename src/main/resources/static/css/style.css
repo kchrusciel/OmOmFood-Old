@@ -17,6 +17,15 @@ a{
     margin-bottom:10px;
 }
 
+.panel-login{
+    margin-bottom:0px;
+}
+
+.popover{
+    width:100%;
+    text-align: center;
+}
+
 .navbar-brand>img {
     width: 24px;
     height: 24px;

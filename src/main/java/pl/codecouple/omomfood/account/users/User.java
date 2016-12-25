@@ -16,6 +16,7 @@ import pl.codecouple.omomfood.offers.Offer;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,6 +56,9 @@ public class User implements UserDetails {
     private String passwordMatcher;
 
     private String passwordEncrypted;
+
+    private String resetPasswordToken;
+    private LocalDateTime resetPasswordExpires;
 
     private boolean confirmationStatus;
     private String confirmationId;

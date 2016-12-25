@@ -49,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/login",
                         "/logout",
                         "/forget-password",
+                        "/reset-password",
                         "/offers/**",
                         "/offer/{[0-9]+}",
                         "/confirm",
@@ -68,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected UserDetailsService userDetailsService() {
-        return new AccountServiceImpl();
+        return accountService;
     }
 
     @Bean

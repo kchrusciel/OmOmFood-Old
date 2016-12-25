@@ -8,12 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.codecouple.omomfood.account.roles.Role;
 import pl.codecouple.omomfood.account.roles.RoleEnum;
 import pl.codecouple.omomfood.account.roles.RoleRepository;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.users.UserRepository;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,12 +25,20 @@ import java.util.Set;
 @Service
 public class AccountServiceImpl implements UserDetailsService, AccountService{
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    public AccountServiceImpl(final UserRepository userRepository,
+                              final RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
         log.debug("Load user by email");
@@ -56,23 +64,51 @@ public class AccountServiceImpl implements UserDetailsService, AccountService{
         return user;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User getUserByConfirmationId(final String confirmId) {
         return userRepository.findByConfirmationId(confirmId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public User getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<RoleEnum> getAllRoles() {
-        return null;
+        return Collections.emptyList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addUser(final User user) {
         userRepository.save(user);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateUser(final User user) {
+        userRepository.save(user);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User findByResetPasswordToken(final String token) {
+        return userRepository.findByResetPasswordToken(token);
     }
 }

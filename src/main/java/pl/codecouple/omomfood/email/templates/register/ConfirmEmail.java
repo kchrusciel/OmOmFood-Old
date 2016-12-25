@@ -1,8 +1,8 @@
-package pl.codecouple.omomfood.account.registration.email.templates;
+package pl.codecouple.omomfood.email.templates.register;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import pl.codecouple.omomfood.email.BaseEmail;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 /**
@@ -27,8 +27,8 @@ public class ConfirmEmail extends BaseEmail {
     /**
      * Constructor of {@link ConfirmEmail} class.
      *
+     * @param resourceMessagesService instance.
      * @param confirmLinkID with confirmation ID.
-     *
      */
     @Autowired
     public ConfirmEmail(final ResourceMessagesService resourceMessagesService,

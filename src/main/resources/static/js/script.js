@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
 
+    $('[data-toggle="popover"]').popover();
+
+
     $('#datetimepicker1').datetimepicker({
         format: 'DD/MM/YYYY HH:mm',
         minDate: new Date()

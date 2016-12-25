@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.account.registration.email.service;
+package pl.codecouple.omomfood.email.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +8,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import pl.codecouple.omomfood.account.registration.email.templates.BaseEmail;
-import pl.codecouple.omomfood.account.registration.email.templates.ConfirmEmail;
-import pl.codecouple.omomfood.account.registration.email.templates.WelcomeEmail;
+import pl.codecouple.omomfood.email.BaseEmail;
+import pl.codecouple.omomfood.email.templates.forget.password.ForgetPasswordEmail;
+import pl.codecouple.omomfood.email.templates.register.ConfirmEmail;
+import pl.codecouple.omomfood.email.templates.register.WelcomeEmail;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 import javax.mail.MessagingException;
@@ -36,14 +37,22 @@ public class EmailServiceImpl implements EmailService {
     public static final String CONTEXT_FOOTER_ID = "footer";
     /** Context confirm_link id. */
     public static final String CONTEXT_CONFIRM_LINK_ID = "confirm_link";
+    /** Context confirm_link id. */
+    public static final String CONTEXT_RESET_LINK_ID = "reset_link";
 
-    /** Template name for emails. */
-    public static final String TEMPLATE_NAME_EMAIL = "email/email_template";
+    /** Template name for confirmation emails. */
+    public static final String TEMPLATE_NAME_CONFIRMATION = "email/confirmation_template";
+    /** Template name for reset password emails. */
+    public static final String TEMPLATE_NAME_RESET_PASSWORD = "email/reset_password_template";
+    /** Template name for welcome emails. */
+    public static final String TEMPLATE_NAME_WELCOME = "email/welcome_template";
 
     /** Welcome email title message id. */
     public static final String WELCOME_EMAIL_TITLE = "email.account.title";
     /** Confirm email title message id. */
     public static final String CONFIRM_EMAIL_TITLE = "email.confirm.title";
+    /** Forget password email title message id. */
+    public static final String EMAIL_FORGET_PASSWORD_TITLE = "email.forget.password.title";
 
     /** Email address from properties.*/
     @Value("${omomfood.email}")
@@ -95,6 +104,25 @@ public class EmailServiceImpl implements EmailService {
         javaMailSender.send(mail);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void sendForgetPasswordEmail(final String to, final String content) {
+        String title = resourceMessagesService.getMessage(EMAIL_FORGET_PASSWORD_TITLE);
+        sendEmail(title, to, prepareContentForForgetPasswordEmail(content));
+    }
+
+    /**
+     * This method creates HTML email content for forget password email.
+     *
+     * @param resetTokenLinkID forget password email.
+     * @return <code>String</code> with email content.
+     */
+    private String prepareContentForForgetPasswordEmail(final String resetTokenLinkID){
+        return templateEngine.process(TEMPLATE_NAME_RESET_PASSWORD,
+                getContextForEmail(new ForgetPasswordEmail(resourceMessagesService, resetTokenLinkID)));
+    }
 
     /**
      * {@inheritDoc}
@@ -106,6 +134,18 @@ public class EmailServiceImpl implements EmailService {
     }
 
     /**
+     * This method creates HTML email content for confirmation email.
+     *
+     * @param confirmLinkID for confirmation email.
+     * @return <code>String</code> with email content.
+     */
+    private String prepareContentForConfirmationEmail(final String confirmLinkID){
+        return templateEngine.process(TEMPLATE_NAME_CONFIRMATION,
+                getContextForEmail(new ConfirmEmail(resourceMessagesService, confirmLinkID)));
+    }
+
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -115,22 +155,13 @@ public class EmailServiceImpl implements EmailService {
     }
 
     /**
-     * This method creates HTML email content for confirmation email.
-     *
-     * @param confirmLinkID for confirmation email.
-     * @return <code>String</code> with email content.
-     */
-    private String prepareContentForConfirmationEmail(final String confirmLinkID){
-        return templateEngine.process(TEMPLATE_NAME_EMAIL, getContextForEmail(new ConfirmEmail(resourceMessagesService, confirmLinkID)));
-    }
-
-    /**
      * This method creates HTML email content for welcome email.
      *
      * @return <code>String</code> with email content.
      */
     private String prepareContentForWelcomeEmail(){
-        return templateEngine.process(TEMPLATE_NAME_EMAIL, getContextForEmail(new WelcomeEmail(resourceMessagesService)));
+        return templateEngine.process(TEMPLATE_NAME_WELCOME,
+                getContextForEmail(new WelcomeEmail(resourceMessagesService)));
     }
 
     /**
@@ -147,6 +178,9 @@ public class EmailServiceImpl implements EmailService {
         context.setVariable(CONTEXT_FOOTER_ID, email.getFooter());
         if(email instanceof ConfirmEmail){
             context.setVariable(CONTEXT_CONFIRM_LINK_ID, ((ConfirmEmail) email).getConfirmLink());
+        }
+        if(email instanceof ForgetPasswordEmail){
+            context.setVariable(CONTEXT_RESET_LINK_ID, ((ForgetPasswordEmail) email).getResetTokenLinkID());
         }
         return context;
     }

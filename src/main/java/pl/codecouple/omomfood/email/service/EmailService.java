@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.account.registration.email.service;
+package pl.codecouple.omomfood.email.service;
 
 /**
  * This is {@link EmailService} interface for email purposes.
@@ -28,4 +28,11 @@ public interface EmailService {
      * @param to where email will be send.
      */
     void sendWelcomeEmail(String to);
+
+    /**
+     * This method send email with forget password link after forget process to specific address.
+     * @param to where email will be send.
+     * @param content of the email.
+     */
+    void sendForgetPasswordEmail(String to, String content);
 }

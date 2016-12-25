@@ -12,8 +12,10 @@ import java.util.List;
 public interface AccountService extends UserDetailsService {
 
     void addUser(User user);
+    void updateUser(User user);
     User getUserByConfirmationId(String confirmId);
     User getUserByEmail(String email);
+    User findByResetPasswordToken(String token);
     List<RoleEnum> getAllRoles();
 
 }

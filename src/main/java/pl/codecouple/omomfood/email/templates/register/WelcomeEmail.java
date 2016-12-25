@@ -1,7 +1,7 @@
-package pl.codecouple.omomfood.account.registration.email.templates;
+package pl.codecouple.omomfood.email.templates.register;
 
 import lombok.Data;
-import org.springframework.stereotype.Component;
+import pl.codecouple.omomfood.email.BaseEmail;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 /**
