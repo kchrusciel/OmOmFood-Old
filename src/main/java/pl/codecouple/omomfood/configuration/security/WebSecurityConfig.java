@@ -24,6 +24,8 @@ import pl.codecouple.omomfood.account.AccountServiceImpl;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    public static final int NUMBER_OF_DAYS = 360;
+    public static final int SECONDS_IN_ONE_DAY = 86400;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
@@ -59,6 +61,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and().csrf().disable();
                  // for h2
+
+        //remember me configuration
+        http.rememberMe().
+                key("rem-me-key").
+                rememberMeParameter("remember-me-omom").
+                rememberMeCookieName("my-remember-me").
+                tokenValiditySeconds(SECONDS_IN_ONE_DAY * NUMBER_OF_DAYS).
+                authenticationSuccessHandler(successHandler());
+
         http.exceptionHandling().accessDeniedPage("/403");
     }
 
