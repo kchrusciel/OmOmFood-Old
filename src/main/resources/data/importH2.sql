@@ -1,5 +1,5 @@
-insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, null, true, 'test1@test.pl', 'Krzysztof', 'Chrusciel', 'false', '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
-insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, null, true, 'test2@test.pl', 'Jan', 'Nowak', 'false', '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
+insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, null, true, 'test1@test.pl', 'Krzysztof', 'Chrusciel', false, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
+insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, null, true, 'test2@test.pl', 'Jan', 'Nowak', false, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
 
 
 -- References

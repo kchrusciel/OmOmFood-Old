@@ -1,1 +1,1 @@
-web: java -Dspring.profiles.active=prod -Dserver.port=$PORT -Dspring.datasource.url=$SPRING_DATASOURCE_URL -Dspring.datasource.user=$SPRING_DATASOURCE_USER -Dspring.datasource.password=$SPRING_DATASOURCE_PASSWORD -jar  target/omomfood-0.1.0-SNAPSHOT.jar
+web: java -Dspring.profiles.active=prod -Dserver.port=$PORT -Dspring.datasource.url=$JDBC_DATABASE_URL -Dspring.datasource.user=$JDBC_DATABASE_USERNAME -Dspring.datasource.password=$JDBC_DATABASE_PASSWORD -jar  target/omomfood-0.1.0-SNAPSHOT.jar

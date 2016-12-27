@@ -102,7 +102,6 @@ public class ForgetPasswordController {
         return FORGET_PASSWORD_TEMPLATE;
     }
 
-    @Async
     private void sendPasswordToken(final String passwordToken,
                                    final ForgetPasswordForm forgetPasswordForm) {
         emailService.sendForgetPasswordEmail(forgetPasswordForm.getEmail(),
