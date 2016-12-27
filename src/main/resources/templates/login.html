@@ -24,8 +24,9 @@
                     <input type="password" name="password" class="form-control" th:placeholder="#{placeholder.password}" required="true" placeholder="Password..."/>
                 </div>
                 <div class="alert alert-danger" role="alert"
-                     th:if="${param.error}">
-                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                     th:if="${param.error}"
+                     th:utext="#{error.invalid.credentials}">
+
                 </div>
             </div>
             <div class="col-md-3"/>

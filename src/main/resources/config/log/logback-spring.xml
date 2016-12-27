@@ -34,7 +34,7 @@
         <appender-ref ref="Console-Appender" />
     </logger>
 
-    <logger name="pl.codecouple.omomfood" level="DEBUG" additivity="false">
+    <logger name="pl.codecouple.omomfood" level="INFO" additivity="false">
         <appender-ref ref="Console-Appender" />
         <appender-ref ref="File-Appender" />
         <appender-ref ref="Async-Appender" />
