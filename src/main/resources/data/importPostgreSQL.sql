@@ -14,8 +14,8 @@ create table UserConnection (userId varchar(255) not null,
   primary key (userId, providerId, providerUserId));
 create unique index UserConnectionRank on UserConnection(userId, providerId, rank);
 
-insert into "user" (confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, true, 'test1@test.pl', 'Krzysztof', 'Chrusciel', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
-insert into "user" (confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, true, 'test2@test.pl', 'Jan', 'Nowak', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
+insert into "user" (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (1, null, true, 'test1@test.pl', 'Krzysztof', 'Chrusciel', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
+insert into "user" (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (2, null, true, 'test2@test.pl', 'Jan', 'Nowak', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
 
 
 -- References
