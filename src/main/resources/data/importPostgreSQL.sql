@@ -19,12 +19,12 @@ insert into "user" (id, confirmation_id, confirmation_status, email, first_name,
 
 
 -- References
-insert into reference (about_id, author_id, reference_content) values (2, 1, 'One ipsum dolor sit amet, consectetur adipiscing elit');
-insert into reference (about_id, author_id, reference_content) values (2, 1, 'Two ipsum dolor sit amet, consectetur adipiscing elit');
+insert into reference (id, about_id, author_id, reference_content) values (1, 2, 1, 'One ipsum dolor sit amet, consectetur adipiscing elit');
+insert into reference (id, about_id, author_id, reference_content) values (2, 2, 1, 'Two ipsum dolor sit amet, consectetur adipiscing elit');
 
 -- Offers
-insert into offer (city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values ('Sosnowiec',  to_date ('2016-12-20 21:49:09','YYYY-MM-DD HH24:MI:SS'), 'Opis', to_date('2016-12-20 21:49:09','YYYY-MM-DD HH24:MI:SS'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
+insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (1, 'Sosnowiec',  to_date ('2016-12-20 21:49:09','YYYY-MM-DD HH24:MI:SS'), 'Opis', to_date('2016-12-20 21:49:09','YYYY-MM-DD HH24:MI:SS'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
 
 -- Messages
-insert into message (content, creation_date, is_read, offerid, owner, title) values ('One ipsum dolor sit amet, consectetur adipiscing elit', to_date ('2016-12-20 21:49:09','YYYY-MM-DD HH24:MI:SS'), FALSE, 1, 1, 'title');
-insert into message (content, creation_date, is_read, offerid, owner, title) values ('One ipsum dolor sit amet, consectetur adipiscing elit', to_date ('2016-12-20 21:49:09','YYYY-MM-DD HH24:MI:SS'), FALSE, 1, 1, 'title');
+insert into message (id, content, creation_date, is_read, offerid, owner, title) values (1, 'One ipsum dolor sit amet, consectetur adipiscing elit', to_date ('2016-12-20 21:49:09','YYYY-MM-DD HH24:MI:SS'), FALSE, 1, 1, 'title');
+insert into message (id, content, creation_date, is_read, offerid, owner, title) values (2, 'One ipsum dolor sit amet, consectetur adipiscing elit', to_date ('2016-12-20 21:49:09','YYYY-MM-DD HH24:MI:SS'), FALSE, 1, 1, 'title');
