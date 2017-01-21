@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.codecouple.omomfood.account.AccountService;
+import pl.codecouple.omomfood.account.password.forget.ForgetPasswordController;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.email.service.EmailService;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
@@ -25,16 +26,17 @@ import java.time.LocalDateTime;
 @Controller
 public class ResetPasswordController {
 
+    /** Reset-password endpoint name .*/
     private static final String RESET_PASSWORD_ENDPOINT = "reset-password";
-
+    /** Reset-password template name .*/
     private static final String RESET_PASSWORD_TEMPLATE_NAME = "password/reset-password";
-
+    /** Wrong token message ID .*/
     private static final String FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID = "forgot.password.wrong.token";
-
-    private static final String FORGOT_PASSWORD_EXPIRED_TOKEN_MESSAGE_ID = "forgot.password.expired.tokenn";
-
+    /** Expired token message ID .*/
+    private static final String FORGOT_PASSWORD_EXPIRED_TOKEN_MESSAGE_ID = "forgot.password.expired.token";
+    /** Successfully change token message ID .*/
     private static final String FORGOT_PASSWORD_SUCCESSFULLY_CHANGE_ID = "forgot.password.successfully.changed";
-
+    /** Reset-password successfully model ID .*/
     private static final String MODEL_SUCCESS_MESSAGE_ID = "success";
 
     /** Template message name.*/
@@ -72,11 +74,13 @@ public class ResetPasswordController {
     }
 
     /**
+     * This is GET {@link ResetPasswordController#RESET_PASSWORD_ENDPOINT} endpoint which checks password token.
+     * If password token is correct {@link ResetPasswordController#RESET_PASSWORD_TEMPLATE_NAME} is showed.
      *
-     * @param resetPasswordToken
-     * @param resetPasswordForm
-     * @param model
-     * @return
+     * @param resetPasswordToken from {@link User}.
+     * @param resetPasswordForm for binding with reset password form.
+     * @param model object which takes return values.
+     * @return <code>{@link String}</code> with template name.
      */
     @GetMapping(RESET_PASSWORD_ENDPOINT)
     public String showResetPasswordPage(final @RequestParam(value = "id") String resetPasswordToken,
@@ -86,20 +90,26 @@ public class ResetPasswordController {
         User foundedUser = accountService.findByResetPasswordToken(resetPasswordToken);
         if(foundedUser == null){
             model.addAttribute(MODEL_MESSAGE_ID,
-                    resourceMessagesService.getMessage(FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID));
+                    resourceMessagesService.getParametrizedMessages(FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID,  new Object[]{ForgetPasswordController.FORGET_PASSWORD}));
             return TEMPLATE_NAME_MESSAGES;
         }
         if(isPasswordExpired(foundedUser)){
             model.addAttribute(MODEL_MESSAGE_ID,
-                    resourceMessagesService.getMessage(FORGOT_PASSWORD_EXPIRED_TOKEN_MESSAGE_ID));
+                    resourceMessagesService.getParametrizedMessages(FORGOT_PASSWORD_EXPIRED_TOKEN_MESSAGE_ID, new Object[]{ForgetPasswordController.FORGET_PASSWORD}));
             return TEMPLATE_NAME_MESSAGES;
         }
         model.addAttribute("resetPasswordToken", resetPasswordToken);
         return RESET_PASSWORD_TEMPLATE_NAME;
     }
 
-    private boolean isPasswordExpired(User foundedUser) {
-        return foundedUser.getResetPasswordExpires().isBefore(LocalDateTime.now());
+    /**
+     * This method check if password token is expired.
+     *
+     * @param userToCheck for which expired token will be checked.
+     * @return <code>true</code> if password expire, <code>false</code> otherwise.
+     */
+    private boolean isPasswordExpired(final User userToCheck) {
+        return userToCheck.getResetPasswordExpires().isBefore(LocalDateTime.now());
     }
 
     /**
@@ -133,13 +143,15 @@ public class ResetPasswordController {
 
         User userToUpdate = accountService.findByResetPasswordToken(resetPasswordToken);
         if(userToUpdate == null){
-            model.addAttribute(MODEL_MESSAGE_ID, resourceMessagesService.getMessage(FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID));
+            model.addAttribute(MODEL_MESSAGE_ID,
+                    resourceMessagesService.getMessage(FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID));
             return TEMPLATE_NAME_MESSAGES;
         }
         resetPasswordToken(userToUpdate);
         setNewEncryptedPasswordPassword(userToUpdate, resetPasswordForm.getPassword());
 
-        model.addAttribute(MODEL_SUCCESS_MESSAGE_ID, resourceMessagesService.getMessage(FORGOT_PASSWORD_SUCCESSFULLY_CHANGE_ID));
+        model.addAttribute(MODEL_SUCCESS_MESSAGE_ID,
+                resourceMessagesService.getMessage(FORGOT_PASSWORD_SUCCESSFULLY_CHANGE_ID));
 
         return RESET_PASSWORD_TEMPLATE_NAME;
     }
@@ -155,6 +167,13 @@ public class ResetPasswordController {
         resetPasswordFormValidator.validate(resetPasswordForm, bindingResult);
     }
 
+    /**
+     * This method set password to {@link User}. This password will be encrypted
+     * using {@link ResetPasswordController#encryptPassword(String)}.
+     *
+     * @param userToUpdate for which password will be updated.
+     * @param password value which will be updated on {@link User}
+     */
     private void setNewEncryptedPasswordPassword(final User userToUpdate, final String password) {
         userToUpdate.setPasswordEncrypted(encryptPassword(password));
         accountService.updateUser(userToUpdate);
@@ -167,11 +186,15 @@ public class ResetPasswordController {
      * @return <code>{@link String}</code> with encrypted password.
      */
     private String encryptPassword(final String password){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
-        return hashedPassword;
+        return new BCryptPasswordEncoder().encode(password);
     }
 
+    /**
+     * This method reset password token on {@link User}.
+     * Reset means set {@link User#resetPasswordExpires} and {@link User#resetPasswordToken} to null.
+     *
+     * @param userToUpdate for which password token will be reset.
+     */
     private void resetPasswordToken(final User userToUpdate) {
         userToUpdate.setResetPasswordToken(null);
         userToUpdate.setResetPasswordExpires(null);

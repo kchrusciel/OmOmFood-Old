@@ -32,7 +32,7 @@ import java.util.UUID;
 public class ForgetPasswordController {
 
     /** Forget-password endpoint name .*/
-    private static final String FORGET_PASSWORD = "forget-password";
+    public static final String FORGET_PASSWORD = "forget-password";
     /** Forget-password template name .*/
     private static final String FORGET_PASSWORD_TEMPLATE = "password/forget-password";
     /** Password expiration days quantity .*/
