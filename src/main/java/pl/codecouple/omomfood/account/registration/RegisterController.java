@@ -107,7 +107,8 @@ public class RegisterController extends WebMvcConfigurerAdapter {
     /**
      * This is POST "/register" endpoint which is used for
      * user registration. Firstly values from register form are
-     * validate
+     * validate, if validation is correctly confirmation id is sets. After that user is stored in DB
+     * and confirmation link is send to email address provided in register form.
      *
      * @param user with values from registration form.
      * @param bindingResult results from registration form fields.

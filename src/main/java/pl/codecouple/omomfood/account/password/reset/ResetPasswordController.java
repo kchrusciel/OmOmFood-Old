@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.codecouple.omomfood.account.AccountService;
@@ -26,14 +25,17 @@ import java.time.LocalDateTime;
 @Controller
 public class ResetPasswordController {
 
-    public static final String RESET_PASSWORD_ENDPOINT = "reset-password";
-    public static final String RESET_PASSWORD_TEMPLATE_NAME = "password/reset-password";
+    private static final String RESET_PASSWORD_ENDPOINT = "reset-password";
 
-    public static final String FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID = "forgot.password.wrong.token";
+    private static final String RESET_PASSWORD_TEMPLATE_NAME = "password/reset-password";
 
-    public static final String FORGOT_PASSWORD_SUCCESSFULLY_CHANGE_ID = "forgot.password.successfully.changed";
+    private static final String FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID = "forgot.password.wrong.token";
 
-    public static final String MODEL_SUCCESS_MESSAGE_ID = "success";
+    private static final String FORGOT_PASSWORD_EXPIRED_TOKEN_MESSAGE_ID = "forgot.password.expired.tokenn";
+
+    private static final String FORGOT_PASSWORD_SUCCESSFULLY_CHANGE_ID = "forgot.password.successfully.changed";
+
+    private static final String MODEL_SUCCESS_MESSAGE_ID = "success";
 
     /** Template message name.*/
     public static final String TEMPLATE_NAME_MESSAGES = "messages";
@@ -69,6 +71,13 @@ public class ResetPasswordController {
         this.resetPasswordFormValidator = resetPasswordFormValidator;
     }
 
+    /**
+     *
+     * @param resetPasswordToken
+     * @param resetPasswordForm
+     * @param model
+     * @return
+     */
     @GetMapping(RESET_PASSWORD_ENDPOINT)
     public String showResetPasswordPage(final @RequestParam(value = "id") String resetPasswordToken,
                                         final ResetPasswordForm resetPasswordForm,
@@ -76,17 +85,31 @@ public class ResetPasswordController {
         log.info("Show reset password page");
         User foundedUser = accountService.findByResetPasswordToken(resetPasswordToken);
         if(foundedUser == null){
-            model.addAttribute(MODEL_MESSAGE_ID, resourceMessagesService.getMessage(FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID));
+            model.addAttribute(MODEL_MESSAGE_ID,
+                    resourceMessagesService.getMessage(FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID));
             return TEMPLATE_NAME_MESSAGES;
         }
-        if(foundedUser.getResetPasswordExpires().isBefore(LocalDateTime.now())){
-            model.addAttribute(MODEL_MESSAGE_ID, resourceMessagesService.getMessage(FORGOT_PASSWORD_WRONG_TOKEN_MESSAGE_ID));
+        if(isPasswordExpired(foundedUser)){
+            model.addAttribute(MODEL_MESSAGE_ID,
+                    resourceMessagesService.getMessage(FORGOT_PASSWORD_EXPIRED_TOKEN_MESSAGE_ID));
             return TEMPLATE_NAME_MESSAGES;
         }
         model.addAttribute("resetPasswordToken", resetPasswordToken);
         return RESET_PASSWORD_TEMPLATE_NAME;
     }
 
+    private boolean isPasswordExpired(User foundedUser) {
+        return foundedUser.getResetPasswordExpires().isBefore(LocalDateTime.now());
+    }
+
+    /**
+     *
+     * @param resetPasswordForm
+     * @param resetPasswordToken
+     * @param bindingResult
+     * @param model
+     * @return
+     */
     @PostMapping(RESET_PASSWORD_ENDPOINT)
     public String resetPassword(final @Valid ResetPasswordForm resetPasswordForm,
                                 final @RequestParam(value = "id") String resetPasswordToken,
@@ -103,7 +126,7 @@ public class ResetPasswordController {
 
         validateResetPasswordForm(resetPasswordForm, bindingResult);
 
-        if (areErrorsAfterResetPasswordFormValidation(resetPasswordForm, bindingResult)) {
+        if (areErrorsAfterResetPasswordFormValidation(bindingResult)) {
             log.error("Error during creating password token");
             return RESET_PASSWORD_TEMPLATE_NAME;
         }
@@ -121,9 +144,32 @@ public class ResetPasswordController {
         return RESET_PASSWORD_TEMPLATE_NAME;
     }
 
+    /**
+     * This method use {@link ResetPasswordForm} for reset password form validation.
+     *
+     * @param resetPasswordForm with values from reset password form.
+     * @param bindingResult results from reset password form fields.
+     */
+    private void validateResetPasswordForm(final ResetPasswordForm resetPasswordForm,
+                                           final BindingResult bindingResult) {
+        resetPasswordFormValidator.validate(resetPasswordForm, bindingResult);
+    }
+
     private void setNewEncryptedPasswordPassword(final User userToUpdate, final String password) {
         userToUpdate.setPasswordEncrypted(encryptPassword(password));
         accountService.updateUser(userToUpdate);
+    }
+
+    /**
+     * This method encrypt new password using {@link BCryptPasswordEncoder}.
+     *
+     * @param password which will be enrypted.
+     * @return <code>{@link String}</code> with encrypted password.
+     */
+    private String encryptPassword(final String password){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        return hashedPassword;
     }
 
     private void resetPasswordToken(final User userToUpdate) {
@@ -132,27 +178,14 @@ public class ResetPasswordController {
         accountService.updateUser(userToUpdate);
     }
 
-    private String encryptPassword(final String password){
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(password);
-        return hashedPassword;
-    }
-
-    private void validateResetPasswordForm(final ResetPasswordForm resetPasswordForm,
-                                            final BindingResult bindingResult) {
-        resetPasswordFormValidator.validate(resetPasswordForm, bindingResult);
-    }
 
     /**
-     * This method checks if are some errors after forget password
-     * form validation.
+     * This method checks if are some errors after reset password form validation.
      *
-     * @param resetPasswordForm with values from forget password form.
-     * @param bindingResult results from forget password fields.
+     * @param bindingResult results from reset password fields.
      * @return <code>true</code> if there are some errors after validation, <code>false</code> otherwise.
      */
-    private boolean areErrorsAfterResetPasswordFormValidation(final ResetPasswordForm resetPasswordForm,
-                                                              final BindingResult bindingResult) {
+    private boolean areErrorsAfterResetPasswordFormValidation(final BindingResult bindingResult) {
         return bindingResult.hasErrors();
     }
 

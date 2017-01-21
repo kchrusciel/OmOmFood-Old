@@ -2,7 +2,6 @@ package pl.codecouple.omomfood.account.password.forget;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,21 +17,34 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
- * Created by Krzysztof Chruściel.
+ * This is {@link ForgetPasswordController} for forget password purposes.
+ * We got one public endpoint "/forget-password". GET method shows forget password page.
+ * POST method is used for restore password logic.
+ * This logic means, form validation, if validation is correctly
+ * reset password token is generated. After that, this token is set in {@link User} and is stored in DB
+ * Reset password link is send to email address provided in reset password form.
+ *
+ * @author Krzysztof Chruściel
  */
+
 @Slf4j
 @Controller
 public class ForgetPasswordController {
 
-    public static final String FORGET_PASSWORD = "forget-password";
-    public static final String FORGET_PASSWORD_TEMPLATE = "password/forget-password";
-    public static final int EXPIRATION_DAYS_QUANTITY = 1;
+    /** Forget-password endpoint name .*/
+    private static final String FORGET_PASSWORD = "forget-password";
+    /** Forget-password template name .*/
+    private static final String FORGET_PASSWORD_TEMPLATE = "password/forget-password";
+    /** Password expiration days quantity .*/
+    private static final int PASSWORD_EXPIRATION_DAYS_QUANTITY = 1;
 
-    public static final String MODEL_SUCCESS_MESSAGE_ID = "success";
-    public static final String FORGOT_PASSWORD_EMAIL_SUCCESSFULLY_SEND = "forgot.password.email.successfully.send";
+    /** Forget-password successfully model ID .*/
+    private static final String MODEL_SUCCESS_MESSAGE_ID = "success";
+    /** Forget-password successfully message ID .*/
+    private static final String FORGOT_PASSWORD_EMAIL_SUCCESSFULLY_SEND = "forgot.password.email.successfully.send";
 
     /** Part of reset password link.*/
-    public static final String RESET_TOKEN_ID = "reset-password?id=";
+    private static final String RESET_TOKEN_ID = "reset-password?id=";
 
     /** {@link EmailService} email service instance. */
     private final EmailService emailService;
@@ -44,11 +56,12 @@ public class ForgetPasswordController {
     private final ResourceMessagesService resourceMessagesService;
 
     /**
+     * Constructor of {@link ForgetPasswordController} class.
      *
-     * @param emailService
-     * @param accountService
-     * @param forgetPasswordFormValidator
-     * @param resourceMessagesService
+     * @param emailService for email operations.
+     * @param accountService for account operations.
+     * @param forgetPasswordFormValidator for forget password form validation.
+     * @param resourceMessagesService for messages operations.
      */
     @Autowired
     public ForgetPasswordController(final EmailService emailService,
@@ -61,12 +74,32 @@ public class ForgetPasswordController {
         this.resourceMessagesService = resourceMessagesService;
     }
 
+    /**
+     * This is GET "/forget-password" endpoint which is used for
+     * forget password template showing. Also this endpoint
+     * bind forget password form with {@link ForgetPasswordForm}.
+     *
+     * @param forgetPasswordForm for binding with forget password form.
+     * @return <code>String</code> with template name.
+     */
     @GetMapping(FORGET_PASSWORD)
     public String showForgetPasswordPage(final ForgetPasswordForm forgetPasswordForm){
         log.info("Show forget password page");
         return FORGET_PASSWORD_TEMPLATE;
     }
 
+    /**
+     * This is POST "/forget-password" endpoint which is used for
+     * reset password. Firstly values from forget password form are
+     * validate if validation is correctly reset password token is generated.
+     * After that, this token is set in {@link User} and is stored in DB.
+     * Reset password link is send to email address provided in reset password form.
+     *
+     * @param forgetPasswordForm with values from forget password from.
+     * @param bindingResult results from forget password from fields.
+     * @param model object which takes return values.
+     * @return <code>{@link String}</code> with template name.
+     */
     @PostMapping(FORGET_PASSWORD)
     public String createPasswordToken(final @Valid ForgetPasswordForm forgetPasswordForm,
                                       final BindingResult bindingResult,
@@ -82,7 +115,7 @@ public class ForgetPasswordController {
 
         validateForgetPasswordForm(forgetPasswordForm, bindingResult);
 
-        if (areErrorsAfterForgetPasswordFormValidation(forgetPasswordForm, bindingResult)) {
+        if (areErrorsAfterForgetPasswordFormValidation(bindingResult)) {
             log.error("Error during creating password token");
             return FORGET_PASSWORD_TEMPLATE;
         }
@@ -94,21 +127,51 @@ public class ForgetPasswordController {
         log.info("Set password token");
         setPasswordToken(passwordToken, forgetPasswordForm);
 
-        log.info("Set password token");
+        log.info("Send password token");
         sendPasswordToken(passwordToken, forgetPasswordForm);
 
-        model.addAttribute(MODEL_SUCCESS_MESSAGE_ID, resourceMessagesService.getMessage(FORGOT_PASSWORD_EMAIL_SUCCESSFULLY_SEND));
+        model.addAttribute(MODEL_SUCCESS_MESSAGE_ID,
+                resourceMessagesService.getMessage(FORGOT_PASSWORD_EMAIL_SUCCESSFULLY_SEND));
 
         return FORGET_PASSWORD_TEMPLATE;
     }
 
-    private void sendPasswordToken(final String passwordToken,
-                                   final ForgetPasswordForm forgetPasswordForm) {
-        emailService.sendForgetPasswordEmail(forgetPasswordForm.getEmail(),
-                                             RESET_TOKEN_ID + passwordToken);
-
+    /**
+     * This method use {@link ForgetPasswordFormValidator} for forget password form validation.
+     *
+     * @param forgetPasswordForm with values from forget password form.
+     * @param bindingResult results from forget password form fields.
+     */
+    private void validateForgetPasswordForm(final ForgetPasswordForm forgetPasswordForm,
+                                            final BindingResult bindingResult) {
+        forgetPasswordFormValidator.validate(forgetPasswordForm, bindingResult);
     }
 
+    /**
+     * This method checks if are some errors after forget password form validation.
+     *
+     * @param bindingResult results from forget password fields.
+     * @return <code>true</code> if there are some errors after validation, <code>false</code> otherwise.
+     */
+    private boolean areErrorsAfterForgetPasswordFormValidation(final BindingResult bindingResult) {
+        return bindingResult.hasErrors();
+    }
+
+    /**
+     * This method create password reset token using {@link UUID#randomUUID()}.
+     *
+     * @return <code>{@link String}</code> with password reset token.
+     */
+    private String getPasswordResetToken() {
+        return UUID.randomUUID().toString();
+    }
+
+    /**
+     * This method sets password token and password expiration date on founded user.
+     *
+     * @param passwordToken which will be stored on {@link User}.
+     * @param forgetPasswordForm forget password form with email address.
+     */
     private void setPasswordToken(final String passwordToken,
                                   final ForgetPasswordForm forgetPasswordForm) {
         User foundedUser = accountService.getUserByEmail(forgetPasswordForm.getEmail());
@@ -117,31 +180,28 @@ public class ForgetPasswordController {
         accountService.updateUser(foundedUser);
     }
 
+    /**
+     * This method create {@link LocalDateTime} object with password expiration date.
+     * Current date is increased by {@link ForgetPasswordController#PASSWORD_EXPIRATION_DAYS_QUANTITY}.
+     *
+     * @return <code>{@link LocalDateTime}</code> with password expiration date.
+     */
     private LocalDateTime getResetPasswordExpireDate() {
-        return LocalDateTime.now().plusDays(EXPIRATION_DAYS_QUANTITY);
+        return LocalDateTime.now().plusDays(PASSWORD_EXPIRATION_DAYS_QUANTITY);
     }
-
-    private String getPasswordResetToken() {
-        return UUID.randomUUID().toString();
-    }
-
 
     /**
-     * This method checks if are some errors after forget password
-     * form validation.
+     * This method send {@link pl.codecouple.omomfood.email.templates.forget.password.ForgetPasswordEmail}
+     * with password token to address email given in forget password form.
      *
-     * @param forgetPasswordForm with values from forget password form.
-     * @param bindingResult results from forget password fields.
-     * @return <code>true</code> if there are some errors after validation, <code>false</code> otherwise.
+     * @param passwordToken which will be send to email address.
+     * @param forgetPasswordForm forget password form with email address.
      */
-    private boolean areErrorsAfterForgetPasswordFormValidation(final ForgetPasswordForm forgetPasswordForm,
-                                                               final BindingResult bindingResult) {
-        return bindingResult.hasErrors();
-    }
+    private void sendPasswordToken(final String passwordToken,
+                                   final ForgetPasswordForm forgetPasswordForm) {
+        emailService.sendForgetPasswordEmail(forgetPasswordForm.getEmail(),
+                                             RESET_TOKEN_ID + passwordToken);
 
-    private void validateForgetPasswordForm(final ForgetPasswordForm forgetPasswordForm,
-                                            final BindingResult bindingResult) {
-        forgetPasswordFormValidator.validate(forgetPasswordForm, bindingResult);
     }
 
 }
