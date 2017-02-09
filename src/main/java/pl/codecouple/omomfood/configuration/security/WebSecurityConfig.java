@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -17,6 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import pl.codecouple.omomfood.account.AccountService;
+import pl.codecouple.omomfood.configuration.security.handlers.CustomAuthenticationSuccessHandler;
 
 /**
  * Created by krzysztof.chrusciel on 2016-07-08.
@@ -33,12 +33,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(final WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/webjars/**", "/favicon.ico");
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
+
         http.formLogin()
                 .loginPage("/login")
                 .successHandler(successHandler())
@@ -53,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/logout",
                         "/forget-password",
                         "/reset-password",
-                        "/offers/**",
+                        "/offers",
                         "/offer/{[0-9]+}",
                         "/confirm",
                         "/signup/**",
@@ -74,20 +75,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().accessDeniedPage("/403");
     }
 
-    @Bean
-    public AuthenticationManager getAuthenticationManager() throws Exception {
-        return super.authenticationManagerBean(); //not return auth.build();
-    }
-
-    @Bean
-    public UsernamePasswordAuthenticationFilter authenticationFilter() throws Exception {
-        UsernamePasswordAuthenticationFilter authFilter = new UsernamePasswordAuthenticationFilter();
-        authFilter.setAuthenticationManager(getAuthenticationManager());
-        return authFilter;
-    }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(accountService).passwordEncoder(passwordEncoder());
     }
 
@@ -105,9 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
-        AuthenticationSuccessHandler handler = new MySimpleUrlAuthenticationSuccessHandler();
-//        handler.setUseReferer(true);
-        return handler;
+        return new CustomAuthenticationSuccessHandler();
     }
 
     @Bean

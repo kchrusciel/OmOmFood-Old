@@ -25,8 +25,12 @@ import java.util.Set;
 @Service
 public class AccountServiceImpl implements UserDetailsService, AccountService{
 
-    private final UserRepository userRepository;
 
+    public static final String ADMIN_EMAIL_ADDRESS = "admin@omomfood.pl";
+
+    /** {@link UserRepository} user repository instance. */
+    private final UserRepository userRepository;
+    /** {@link RoleRepository} role repository instance. */
     private final RoleRepository roleRepository;
 
     @Autowired
@@ -110,5 +114,21 @@ public class AccountServiceImpl implements UserDetailsService, AccountService{
     @Override
     public User findByResetPasswordToken(final String token) {
         return userRepository.findByResetPasswordToken(token);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User getAdminUser() {
+        return userRepository.findByEmail(ADMIN_EMAIL_ADDRESS);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User getUserByProviderUserID(final String providerUserID) {
+        return userRepository.findByProviderUserID(providerUserID);
     }
 }

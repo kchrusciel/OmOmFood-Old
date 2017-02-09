@@ -45,4 +45,13 @@ $(document).ready(function () {
 
     });
 
+    $(function() {
+        $("#city")
+            .autocomplete(
+                {
+                    source : 'http://localhost:8082/autocomplete',
+                    minLength : 1,
+                });
+    });
+
 });

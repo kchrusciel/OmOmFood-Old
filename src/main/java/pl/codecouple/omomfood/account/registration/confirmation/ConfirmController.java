@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.codecouple.omomfood.account.AccountService;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.email.service.EmailService;
+import pl.codecouple.omomfood.messages.Message;
+import pl.codecouple.omomfood.messages.MessageService;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
+
+import java.time.LocalDateTime;
 
 /**
  * This is {@link ConfirmController} for confirmation purposes.
@@ -30,6 +34,10 @@ public class ConfirmController {
     public static final String EMAIL_CONFIRM_ERROR_MESSAGE_ID = "email.confirm.error";
     /** Email confirmation message id.*/
     public static final String EMAIL_CONFIRMED_MESSAGE_ID = "email.confirmed.message";
+    /** Welcome message title message id.*/
+    public static final String MESSAGES_WELCOME_TITLE_MESSAGE_ID = "messages.welcome.title";
+    /** Welcome message content message id.*/
+    public static final String MESSAGES_WELCOME_CONTENT_MESSAGE_ID = "messages.welcome.content";
     /** Model message id.*/
     public static final String MODEL_MESSAGE_ID = "message";
 
@@ -37,11 +45,13 @@ public class ConfirmController {
     public static final String TEMPLATE_NAME_MESSAGES = "messages";
 
     /** {@link AccountService} account service instance. */
-    private final AccountService accountService;
+    private AccountService accountService;
     /** {@link ResourceMessagesService} resource messages service instance. */
-    private final ResourceMessagesService resourceMessagesService;
+    private ResourceMessagesService resourceMessagesService;
     /** {@link EmailService} email service instance. */
-    private final EmailService emailService;
+    private EmailService emailService;
+    /** {@link MessageService} message service instance. */
+    private MessageService messageService;
 
     /**
      * Constructor of {@link ConfirmController} class.
@@ -49,15 +59,18 @@ public class ConfirmController {
      * @param emailService for email operations.
      * @param accountService for account operations.
      * @param resourceMessagesService for messages operations.
+     * @param messageService for messages operations.
      *
      */
     @Autowired
     public ConfirmController(final AccountService accountService,
                              final ResourceMessagesService resourceMessagesService,
-                             final EmailService emailService) {
+                             final EmailService emailService,
+                             final MessageService messageService) {
         this.accountService = accountService;
         this.resourceMessagesService = resourceMessagesService;
         this.emailService = emailService;
+        this.messageService = messageService;
     }
 
     /**
@@ -84,6 +97,9 @@ public class ConfirmController {
 
         log.info("Active user");
         activeUser(user);
+
+        log.info("Send welcome message");
+        sendWelcomeMessage(user);
 
         model.addAttribute(MODEL_MESSAGE_ID, getEmailConfirmedMessage(user.getUsername()));
         return TEMPLATE_NAME_MESSAGES;
@@ -115,6 +131,47 @@ public class ConfirmController {
         return resourceMessagesService.getParametrizedMessages(
                 EMAIL_CONFIRMED_MESSAGE_ID,
                 new Object[]{userName});
+    }
+
+    /**
+     * This method create welcome message and send this message to {@link User}.
+     * @param recipient for which message will be send.
+     */
+    private void sendWelcomeMessage(final User recipient) {
+        Message welcomeMessage = createWelcomeMessage(recipient);
+        messageService.sendMessage(welcomeMessage);
+    }
+
+    /**
+     * This method creates welcome message for new {@link User}.
+     *
+     * @param recipient for which message will be send.
+     * @return <code>{@link Message}</code> with welcome content.
+     */
+    private Message createWelcomeMessage(final User recipient){
+        String welcomeMessageTitle = getWelcomeMessageTitle();
+        String welcomeMessageContent = getWelcomeMessageContent();
+        return new Message(welcomeMessageTitle,
+                           welcomeMessageContent,
+                           LocalDateTime.now(),
+                           accountService.getAdminUser(),
+                           recipient);
+    }
+
+    /**
+     * This method return {@link ConfirmController#MESSAGES_WELCOME_TITLE_MESSAGE_ID} message.
+     * @return <code>{@link String}</code> with welcome message title.
+     */
+    private String getWelcomeMessageTitle() {
+        return resourceMessagesService.getMessage(MESSAGES_WELCOME_TITLE_MESSAGE_ID);
+    }
+
+    /**
+     * This method return {@link ConfirmController#MESSAGES_WELCOME_CONTENT_MESSAGE_ID} message.
+     * @return <code>{@link String}</code> with welcome message content.
+     */
+    private String getWelcomeMessageContent() {
+        return resourceMessagesService.getMessage(MESSAGES_WELCOME_CONTENT_MESSAGE_ID);
     }
 
 }

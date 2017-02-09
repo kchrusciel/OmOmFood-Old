@@ -25,9 +25,10 @@
                 </div>
                 <div class="alert alert-danger" role="alert"
                      th:if="${param.error}"
-                     th:utext="#{error.invalid.credentials}">
-
+                     th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
                 </div>
+
+
             </div>
             <div class="col-md-3"/>
         </div>

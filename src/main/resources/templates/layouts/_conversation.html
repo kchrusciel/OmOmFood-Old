@@ -8,7 +8,7 @@
             <form th:action="'/offers/' + ${offer.id} + '/message/'" th:object="${message}" method="POST">
                 <div class="form-group">
                     <textarea th:field="*{content}" th:placeholder="#{placeholder.ask.question}" class="form-control" rows="5"></textarea>
-                    <input type="hidden" th:field="*{offerID}" th:value="${offer.id}"/>
+                    <input type="hidden" name="title" th:value="${offer.title}"/>
                 </div>
                 <button type="submit" class="btn btn-primary pull-right">Send question</button>
             </form>

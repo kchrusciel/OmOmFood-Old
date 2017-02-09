@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.configuration.security;
+package pl.codecouple.omomfood.configuration.security.handlers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -15,17 +15,19 @@ import java.io.IOException;
  * Created by Krzysztof Chruściel.
  */
 @Slf4j
-public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                                        Authentication authentication) throws IOException, ServletException {
         log.debug("OnAuthenticationSuccess");
         log.debug("httpServletRequest: " + httpServletRequest);
         log.debug("httpServletRequest: " + httpServletRequest.getHeader("referer"));
         log.debug("authentication: " + authentication);
-        if(httpServletRequest.getHeader("referer").contains("confirm") || httpServletRequest.getHeader("referer").contains("error"))
+        if(httpServletRequest.getHeader("referer").contains("confirm") || httpServletRequest.getHeader("referer").contains("error")
+                || httpServletRequest.getHeader("referer").contains("/login"))
             redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, "/");
         else
             redirectStrategy.sendRedirect(httpServletRequest, httpServletResponse, httpServletRequest.getHeader("referer"));

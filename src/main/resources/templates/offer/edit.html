@@ -1,0 +1,198 @@
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
+<div layout:fragment="content">
+    <div class="container site_box">
+        <form action="#" th:action="@{/offers/new}" th:object="${offer}" enctype="multipart/form-data" method="post">
+            <div class="col-md-8 col-sm-12">
+                <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Add new offer</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <input type="text"
+                                   th:field="*{title}"
+                                   class="form-control"
+                                   th:placeholder="#{placeholder.title}"
+                                   placeholder="Title here..."/>
+                        </div>
+                        <div class="alert alert-danger"
+                             role="alert"
+                             th:if="${#fields.hasErrors('title')}"
+                             th:errors="*{title}">
+                            <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                        </div>
+                        <div class="form-group">
+                            <textarea
+                                    placeholder="Wyślij pytanie, jeśli potrzebujesz dodatkowych informacji odnośnie przejazdu..."
+                                    class="form-control"
+                                    th:field="*{description}"
+                                    rows="8"></textarea>
+                            <div class="alert alert-danger"
+                                 role="alert"
+                                 th:if="${#fields.hasErrors('description')}"
+                                 th:errors="*{description}">
+                                <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-map-marker"></i>
+                                            </span>
+                                        <input type="text"
+                                               th:field="*{city}"
+                                               class="form-control"
+                                               th:placeholder="#{placeholder.city}"
+                                               placeholder="Title here..."/>
+                                    </div>
+                                    <div class="alert alert-danger"
+                                         role="alert"
+                                         th:if="${#fields.hasErrors('city')}"
+                                         th:errors="*{city}">
+                                        <strong>Oh snap!</strong> Change a few things up and try submitting
+                                        again.
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input type='text'
+                                                   class="form-control"
+                                                   th:field="*{eventDate}"
+                                                   th:placeholder="#{placeholder.date}"
+                                                   placeholder="Date here..."/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                        <div class="alert alert-danger"
+                                             role="alert"
+                                             th:if="${#fields.hasErrors('eventDate')}"
+                                             th:errors="*{eventDate}">
+                                            <strong>Oh snap!</strong> Change a few things up and try submitting
+                                            again.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon glyphicon-phone-alt"></i>
+                                            </span>
+                                        <input type="text"
+                                               th:field="*{phoneNumber}"
+                                               class="form-control"
+                                               th:placeholder="#{placeholder.phoneNumber}"
+                                               placeholder="Title here..."/>
+                                    </div>
+                                    <div class="alert alert-danger"
+                                         role="alert"
+                                         th:if="${#fields.hasErrors('phoneNumber')}"
+                                         th:errors="*{phoneNumber}">
+                                        <strong>Oh snap!</strong> Change a few things up and try submitting
+                                        again.
+                                    </div>
+                                    <span class="help-block pull-left">* This information will be only for client</span>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="input-group">
+                                        <label class="input-group-btn">
+                                            <span class="btn btn-primary">
+                                                Browse&hellip; <input type="file" style="display: none;" name="offerIcon"/>
+                                            </span>
+                                        </label>
+                                        <input type="text" class="form-control" th:readonly="true" readonly="readonly"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="row">
+                    <div class="col-md-11 col-sm-12 col-md-offset-1">
+                        <div class="row panel panel-default margin-bottom">
+                            <div class="panel-heading">
+                                <h3 class="panel-title text-left">
+                                    <i class="glyphicon glyphicon-info-sign"></i>  Deatils</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">$</div>
+                                                <input type="text" th:field="*{price}" class="form-control" id="exampleInputAmount" placeholder="00"/>
+                                                <div class="input-group-addon">.00</div>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-danger"
+                                             role="alert"
+                                             th:if="${#fields.hasErrors('price')}"
+                                             th:errors="*{price}">
+                                            <strong>Oh snap!</strong> Change a few things up and try submitting
+                                            again.
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="input-group spinner">
+                                            <input type="text" th:field="*{quantity}" class="form-control" th:value="1" value="1"/>
+                                            <div class="input-group-btn-vertical">
+                                                <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
+                                                <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-danger"
+                                             role="alert"
+                                             th:if="${#fields.hasErrors('quantity')}"
+                                             th:errors="*{quantity}">
+                                            <strong>Oh snap!</strong> Change a few things up and try submitting
+                                            again.
+                                        </div>
+                                    </div>
+                                    <div class="preferences">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <td><span class="label label-success"><i class="glyphicon glyphicon-ok-sign"></i></span>  Dog</td>
+                                                <td><span class="label label-danger"><i class="glyphicon glyphicon-remove-sign"></i></span>  Alcohol</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-success"><i class="glyphicon glyphicon-ok-sign"></i></span>  Meet</td>
+                                                <td><span class="label label-success"><i class="glyphicon glyphicon-ok-sign"></i></span>  Music</td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="label label-success"><i class="glyphicon glyphicon-ok-sign"></i></span>  Music</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-xs-offset-6 col-xs-6">
+                                        <button type="submit" class="btn btn-primary pull-right">
+                                            <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>  Add offer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</html>

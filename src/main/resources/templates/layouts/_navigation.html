@@ -15,17 +15,17 @@
             <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <div class="btn-group navbar-btn">
-                        <a href="/offers/new" role="button" class="btn btn-success">Add offer  <i class="glyphicon glyphicon glyphicon-plus"></i></a>
+                        <a th:href="@{/offers/new}" role="button" class="btn btn-success">Add offer  <i class="glyphicon glyphicon glyphicon-plus"></i></a>
                     </div>
                     <div class="btn-group navbar-btn">
                         <button class="btn btn-primary" sec:authentication="name">[User]</button>
                         <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="offers/my">Moje oferty</a></li>
-                            <li><a href="#">Zapisane oferty</a></li>
-                            <li><a href="#">Ustawienia</a></li>
+                            <li><a th:text="#{navigation.my.offers}" th:href="@{/offers/my}">[navigation.my.offers]</a></li>
+                            <li><a th:text="#{navigation.save.offers}" href="#">[navigation.save.offers]</a></li>
+                            <li><a th:text="#{navigation.settings}" th:href="@{/settings}">[navigation.settings]</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/logout">Logout</a></li>
+                            <li><a th:text="#{navigation.logout}" href="/logout">[navigation.logout]</a></li>
                         </ul>
                     </div>
                     <div class="btn-group navbar-btn">

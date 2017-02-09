@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @Controller
 public class OfferEditorController {
 
-    @RequestMapping(value = "offers/{offerID}/edit",
+    @RequestMapping(value = "offer/{offerID}/edit",
             method = RequestMethod.GET)
     public String showEditOfferPage(final Offer offerForm,
                                     final @PathVariable("offerID") long offerID) {
@@ -23,7 +23,7 @@ public class OfferEditorController {
         return "offer/edit";
     }
 
-    @RequestMapping(value = "offers/{offerID}/edit",
+    @RequestMapping(value = "offer/{offerID}/edit",
             method = RequestMethod.POST)
     public String editOfferPage(final @Valid Offer offer,
                                 final @PathVariable("offerID") long offerID) {

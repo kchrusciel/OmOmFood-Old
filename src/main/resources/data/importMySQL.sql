@@ -14,7 +14,9 @@ create table UserConnection (userId varchar(255) not null,
   primary key (userId, providerId, providerUserId));
 create unique index UserConnectionRank on UserConnection(userId, providerId, rank);
 
-insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, null, true, 'test1@test.pl', 'Krzysztof', 'Chrusciel', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
+-- Users
+insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, null, false, 'test1@test.pl', 'Krzysztof', 'Chrusciel', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
+insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, null, true, 'admin@omomfood.pl', 'Admin', 'Admin', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
 insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted) values (null, null, true, 'test2@test.pl', 'Jan', 'Nowak', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6');
 
 
@@ -26,13 +28,17 @@ insert into reference (id, about_id, author_id, reference_content) values (null,
 insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Sosnowiec',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
 insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Warszawa',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
 insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Katowice',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
-insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Sosnowiec',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
-insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Sosnowiec',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
-insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Katowice',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
-insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Sochaczew',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
-insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Sędziszów',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
+insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Sosnowiec',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 2, '500-600-700', 50, 4, 'Title');
+insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Sosnowiec',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 2, '500-600-700', 50, 4, 'Title');
+insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Katowice',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 2, '500-600-700', 50, 4, 'Title');
+insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Sochaczew',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 2, '500-600-700', 50, 4, 'Title');
+insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Sędziszów',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 2, '500-600-700', 50, 4, 'Title');
 insert into offer (id, city, created_date, description, event_date, file_name, owner_id, phone_number, price, quantity, title) values (null, 'Skoczów',  STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'Opis', STR_TO_DATE('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), 'test.png', 1, '500-600-700', 50, 4, 'Title');
 
+
+-- Offers types
+insert into offer_offer_type (offer_id, offer_type) values (1, "DOG");
+
 -- Messages
-insert into message (id, content, creation_date, is_read, offerid, owner, title) values (null, 'One ipsum dolor sit amet, consectetur adipiscing elit', STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), FALSE, 1, 1, 'title');
-insert into message (id, content, creation_date, is_read, offerid, owner, title) values (null, 'One ipsum dolor sit amet, consectetur adipiscing elit', STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), FALSE, 1, 1, 'title');
+insert into message (id, content, creation_date, is_read, recipient, author, title) values (null, 'One ipsum dolor sit amet, consectetur adipiscing elit', STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), FALSE, 2, 1, 'title');
+insert into message (id, content, creation_date, is_read, recipient, author, title) values (null, 'One ipsum dolor sit amet, consectetur adipiscing elit', STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), FALSE, 2, 1, 'title');

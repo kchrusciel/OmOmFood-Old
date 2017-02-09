@@ -16,6 +16,15 @@ public interface AccountService extends UserDetailsService {
     User getUserByConfirmationId(String confirmId);
     User getUserByEmail(String email);
     User findByResetPasswordToken(String token);
+    User getAdminUser();
+
+    /**
+     * This method returns {@link User} which contains the provider user id value in DB.
+     *
+     * @param providerUserID which is used to search.
+     * @return <code>{@link User}</code> founded user.
+     */
+    User getUserByProviderUserID(String providerUserID);
     List<RoleEnum> getAllRoles();
 
 }

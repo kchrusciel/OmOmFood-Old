@@ -9,6 +9,6 @@ import java.util.List;
  * Created by Krzysztof Chruściel.
  */
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    List<Message> findByOwner(User user);
-    Message findByOwnerAndId(User user, Long id);
+    List<Message> findByAuthor(User user);
+    Message findByAuthorAndId(User user, Long id);
 }

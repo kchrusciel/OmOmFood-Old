@@ -16,41 +16,59 @@ import java.time.LocalDateTime;
 @Entity
 public class Message {
 
+    /** Message ID. */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    /** Message title. */
     private String title;
 
+    /** Message content. */
     @NotEmpty
     private String content;
 
-    private Long offerID;
-
+    /** Message {@link java.time.LocalDateTime} creation date. */
     private LocalDateTime creationDate;
 
+    /** Value {@link Boolean} which store information about read message. */
     private boolean isRead;
 
-    private User toUser;
-
+    /** Recipient {@link User} for which message is addressed. */
     @ManyToOne(fetch=FetchType.LAZY, optional = false)
-    @JoinColumn(name="owner")
-    private User owner;
+    @JoinColumn(name="recipient")
+    private User recipient;
 
+    /** Author {@link User} of message. */
+    @ManyToOne(fetch=FetchType.LAZY, optional = false)
+    @JoinColumn(name="author")
+    private User author;
+
+    /**
+     * Empty constructor for {@link Message}
+     */
     public Message() {
     }
 
-    public Message(final String content,
-                   final Long offerID,
+    /**
+     * Constructor for {@link Message}
+     *
+     * @param title of the message.
+     * @param content of the message.
+     * @param creationDate of the message.
+     * @param author of the message.
+     * @param recipient of the message.
+     */
+    public Message(final String title,
+                   final String content,
                    final LocalDateTime creationDate,
-                   final User owner,
-                   final User toUser) {
-        log.debug("Create message");
+                   final User author,
+                   final User recipient) {
+        this.title = title;
         this.content = content;
-        this.offerID = offerID;
         this.creationDate = creationDate;
         this.isRead = false;
-        this.owner = owner;
-        this.toUser = toUser;
+        this.author = author;
+        this.recipient = recipient;
     }
 }

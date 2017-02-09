@@ -166,3 +166,10 @@ td{
     top: 0;
     left: 4px;
 }
+
+.ui-autocomplete {
+    text-align: left;
+}
+
+.top-buffer-10 { margin-top:10px; }
+

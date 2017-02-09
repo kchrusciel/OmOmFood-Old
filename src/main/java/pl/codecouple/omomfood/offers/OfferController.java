@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.messages.Message;
 import pl.codecouple.omomfood.messages.MessageService;
 import pl.codecouple.omomfood.utils.UserDetailsService;
@@ -16,6 +17,7 @@ import pl.codecouple.omomfood.utils.UserDetailsService;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 
 @Slf4j
 @Controller
@@ -146,8 +148,18 @@ public class OfferController {
         modelAndView.addObject(MODEL_OFFERS_ID, offersPageable.getContent());
         modelAndView.addObject(MODEL_PAGE_ID, page);
         modelAndView.setViewName(TEMPLATE_NAME_OFFER_OFFERS);
+
+//        RestTemplate restTemplate = new RestTemplate();
+//        ResponseEntity<List<OfferCities>> rateResponse =
+//                restTemplate.exchange("http://localhost:8082/offers/cities",
+//                        HttpMethod.GET, null, new ParameterizedTypeReference<List<OfferCities>>() {
+//                        });
+//        List<OfferCities> rates = rateResponse.getBody();
+//        modelAndView.addObject("offerCities", rates);
+        modelAndView.addObject("offerCities", Collections.emptyList());
         return modelAndView;
     }
+
 
     /**
      * TODO
@@ -199,12 +211,16 @@ public class OfferController {
     public String sendMessageToOffer(final @Valid Message message,
                                      final BindingResult bindingResult,
                                      final @PathVariable("offerID") long offerID){
-        message.isRead();
-        message.getContent();
-        log.debug("sendMessageToOffer");
-        log.debug(bindingResult.toString());
-        log.debug(message.getContent());
-        return "index";
+        if(bindingResult.hasErrors()){
+            return null;
+        }
+        Offer offerForMessage = offerService.getOfferById(offerID);
+        User author = offerForMessage.getOwner();
+        message.setAuthor(author);
+        message.setRecipient(userDetailsService.getLoggedUser());
+        message.setCreationDate(LocalDateTime.now());
+        messageService.sendMessage(message);
+        return TEMPLATE_NAME_OFFER_OFFERS;
     }
 
 }

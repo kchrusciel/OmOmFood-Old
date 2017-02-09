@@ -14,20 +14,22 @@
                         <p th:text="${offer.getReservationQuantityDetails()}" class="price">[offer.assigned]/[offer.quantity]</p>
                     </div>
                 </div>
-                <div class="preferences">
-                    <table class="table">
-                        <tbody>
-                            <tr th:each="offerType:${offer.offerType}">
+                <div class="row">
+                    <div class="preferences">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferTypesEnum).values()}">
                                 <td th:inline="text">
-                                    <span th:if="${offerType.available}" class="label label-success"><i class="glyphicon glyphicon-ok-sign"></i></span>
-                                    <span th:if="${!offerType.available}" class="label label-danger"><i class="glyphicon glyphicon-remove-sign"></i></span>
+                                    <span th:if="${offer.offerType.contains(offerType)}" class="label label-success"><i class="glyphicon glyphicon-ok-sign"></i></span>
+                                    <span th:if="${!offer.offerType.contains(offerType)}" class="label label-danger"><i class="glyphicon glyphicon-remove-sign"></i></span>
                                     [[${offerType.type}]]
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="row">
+                <div class="row top-buffer-10">
                     <div class="col-xs-offset-6 col-xs-6">
                         <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-primary btn-lg pull-right">
                             <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>  OmOm

@@ -27,11 +27,11 @@ public class MessageServiceImpl implements MessageService{
 
     @Override
     public List<Message> getAllMessages(User user) {
-        return messageRepository.findByOwner(user);
+        return messageRepository.findByAuthor(user);
     }
 
     @Override
     public Message getMessage(User user, Long id) {
-        return messageRepository.findByOwnerAndId(user, id);
+        return messageRepository.findByAuthorAndId(user, id);
     }
 }
