@@ -16,13 +16,20 @@ import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.utils.ResourceMessagesService;
 
 /**
- * Created by Agnieszka on 2016-10-09.
+ * This is {@link SignUpController} for sign up purposes.
+ * We got one public endpoint "/signup". GET method takes {@link Connection}
+ * object from session. If {@link Connection} exists than provider id is taken.
+ * If {@link User} with specific provider exists than enabling is checked.
+ * If account is enabled {@link User} is authenticated. In other cases "register" template is showed.
+ * If account is disabled page with messages is showed.
+ *
+ * @author Agnieszka Pieszczek
  */
 @Slf4j
 @Controller
 public class SignUpController {
 
-    /** Template name which is returned on GET method.*/
+    /** Template name which is returned when Social {@link User} is not registered.*/
     public static final String TEMPLATE_NAME_REGISTER = "register";
 
     /** Template name which is returned after registration.*/
@@ -34,14 +41,26 @@ public class SignUpController {
     /** Email confirmation error message id.*/
     public static final String ACCOUNT_DISABLED_MESSAGE_ID = "AbstractUserDetailsAuthenticationProvider.disabled";
 
+    /** Sign up endpoint. */
+    public static final String SIGNUP_ENDPOINT = "/signup";
+
+    /** {@link ProviderSignInUtils} provider sign in utils instance. */
     private final ProviderSignInUtils providerSignInUtils;
+    /** {@link AuthenticateService} authentication service instance. */
     private final AuthenticateService authenticateService;
-
+    /** {@link AccountService} account service instance. */
     private final AccountService accountService;
-
     /** {@link ResourceMessagesService} resource messages service instance. */
     private ResourceMessagesService resourceMessagesService;
 
+    /**
+     *
+     * @param connectionFactoryLocator for {@link ProviderSignInUtils}.
+     * @param connectionRepository for {@link ProviderSignInUtils}.
+     * @param authenticateService for authentication operations.
+     * @param resourceMessagesService for messages operations.
+     * @param accountService for account operations.
+     */
     @Autowired
     public SignUpController(final ConnectionFactoryLocator connectionFactoryLocator,
                             final UsersConnectionRepository connectionRepository,
@@ -54,7 +73,18 @@ public class SignUpController {
         this.accountService = accountService;
     }
 
-    @GetMapping(value = "/signup")
+    /**
+     * This method takes {@link Connection} object from session.
+     * If {@link Connection} exists than provider id is taken.
+     * If {@link User} with specific provider exists than enabling is checked.
+     * If account is enabled {@link User} is authenticated. In other cases "register" template is showed.
+     * If account is disabled page with messages is showed.
+     * @param request from session.
+     * @param registerForm for registration purposes.
+     * @param model for data to view.
+     * @return <code>String</code> with template name
+     */
+    @GetMapping(value = SIGNUP_ENDPOINT)
     public String signup(final WebRequest request, final User registerForm, final Model model) {
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
         if (connection != null) {
