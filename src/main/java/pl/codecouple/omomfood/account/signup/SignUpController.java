@@ -31,16 +31,12 @@ public class SignUpController {
 
     /** Template name which is returned when Social {@link User} is not registered.*/
     public static final String TEMPLATE_NAME_REGISTER = "register";
-
     /** Template name which is returned after registration.*/
     public static final String TEMPLATE_NAME_MESSAGES = "messages";
-
     /** Model message id.*/
     public static final String MODEL_MESSAGE_ID = "message";
-
     /** Email confirmation error message id.*/
     public static final String ACCOUNT_DISABLED_MESSAGE_ID = "AbstractUserDetailsAuthenticationProvider.disabled";
-
     /** Sign up endpoint. */
     public static final String SIGNUP_ENDPOINT = "/signup";
 
@@ -54,6 +50,7 @@ public class SignUpController {
     private ResourceMessagesService resourceMessagesService;
 
     /**
+     * Constructor of {@link SignUpController}.
      *
      * @param connectionFactoryLocator for {@link ProviderSignInUtils}.
      * @param connectionRepository for {@link ProviderSignInUtils}.
