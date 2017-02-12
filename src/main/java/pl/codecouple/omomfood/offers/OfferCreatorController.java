@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.validator.OfferValidator;
+import pl.codecouple.omomfood.storage.StorageFolders;
 import pl.codecouple.omomfood.storage.StorageService;
 import pl.codecouple.omomfood.utils.UserDetailsService;
 
 import javax.validation.Valid;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 /**
@@ -89,11 +92,15 @@ public class OfferCreatorController {
         offerService.addOffer(offer);
 
         log.debug("Store file");
-        storageService.store(file);
+        storageService.storeFileInPath(file, getPathForSaveOfferImage(user));
 
         model.addAttribute("offer", offer);
 
         return TEMPLATE_NAME_SINGLE_OFFER;
+    }
+
+    private Path getPathForSaveOfferImage(final User user) {
+        return Paths.get(user.getUsername() + StorageFolders.OFFERS.getFolderName());
     }
 
 }

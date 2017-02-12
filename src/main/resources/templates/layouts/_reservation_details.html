@@ -18,7 +18,7 @@
                     <div class="preferences">
                         <table class="table table-striped">
                             <tbody>
-                            <tr th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferTypesEnum).values()}">
+                            <tr th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferTypes).values()}">
                                 <td th:inline="text">
                                     <span th:if="${offer.offerType.contains(offerType)}" class="label label-success"><i class="glyphicon glyphicon-ok-sign"></i></span>
                                     <span th:if="${!offer.offerType.contains(offerType)}" class="label label-danger"><i class="glyphicon glyphicon-remove-sign"></i></span>

@@ -1,9 +1,9 @@
 <div th:fragment="reference(offer)">
-    <blockquote th:if="${offer.owner.references.isEmpty()}" class="blockquote-reverse">
+    <blockquote th:if="${offer.owner.receivedReferences.isEmpty()}" class="blockquote-reverse">
         <p th:inline="text" class="bg-info">Brak recencji dla tego użytkownika, może pora odwiedzić [[${offer.owner.getFirstAndLastName()}]]</p>
         <footer>Famous OmOm about <cite th:text="${offer.owner.firstName}" title="Source Title">[offer.owner.firstName]</cite></footer>
     </blockquote>
-    <blockquote th:each="reference, rowStat:${offer.owner.references}" th:class="${rowStat.odd}? 'text-left' : 'blockquote-reverse'" >
+    <blockquote th:each="reference, rowStat:${offer.owner.receivedReferences}" th:class="${rowStat.odd}? 'text-left' : 'blockquote-reverse'" >
         <p th:text="${reference.referenceContent}" class="bg-info">[reference.referenceContent]</p>
         <footer th:inline="text">[[${reference.author.getFirstAndLastName()}]] about <cite th:text="${offer.owner.getFirstAndLastName()}" title="Source Title">[offer.owner.firstName]</cite></footer>
     </blockquote>

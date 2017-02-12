@@ -18,22 +18,26 @@ public class StorageServiceImpl implements StorageService {
 
     private final Path rootLocation;
 
+    private final StorageProperties properties;
+
     @Autowired
-    public StorageServiceImpl(StorageProperties properties) {
-        this.rootLocation = Paths.get(properties.getLocation());
+    public StorageServiceImpl(final StorageProperties properties) {
+        this.properties = properties;
+        this.rootLocation = Paths.get(properties.getRootLocation());
     }
 
     @Override
     public void init() {
         try {
-            Files.createDirectory(rootLocation);
+            Files.createDirectory(Paths.get(properties.getOffersLocation()));
+            Files.createDirectory(Paths.get(properties.getUsersLocation()));
         } catch (IOException e) {
             throw new StorageException("Could not initialize storage", e);
         }
     }
 
     @Override
-    public void store(MultipartFile file) {
+    public void store(final MultipartFile file) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
@@ -45,7 +49,20 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
+    public void storeFileInPath(final MultipartFile file, final Path path) {
+        try {
+            if (file.isEmpty()) {
+                throw new StorageException("Failed to store empty file " + file.getOriginalFilename());
+            }
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(path.resolve(file.getOriginalFilename())));
+        } catch (IOException e) {
+            throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
+        }
+    }
+
+    @Override
     public void deleteAll() {
-        FileSystemUtils.deleteRecursively(rootLocation.toFile());
+        FileSystemUtils.deleteRecursively(Paths.get(properties.getOffersLocation()).toFile());
+        FileSystemUtils.deleteRecursively(Paths.get(properties.getUsersLocation()).toFile());
     }
 }

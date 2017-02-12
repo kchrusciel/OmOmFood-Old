@@ -11,8 +11,18 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class StorageProperties {
 
     /**
-     * Folder location for storing files
+     * Root folder location for storing files
      */
-    private String location = "src/main/resources/static/images/offers";
+    private String rootLocation = "src/main/resources/static/images";
+
+    /**
+     * Offers folder location for storing files
+     */
+    private String offersLocation = "src/main/resources/static/images/offers";
+
+    /**
+     * Users folder location for storing files
+     */
+    private String usersLocation = "src/main/resources/static/images/users";
 
 }

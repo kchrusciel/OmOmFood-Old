@@ -126,7 +126,7 @@ td{
     border: none;
 }
 .client-img{
-    background: url("../images/user.png") no-repeat center center;
+    background: url("../images/defaults/users/user.png") no-repeat center center;
     background-size: 55px 55px;
 }
 .checkbox label{
@@ -173,3 +173,7 @@ td{
 
 .top-buffer-10 { margin-top:10px; }
 
+.offer-img {
+    width: 150px;
+    height: 150px;
+}

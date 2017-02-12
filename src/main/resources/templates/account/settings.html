@@ -1,7 +1,20 @@
 <html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
 <div layout:fragment="content">
     <div class="container site_box">
-        <p>Settings</p>
+        <form action="#" th:action="@{/settings}" th:object="${settingsForm}" enctype="multipart/form-data" method="post">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Account Settings</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>Settings</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 </html>

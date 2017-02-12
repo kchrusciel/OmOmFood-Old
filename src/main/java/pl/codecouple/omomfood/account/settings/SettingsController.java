@@ -11,18 +11,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class SettingsController {
 
-
+    /** Account settings template name.*/
     public static final String ACCOUNT_SETTINGS = "account/settings";
+    /** Settings endpoint. */
     public static final String SETTINGS = "/settings";
 
     /**
      * This is "/settings" GET endpoint.
      * This method shows account settings page.
      *
+     * @param settingsForm for form validation.
      * @return <code>String</code> with template name.
      */
     @GetMapping(SETTINGS)
-    public String showSettingsPage(){
+    public String showSettingsPage(final SettingsForm settingsForm){
         return ACCOUNT_SETTINGS;
     }
 
