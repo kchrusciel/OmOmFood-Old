@@ -6,7 +6,7 @@
         <div class="panel-body offer_box">
             <a th:href="'/offer/' + ${offer.id}" href="#">
                 <div class="col-md-3">
-                    <img th:src="@{/images/offers/} + ${offer.fileName}" class="img-circle offer-img"/>
+                    <img th:src="@{/images/} + ${offer.iconFileName}" class="img-circle offer-img"/>
                     <p>Some info here?</p>
                 </div>
                 <div class="col-md-9 offer_details">

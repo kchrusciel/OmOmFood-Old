@@ -85,7 +85,7 @@ public class OfferCreatorController {
 //        User user = userDetailsService.getLoggedUser();
 
         offer.setOwner(user);
-        offer.setFileName(file.getOriginalFilename());
+        offer.setIconFileName(file.getOriginalFilename());
         offer.setCreatedDate(LocalDateTime.now());
 
         log.debug("Store offer in DB");

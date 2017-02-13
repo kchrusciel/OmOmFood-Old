@@ -49,7 +49,7 @@ public class Offer {
     @Min(1)
     private int quantity;
 
-    private String fileName;
+    private String iconFileName;
 
     private LocalDateTime createdDate;
 
@@ -83,7 +83,7 @@ public class Offer {
      * @param phoneNumber
      * @param price
      * @param quantity
-     * @param fileName
+     * @param iconFileName
      * @param createdDate
      * @param eventDate
      * @param owner
@@ -94,12 +94,12 @@ public class Offer {
                  String phoneNumber,
                  BigDecimal price,
                  int quantity,
-                 String fileName,
+                 String iconFileName,
                  LocalDateTime createdDate,
                  LocalDateTime eventDate,
                  User owner) {
 
-        this(title, description, city, phoneNumber, price, quantity, fileName, createdDate, eventDate, owner, new ArrayList<>());
+        this(title, description, city, phoneNumber, price, quantity, iconFileName, createdDate, eventDate, owner, new ArrayList<>());
     }
 
     /**
@@ -111,7 +111,7 @@ public class Offer {
      * @param phoneNumber
      * @param price
      * @param quantity
-     * @param fileName
+     * @param iconFileName
      * @param createdDate
      * @param eventDate
      * @param owner
@@ -123,7 +123,7 @@ public class Offer {
                  String phoneNumber,
                  BigDecimal price,
                  int quantity,
-                 String fileName,
+                 String iconFileName,
                  LocalDateTime createdDate,
                  LocalDateTime eventDate,
                  User owner,
@@ -135,7 +135,7 @@ public class Offer {
         this.phoneNumber = phoneNumber;
         this.price = price;
         this.quantity = quantity;
-        this.fileName = fileName;
+        this.iconFileName = iconFileName;
         this.createdDate = createdDate;
         this.eventDate = eventDate;
         this.owner = owner;

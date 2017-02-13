@@ -177,3 +177,10 @@ td{
     width: 150px;
     height: 150px;
 }
+
+.reference-img {
+    float: left;
+    margin-left: 5px;
+    width: 45px;
+    height: 45px;
+}

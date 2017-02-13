@@ -6,9 +6,8 @@
 
 
 .center_box{
-    margin: 0 auto;
+    margin: 100px auto 0px auto;
     width: 90%;
-    margin-top:20%;
 }
 
 @media screen and (min-device-width : 540px) and (max-width: 640px) {

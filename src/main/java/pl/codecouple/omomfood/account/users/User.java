@@ -78,6 +78,9 @@ public class User implements UserDetails {
     /** {@link String} with provider user ID from social. */
     private String providerUserID;
 
+    /** {@link String} with provider user ID from social. */
+    private String avatarFileName;
+
     /** List of {@link pl.codecouple.omomfood.offers.Offer}'s. */
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="owner")
     private List<Offer> offers;
@@ -188,7 +191,7 @@ public class User implements UserDetails {
         return passwordEncrypted;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
         this.passwordEncrypted = password;
     }
