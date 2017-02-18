@@ -13,8 +13,8 @@
                     </a>
                     <div class="row offer-types">
                         <img th:src="@{/images/offer-type/} + ${offerType} + '.svg'"
-                             th:if="${offer.offerType.contains(offerType)}"
-                             th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferTypes).values()}"
+                             th:if="${offer.offerDetailsTypes.contains(offerType)}"
+                             th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferDetailsTypes).values()}"
                              th:attr="alt=${offerType.getType()},title=${offerType.getType()}"
                              class="offer-type"
                         />

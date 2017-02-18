@@ -37,30 +37,30 @@ insert into offer (id, city, created_date, description, event_date, icon_file_na
 
 
 -- Offers types
-insert into offer_offer_type (offer_id, offer_type) values (1, "ALCOHOL");
-insert into offer_offer_type (offer_id, offer_type) values (1, "PARKING");
-insert into offer_offer_type (offer_id, offer_type) values (1, "VEGETARIAN");
-insert into offer_offer_type (offer_id, offer_type) values (1, "VEGE");
-insert into offer_offer_type (offer_id, offer_type) values (1, "ANIMAL");
-insert into offer_offer_type (offer_id, offer_type) values (1, "WIFI");
-insert into offer_offer_type (offer_id, offer_type) values (1, "GLUTEN");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (1, "ALCOHOL");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (1, "PARKING");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (1, "VEGETARIAN");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (1, "VEGE");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (1, "ANIMAL");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (1, "WIFI");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (1, "GLUTEN");
 
-insert into offer_offer_type (offer_id, offer_type) values (2, "VEGE");
-insert into offer_offer_type (offer_id, offer_type) values (2, "ANIMAL");
-insert into offer_offer_type (offer_id, offer_type) values (2, "WIFI");
-insert into offer_offer_type (offer_id, offer_type) values (2, "GLUTEN");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (2, "VEGE");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (2, "ANIMAL");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (2, "WIFI");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (2, "GLUTEN");
 
-insert into offer_offer_type (offer_id, offer_type) values (3, "ALCOHOL");
-insert into offer_offer_type (offer_id, offer_type) values (3, "PARKING");
-insert into offer_offer_type (offer_id, offer_type) values (3, "VEGETARIAN");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (3, "ALCOHOL");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (3, "PARKING");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (3, "VEGETARIAN");
 
-insert into offer_offer_type (offer_id, offer_type) values (4, "VEGE");
-insert into offer_offer_type (offer_id, offer_type) values (4, "ANIMAL");
-insert into offer_offer_type (offer_id, offer_type) values (4, "WIFI");
-insert into offer_offer_type (offer_id, offer_type) values (4, "GLUTEN");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (4, "VEGE");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (4, "ANIMAL");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (4, "WIFI");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (4, "GLUTEN");
 
-insert into offer_offer_type (offer_id, offer_type) values (5, "ALCOHOL");
-insert into offer_offer_type (offer_id, offer_type) values (5, "PARKING");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (5, "ALCOHOL");
+insert into offer_offer_details_types (offer_id, offer_details_types) values (5, "PARKING");
 -- Messages
 insert into message (id, content, creation_date, is_read, recipient, author, title) values (null, 'One ipsum dolor sit amet, consectetur adipiscing elit', STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), FALSE, 2, 1, 'title');
 insert into message (id, content, creation_date, is_read, recipient, author, title) values (null, 'One ipsum dolor sit amet, consectetur adipiscing elit', STR_TO_DATE ('2016-12-20 21:49:09','%Y-%m-%d %H:%i:%s'), FALSE, 2, 1, 'title');

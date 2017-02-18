@@ -1,28 +1,16 @@
 package pl.codecouple.omomfood.offers.types;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * Created by Krzysztof Chruściel.
  */
-@Slf4j
 public enum OfferTypes {
-    ANIMAL("Animal"),
-    ALCOHOL("Alcohol"),
-    GLUTEN("Gluten free"),
-    PARKING("Free Parking"),
-    WIFI("Internet"),
-    VEGETARIAN("Vegetarian"),
-    VEGE("Vegan");
+    DINNER("Dinner"),
+    TAKEOUT("Takeout"),
+    ONTHESPOT("On the spot");
 
-    private String type;
+    private String offerType;
 
-    OfferTypes(String type) {
-        this.type = type;
+    OfferTypes(String offerType) {
+        this.offerType = offerType;
     }
-
-    public String getType() {
-        return type;
-    }
-
 }
