@@ -7,9 +7,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public enum OfferTypes {
-    DOG("Dog"),
+    ANIMAL("Animal"),
     ALCOHOL("Alcohol"),
-    MUSIC("Music");
+    GLUTEN("Gluten free"),
+    PARKING("Free Parking"),
+    WIFI("Internet"),
+    VEGETARIAN("Vegetarian"),
+    VEGE("Vegan");
 
     private String type;
 

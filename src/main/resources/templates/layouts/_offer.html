@@ -1,45 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="offer(offer)">
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title" th:text="${offer.title}">[offer.title]</h3>
         </div>
-        <div class="panel-body offer_box">
-            <a th:href="'/offer/' + ${offer.id}" href="#">
-                <div class="col-md-3">
-                    <img th:src="@{/images/} + ${offer.iconFileName}" class="img-circle offer-img"/>
-                    <p>Some info here?</p>
-                </div>
-                <div class="col-md-9 offer_details">
-                    <div class="row">
-                        <p th:text="${offer.description}" class="text-justify">[offer.description]</p>
-                        <table class="table table-striped">
-                            <tbody>
-                            <tr>
-                                <td>When</td>
-                                <td th:text="${#temporals.format(offer.eventDate, 'EEEE d MMMM yyyy - HH:mm')}">
-                                    [offer.eventDate]
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Where</td>
-                                <td th:text="${offer.city}">[offer.city]</td>
-                            </tr>
-                            <tr>
-                                <td>Price</td>
-                                <td th:text="${offer.price}">[offer.price]</td>
-                            </tr>
-                            <tr>
-                                <td>Added by</td>
-                                <td th:text="${offer.owner.getFirstAndLastName()}">[offer.owner.getFirstAndLastName]</td>
-                            </tr>
-                            </tbody>
-                        </table>
+        <div class="panel-body offer-box">
+                <div class="col-md-4 offer-img-details">
+                    <a th:href="'/offer/' + ${offer.id}" href="#">
+                        <img th:src="@{/images/} + ${offer.iconFileName}"
+                             class="img-circle offer-img"
+                        />
+                    </a>
+                    <div class="row offer-types">
+                        <img th:src="@{/images/offer-type/} + ${offerType} + '.svg'"
+                             th:if="${offer.offerType.contains(offerType)}"
+                             th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferTypes).values()}"
+                             th:attr="alt=${offerType.getType()},title=${offerType.getType()}"
+                             class="offer-type"
+                        />
+                    </div>
+                    <div class="row offer-author-box">
+                        <img th:src="@{/images/defaults/users/user.svg/}"
+                            class="img-circle offer-author-avatar"
+                        />
+                        <span th:text="${offer.owner.getFirstAndLastName()}">[offer.owner.getFirstAndLastName]</span>
                     </div>
                 </div>
-            </a>
-            <div sec:authorize="isAuthenticated()">
-                <p>Tutaj ukryta treść</p>
-            </div>
+                <div class="col-md-8 offer-details-box">
+                    <div class="row">
+                        <a th:href="'/offer/' + ${offer.id}" href="#">
+                            <p th:text="${offer.description}" class="text-justify">[offer.description]</p>
+                        </a>
+                        <div class="row offer-details">
+                            <div class="col-md-4">
+                                <img th:src="@{/images/offer-details/dollar.svg/}"
+                                     th:attr="alt=#{offer.price.icon},title=#{offer.price.icon}"
+                                     class="offer-icon-details"
+                                />
+                                <span th:text="${offer.price}">[offer.price]</span>
+                            </div>
+                            <div class="col-md-3">
+                                <img th:src="@{/images/offer-details/location.svg/}"
+                                     th:attr="alt=#{offer.location.icon},title=#{offer.location.icon}"
+                                     class="offer-icon-details"
+                                />
+                                <span th:text="${offer.city}">[offer.city]</span>
+                            </div>
+                            <div class="col-md-5">
+                                <img th:src="@{/images/offer-details/calendar.svg/}"
+                                     th:attr="alt=#{offer.date.icon},title=#{offer.date.icon}"
+                                     class="offer-icon-details"
+                                />
+                                <span th:text="${#temporals.format(offer.eventDate, 'dd/MM/yyyy - HH:mm')}">
+                                    [offer.eventDate]
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </div>
+</html>

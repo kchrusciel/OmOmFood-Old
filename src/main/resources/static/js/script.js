@@ -6,7 +6,8 @@ $(document).ready(function () {
 
     $('#datetimepicker1').datetimepicker({
         format: 'DD/MM/YYYY HH:mm',
-        minDate: new Date()
+        minDate: new Date(),
+        stepping: 10
     });
 
 

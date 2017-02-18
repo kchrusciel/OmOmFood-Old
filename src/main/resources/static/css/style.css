@@ -176,6 +176,7 @@ td{
 .offer-img {
     width: 150px;
     height: 150px;
+    margin-bottom: 5px;
 }
 
 .reference-img {
@@ -183,4 +184,53 @@ td{
     margin-left: 5px;
     width: 45px;
     height: 45px;
+}
+
+.offer-type {
+    width:25px;
+    height:25px;
+}
+.offer-types{
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding:5px;
+}
+
+
+
+.offer-img-details{
+    border-right: 1px solid #ddd;
+}
+
+.offer-table{
+    border-left: none;
+}
+
+/* OFFER */
+.offer-box{
+    padding:0;
+}
+.offer-box .row{
+    margin-right: 0;
+    margin-left: 0;
+}
+.offer-details-box a{
+    text-decoration: none;
+}
+.offer-details{
+    padding: 5px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.offer-icon-details{
+    width:25px;
+    height:25px;
+}
+.offer-author-box{
+    padding: 5px;
+}
+.offer-author-avatar{
+    vertical-align: middle;
+    width:30px;
+    height:30px;
 }

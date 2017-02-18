@@ -35,6 +35,7 @@ public class Offer {
     @Size(min=2,max=50)
     private String title;
     @NotEmpty
+    @Column(length = 500)
     private String description;
     @NotEmpty
     @Size(min=2,max=32)

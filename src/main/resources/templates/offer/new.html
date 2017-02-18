@@ -165,7 +165,7 @@
                                             <tbody>
                                             <tr th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferTypes).values()}">
                                                 <td th:inline="text">
-                                                    [[${offerType.type}]]
+                                                    <label><input type="checkbox" value=""/> [[${offerType.type}]]</label>
                                                 </td>
                                             </tr>
                                             </tbody>

@@ -26,6 +26,8 @@
 
     <script src="../js/script.js"></script>
 
+    <script th:src="'http://maps.googleapis.com/maps/api/js?key=' + ${@environment.getProperty('google.map.api.key')}"></script>
+
     <title th:text="#{Title}">OmOmFood - Food sharing application for everyone</title>
 
 </head>
