@@ -160,6 +160,19 @@
                                             again.
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <p>*Price info</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                            <div class="checkbox">
+                                                <label th:for="${#ids.next('unlimited')}" th:text="#{checkbox.unlimited}">[checkbox.unlimited]</label>
+                                               <input th:field="*{unlimited}" type="checkbox"/>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="preferences">
                                         <table class="table table-striped">
                                             <tbody>
