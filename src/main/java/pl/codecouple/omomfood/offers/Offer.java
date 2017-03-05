@@ -32,29 +32,40 @@ public class Offer {
     /** This is unique offer id*/
     private Long id;
 
+    /** Offer title. */
     @NotEmpty
     @Size(min=2,max=50)
     private String title;
+
+    /** Offer description. */
     @NotEmpty
     @Column(length = 500)
     private String description;
+
+    /** Offer city. */
     @NotEmpty
     @Size(min=2,max=32)
     private String city;
+
+    /** Phone number. */
     @NotEmpty
     private String phoneNumber;
 
+    /** Offer price with specific precision. */
     @Column(nullable= false, precision=5, scale=2)    // Creates the database field with this size.
     @Digits(integer=5, fraction=2)
     private BigDecimal price;
 
+    /** Quantity of {@link Offer}. */
     @Min(1)
     private int quantity;
-
+    /** {@link Boolean} flag which store information about quantity. */
+    private boolean unlimited;
+    /** {@Link String } value with icon file name. */
     private String iconFileName;
-
+    /** {@Link LocalDateTime} with {@link Offer} creation date. */
     private LocalDateTime createdDate;
-
+    /** {@Link LocalDateTime} with event date. */
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime eventDate;
 
