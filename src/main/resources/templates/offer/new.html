@@ -6,7 +6,7 @@
                 <div class="row">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Add new offer</h3>
+                        <h3 class="panel-title" th:text="#{offer.new.panel.title}">[offer.new.panel.title]</h3>
                     </div>
                     <div class="panel-body">
                         <div class="form-group">
@@ -14,17 +14,18 @@
                                    th:field="*{title}"
                                    class="form-control"
                                    th:placeholder="#{placeholder.title}"
-                                   placeholder="Title here..."/>
+                                   placeholder="[placeholder.title]"/>
                         </div>
                         <div class="alert alert-danger"
                              role="alert"
                              th:if="${#fields.hasErrors('title')}"
                              th:errors="*{title}">
-                            <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                            [title.error]
                         </div>
                         <div class="form-group">
                             <textarea
-                                    placeholder="Wyślij pytanie, jeśli potrzebujesz dodatkowych informacji odnośnie przejazdu..."
+                                    placeholder="[placeholder.description]"
+                                    th:placeholder="#{placeholder.description}"
                                     class="form-control"
                                     th:field="*{description}"
                                     rows="8"></textarea>
@@ -32,7 +33,7 @@
                                  role="alert"
                                  th:if="${#fields.hasErrors('description')}"
                                  th:errors="*{description}">
-                                <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                                [description.error]
                             </div>
                         </div>
                         <div class="form-group">
@@ -46,14 +47,13 @@
                                                th:field="*{city}"
                                                class="form-control"
                                                th:placeholder="#{placeholder.city}"
-                                               placeholder="Title here..."/>
+                                               placeholder="[placeholder.city]"/>
                                     </div>
                                     <div class="alert alert-danger"
                                          role="alert"
                                          th:if="${#fields.hasErrors('city')}"
                                          th:errors="*{city}">
-                                        <strong>Oh snap!</strong> Change a few things up and try submitting
-                                        again.
+                                        [city.error]
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -63,7 +63,7 @@
                                                    class="form-control"
                                                    th:field="*{eventDate}"
                                                    th:placeholder="#{placeholder.date}"
-                                                   placeholder="Date here..."/>
+                                                   placeholder="[placeholder.date]"/>
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -72,8 +72,7 @@
                                              role="alert"
                                              th:if="${#fields.hasErrors('eventDate')}"
                                              th:errors="*{eventDate}">
-                                            <strong>Oh snap!</strong> Change a few things up and try submitting
-                                            again.
+                                            [eventDate.error]
                                         </div>
                                     </div>
                                 </div>
@@ -90,23 +89,21 @@
                                                th:field="*{phoneNumber}"
                                                class="form-control"
                                                th:placeholder="#{placeholder.phoneNumber}"
-                                               placeholder="Title here..."/>
+                                               placeholder="[placeholder.phoneNumber]"/>
                                     </div>
                                     <div class="alert alert-danger"
                                          role="alert"
                                          th:if="${#fields.hasErrors('phoneNumber')}"
                                          th:errors="*{phoneNumber}">
-                                        <strong>Oh snap!</strong> Change a few things up and try submitting
-                                        again.
+                                        [phoneNumber.error]
                                     </div>
-                                    <span class="help-block pull-left">* This information will be only for client</span>
+                                    <span class="help-block pull-left" th:text="#{offer.new.hidden.values}">[offer.new.hidden.values]</span>
                                 </div>
                                 <div class="col-lg-6 col-sm-6 col-12">
                                     <div class="input-group">
                                         <label class="input-group-btn">
-                                            <span class="btn btn-primary">
-                                                Browse&hellip; <input type="file" style="display: none;" name="offerIcon"/>
-                                            </span>
+                                            <label class="btn btn-primary" for="avatarInput" th:text="#{offer.new.icon.button}">[offer.new.icon.button]</label>
+                                            <input type="file" id="avatarInput" style="display: none;" name="offerIcon"/>
                                         </label>
                                         <input type="text" class="form-control" th:readonly="true" readonly="readonly"/>
                                     </div>
@@ -122,8 +119,7 @@
                     <div class="col-md-11 col-sm-12 col-md-offset-1">
                         <div class="row panel panel-default margin-bottom">
                             <div class="panel-heading">
-                                <h3 class="panel-title text-left">
-                                    <i class="glyphicon glyphicon-info-sign"></i>  Deatils</h3>
+                                <h3 class="panel-title text-left" th:text="#{offer.new.details.panel.title}">[offer.new.details.panel.title]</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="row">
@@ -140,13 +136,12 @@
                                              role="alert"
                                              th:if="${#fields.hasErrors('price')}"
                                              th:errors="*{price}">
-                                            <strong>Oh snap!</strong> Change a few things up and try submitting
-                                            again.
+                                            [price.error]
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="input-group spinner">
-                                            <input type="text" th:field="*{quantity}" class="form-control" th:value="1" value="1"/>
+                                            <input type="text" id="offerQuantity" th:field="*{quantity}" class="form-control" th:value="1" value="1"/>
                                             <div class="input-group-btn-vertical">
                                                 <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
                                                 <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -156,28 +151,40 @@
                                              role="alert"
                                              th:if="${#fields.hasErrors('quantity')}"
                                              th:errors="*{quantity}">
-                                            <strong>Oh snap!</strong> Change a few things up and try submitting
-                                            again.
+                                            [quantity.error]
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <input type="checkbox" id="free"/>
+                                        <label for="free">Free</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <input type="checkbox" id="unlimited"/>
+                                        <label for="unlimited">Unlimited</label>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="preferences">
                                         <table class="table table-striped">
                                             <tbody>
                                             <tr th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferDetailsTypes).values()}">
                                                 <td th:inline="text">
-                                                    <label><input type="checkbox" value=""/> [[${offerType.type}]]</label>
+                                                    <label><input type="checkbox"
+                                                                  th:value="${offerType}"
+                                                                  th:field="*{offerDetailsTypes}"/> [[${offerType.type}]]</label>
                                                 </td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group">
+                                <div class="row top-buffer-10">
                                     <div class="col-xs-offset-6 col-xs-6">
-                                        <button type="submit" class="btn btn-primary pull-right">
-                                            <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>  Add offer
+                                        <button type="submit"
+                                                class="btn btn-primary pull-right"
+                                                th:text="#{offer.new.add.button}">[offer.new.add.button]
                                         </button>
                                     </div>
                                 </div>

@@ -5,7 +5,7 @@
         <footer>Famous OmOm about <cite th:text="${offer.owner.firstName}" title="Source Title">[offer.owner.firstName]</cite></footer>
     </blockquote>
     <blockquote th:each="reference, rowStat:${offer.owner.receivedReferences}" th:class="${rowStat.odd}? 'text-left' : 'blockquote-reverse'" >
-        <img th:src="@{/images/} + ${reference.author.avatarFileName}" class="img-circle offer-img"/>
+        <img th:src="@{/images/} + ${reference.author.avatarFileName}" class="img-circle reference-img-avatar"/>
         <p th:text="${reference.referenceContent}" class="bg-info">[reference.referenceContent]</p>
         <footer th:inline="text">[[${reference.author.getFirstAndLastName()}]] about <cite th:text="${offer.owner.getFirstAndLastName()}" title="Source Title">[offer.owner.firstName]</cite></footer>
     </blockquote>

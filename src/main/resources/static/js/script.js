@@ -10,6 +10,9 @@ $(document).ready(function () {
         stepping: 10
     });
 
+    $("#free").click(enable_cb);
+    $("#unlimited").click(enable);
+
 
     // We can attach the `fileselect` event to all file inputs on the page
     $(document).on('change', ':file', function() {
@@ -56,3 +59,19 @@ $(document).ready(function () {
     });
 
 });
+
+function enable_cb() {
+    if (this.checked) {
+        $("#exampleInputAmount").attr("disabled", true);
+    } else {
+        $("#exampleInputAmount").removeAttr("disabled");
+    }
+}
+
+function enable() {
+    if (this.checked) {
+        $("#offerQuantity").attr("disabled", true);
+    } else {
+        $("#offerQuantity").removeAttr("disabled");
+    }
+}

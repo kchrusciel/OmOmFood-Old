@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.account.validator.OfferValidator;
+import pl.codecouple.omomfood.messages.Message;
+import pl.codecouple.omomfood.offers.constants.OfferConstants;
 import pl.codecouple.omomfood.storage.StorageFolders;
 import pl.codecouple.omomfood.storage.StorageService;
 import pl.codecouple.omomfood.utils.UserDetailsService;
@@ -63,6 +65,7 @@ public class OfferCreatorController {
     @RequestMapping(value = "offers/new",
             method = RequestMethod.POST)
     public String addNewOffer(final @Valid Offer offer,
+                              final Message messageForm,
                               final BindingResult bindingResult,
                               final Model model,
                               final @RequestParam("offerIcon") MultipartFile file) {
@@ -74,25 +77,31 @@ public class OfferCreatorController {
         log.debug("Validate offer");
         offerValidator.validate(offer, bindingResult);
 
-        User user = userDetailsService.getLoggedUser();
-        log.debug("USER:"+user);
-
         if (bindingResult.hasErrors()) {
             log.debug("Error during creating new offer");
             return TEMPLATE_NAME_OFFER_NEW;
         }
 
-//        User user = userDetailsService.getLoggedUser();
+        User user = userDetailsService.getLoggedUser();
+        log.debug("Logged user:"+user);
 
         offer.setOwner(user);
-        offer.setIconFileName(file.getOriginalFilename());
+
+        if(file.getOriginalFilename().isEmpty()){
+            offer.setIconFileName(OfferConstants.DEFAULT_ICON_FILE_PATH);
+        }else{
+            offer.setIconFileName(file.getOriginalFilename());
+        }
+
         offer.setCreatedDate(LocalDateTime.now());
 
         log.debug("Store offer in DB");
         offerService.addOffer(offer);
 
         log.debug("Store file");
-        storageService.storeFileInPath(file, getPathForSaveOfferImage(user));
+        if(!file.isEmpty()){
+            storageService.storeFileInPath(file, getPathForSaveOfferImage(user));
+        }
 
         model.addAttribute("offer", offer);
 

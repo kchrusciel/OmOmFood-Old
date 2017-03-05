@@ -179,12 +179,6 @@ td{
     margin-bottom: 5px;
 }
 
-.reference-img {
-    float: left;
-    margin-left: 5px;
-    width: 45px;
-    height: 45px;
-}
 
 .offer-type {
     width:25px;
@@ -195,7 +189,6 @@ td{
     border-bottom: 1px solid #ddd;
     padding:5px;
 }
-
 
 
 .offer-img-details{
@@ -233,4 +226,14 @@ td{
     vertical-align: middle;
     width:30px;
     height:30px;
+}
+
+/* REFERENCES */
+.reference-img-avatar {
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    width: 45px;
+    height: 45px;
 }

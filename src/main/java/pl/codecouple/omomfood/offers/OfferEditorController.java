@@ -15,12 +15,15 @@ import javax.validation.Valid;
 @Controller
 public class OfferEditorController {
 
+    /** Template name which is returned on GET method.*/
+    public static final String TEMPLATE_NAME_OFFER_EDIT = "offer/edit";
+
     @RequestMapping(value = "offer/{offerID}/edit",
             method = RequestMethod.GET)
     public String showEditOfferPage(final Offer offerForm,
                                     final @PathVariable("offerID") long offerID) {
         log.debug("Show edit offer page");
-        return "offer/edit";
+        return TEMPLATE_NAME_OFFER_EDIT;
     }
 
     @RequestMapping(value = "offer/{offerID}/edit",

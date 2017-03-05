@@ -6,10 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.EnableAsync;
-import pl.codecouple.omomfood.account.roles.RoleRepository;
-import pl.codecouple.omomfood.account.users.UserRepository;
-import pl.codecouple.omomfood.account.users.references.ReferenceRepository;
-import pl.codecouple.omomfood.offers.OfferRepository;
 import pl.codecouple.omomfood.storage.StorageProperties;
 import pl.codecouple.omomfood.storage.StorageService;
 
@@ -18,17 +14,6 @@ import pl.codecouple.omomfood.storage.StorageService;
 @EnableAsync
 public class OmOmFood implements CommandLineRunner{
 
-    @Autowired
-    OfferRepository offerRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    ReferenceRepository referenceRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
 
     @Autowired
     StorageService storageService;

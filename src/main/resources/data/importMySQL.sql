@@ -15,9 +15,9 @@ create table UserConnection (userId varchar(255) not null,
 create unique index UserConnectionRank on UserConnection(userId, providerId, rank);
 
 -- Users
-insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted, avatar_file_name) values (null, null, false, 'test1@test.pl', 'Krzysztof', 'Chrusciel', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6', 'defaults/users/user.png');
-insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted, avatar_file_name) values (null, null, true, 'admin@omomfood.pl', 'Admin', 'Admin', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6', 'defaults/users/user.png');
-insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted, avatar_file_name) values (null, null, true, 'test2@test.pl', 'Jan', 'Nowak', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6', 'defaults/users/user.png');
+insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted, avatar_file_name) values (null, null, false, 'test1@test.pl', 'Krzysztof', 'Chrusciel', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6', 'defaults/users/user.svg');
+insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted, avatar_file_name) values (null, null, true, 'admin@omomfood.pl', 'Admin', 'Admin', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6', 'defaults/users/user.svg');
+insert into user (id, confirmation_id, confirmation_status, email, first_name, last_name, newsletter_status, password_encrypted, avatar_file_name) values (null, null, true, 'test2@test.pl', 'Jan', 'Nowak', FALSE, '$2a$10$wG.lPg3cbXg/yfL1ZEU.yODOKnl//gaoi9HKFe91Ov9UghipxEaK6', 'defaults/users/user.svg');
 
 
 -- References
