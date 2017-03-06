@@ -65,8 +65,8 @@ public class OfferCreatorController {
     @RequestMapping(value = "offers/new",
             method = RequestMethod.POST)
     public String addNewOffer(final @Valid Offer offer,
-                              final Message messageForm,
                               final BindingResult bindingResult,
+                              final Message messageForm,
                               final Model model,
                               final @RequestParam("offerIcon") MultipartFile file) {
 
