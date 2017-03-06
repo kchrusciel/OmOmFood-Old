@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.offers.types.OfferDetailsTypes;
 import pl.codecouple.omomfood.offers.types.OfferTypes;
+import pl.codecouple.omomfood.utils.validators.Future;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
@@ -66,6 +67,7 @@ public class Offer {
     /** {@Link LocalDateTime} with {@link Offer} creation date. */
     private LocalDateTime createdDate;
     /** {@Link LocalDateTime} with event date. */
+    @Future
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime eventDate;
 

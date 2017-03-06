@@ -163,18 +163,21 @@
                                     <div class="col-xs-6">
                                         <input type="checkbox" id="unlimited"/>
                                         <label for="unlimited">Unlimited</label>
-                                        <p>*Price info</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="preferences">
                                         <table class="table table-striped">
                                             <tbody>
-                                            <tr th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferDetailsTypes).values()}">
-                                                <td th:inline="text">
-                                                    <label><input type="checkbox"
-                                                                  th:value="${offerType}"
-                                                                  th:field="*{offerDetailsTypes}"/> [[${offerType.type}]]</label>
+                                            <tr th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferDetailsTypes).values()}" >
+                                                <td>
+                                                    <img th:src="@{/images/offer-type/} + ${offerType} + '.svg'" class="offer-type"/>
+                                                    <label th:text="${offerType.type}" th:for="${#ids.next('offerDetailsTypes')}">[offerType.type]</label>
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox"
+                                                           th:value="${offerType}"
+                                                           th:field="*{offerDetailsTypes}"/>
                                                 </td>
                                             </tr>
                                             </tbody>
