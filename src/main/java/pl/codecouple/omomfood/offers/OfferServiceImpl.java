@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.codecouple.omomfood.account.AccountService;
 import pl.codecouple.omomfood.account.users.User;
+import pl.codecouple.omomfood.utils.UserDetailsService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +22,8 @@ import java.util.List;
 public class OfferServiceImpl implements OfferService {
 
 
+    /** {@link UserDetailsService} user details service instance. */
+    private UserDetailsService userDetailsService;
     /** {@link AccountService} account service instance. */
     private AccountService accountService;
     /** {@link OfferRepository} offer repository instance. */
@@ -35,9 +38,11 @@ public class OfferServiceImpl implements OfferService {
      */
     @Autowired
     public OfferServiceImpl(final OfferRepository offerRepository,
-                            final AccountService accountService) {
+                            final AccountService accountService,
+                            final UserDetailsService userDetailsService) {
         this.offerRepository = offerRepository;
         this.accountService = accountService;
+        this.userDetailsService = userDetailsService;
     }
 
     /**
@@ -139,6 +144,12 @@ public class OfferServiceImpl implements OfferService {
     public Page<Offer> getAllMyOffers(final String email, final Pageable pageable) {
         User user = accountService.getUserByEmail(email);
         return offerRepository.findByOwnerOrderByEventDateAsc(user, pageable);
+    }
+
+    @Override
+    public boolean isOfferOwner(final Offer offer) {
+        User loggedUser = userDetailsService.getLoggedUser();
+        return offer.getOwner().equals(loggedUser);
     }
 }
 

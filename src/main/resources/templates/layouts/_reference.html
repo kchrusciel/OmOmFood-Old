@@ -1,6 +1,6 @@
 <div th:fragment="reference(offer)">
     <blockquote th:if="${offer.owner.receivedReferences.isEmpty()}" class="blockquote-reverse">
-        <img th:src="@{/images/defaults/users/omom.png}" class="img-circle reference-img"/>
+        <img th:src="@{/images/defaults/users/user.svg}" class="img-circle reference-img-avatar"/>
         <p th:inline="text" class="bg-info">Brak recencji dla tego użytkownika, może pora odwiedzić [[${offer.owner.getFirstAndLastName()}]]</p>
         <footer>Famous OmOm about <cite th:text="${offer.owner.firstName}" title="Source Title">[offer.owner.firstName]</cite></footer>
     </blockquote>

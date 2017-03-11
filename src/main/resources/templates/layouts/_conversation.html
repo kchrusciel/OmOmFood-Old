@@ -1,8 +1,7 @@
 <div th:fragment="conversation">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title text-left">
-                <i class="glyphicon glyphicon-question-sign"></i>  Ask about details</h3>
+            <h3 class="panel-title text-left" th:utext="#{offer.conversation.title}">[offer.conversation.title]</h3>
         </div>
         <div class="panel-body">
             <form th:action="'/offers/' + ${offer.id} + '/message/'" th:object="${message}" method="POST">
@@ -10,7 +9,7 @@
                     <textarea th:field="*{content}" th:placeholder="#{placeholder.ask.question}" class="form-control" rows="5"></textarea>
                     <input type="hidden" name="title" th:value="${offer.title}"/>
                 </div>
-                <button type="submit" class="btn btn-primary pull-right">Send question</button>
+                <button type="submit" class="btn btn-primary pull-right" th:text="#{offer.conversation.button}">[offer.conversation.button]</button>
             </form>
         </div>
     </div>

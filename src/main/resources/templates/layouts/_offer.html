@@ -37,7 +37,7 @@
                                      th:attr="alt=#{offer.price.icon},title=#{offer.price.icon}"
                                      class="offer-icon-details"
                                 />
-                                <span th:text="${offer.price}">[offer.price]</span>
+                                <span th:text="${@currencyServiceImpl.getCalculatedPrice(offer)}">[offer.price]</span>
                             </div>
                             <div class="col-md-3">
                                 <img th:src="@{/images/offer-details/location.svg/}"

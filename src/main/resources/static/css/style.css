@@ -89,6 +89,8 @@ a{
     padding: 2px 5px;
 }
 
+/*PAGE FOOTER*/
+
 .footer{
     text-align:center;
     margin-top:10px;
@@ -126,8 +128,9 @@ td{
     border: none;
 }
 .client-img{
-    background: url("../images/defaults/users/user.png") no-repeat center center;
-    background-size: 55px 55px;
+    border-left: 1px solid #ddd;
+    background: url("../images/page/userIcon.svg") no-repeat center center;
+    background-size: 50px 50px;
 }
 .checkbox label{
     padding-left: 0;
@@ -171,7 +174,7 @@ td{
     text-align: left;
 }
 
-.top-buffer-10 { margin-top:10px; }
+.padding-10 { padding:10px; }
 
 .offer-img {
     width: 150px;

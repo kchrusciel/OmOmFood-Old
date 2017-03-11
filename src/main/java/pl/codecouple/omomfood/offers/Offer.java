@@ -6,15 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.codecouple.omomfood.account.users.User;
+import pl.codecouple.omomfood.offers.price.Price;
 import pl.codecouple.omomfood.offers.types.OfferDetailsTypes;
 import pl.codecouple.omomfood.offers.types.OfferTypes;
 import pl.codecouple.omomfood.utils.validators.Future;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +50,11 @@ public class Offer {
     @NotEmpty
     private String phoneNumber;
 
-    /** Offer price with specific precision. */
-    @Column(nullable= false, precision=5, scale=2)    // Creates the database field with this size.
-    @Digits(integer=5, fraction=2)
-    private BigDecimal price;
+    /** Offer price. */
+    @Embedded
+    private Price price;
 
     /** Quantity of {@link Offer}. */
-    @Min(1)
     private int quantity;
     /** {@link Boolean} flag which store information about quantity. */
     private boolean unlimited;
@@ -95,80 +91,31 @@ public class Offer {
     }
 
     /**
-     * This is constructor for {@link Offer} class.
+     * This method create string for reservation details view.
      *
-     * @param title
-     * @param description
-     * @param city
-     * @param phoneNumber
-     * @param price
-     * @param quantity
-     * @param iconFileName
-     * @param createdDate
-     * @param eventDate
-     * @param owner
+     * @return reservation quantity details "assignedUser/quantity"
      */
-    public Offer(String title,
-                 String description,
-                 String city,
-                 String phoneNumber,
-                 BigDecimal price,
-                 int quantity,
-                 String iconFileName,
-                 LocalDateTime createdDate,
-                 LocalDateTime eventDate,
-                 User owner) {
-
-        this(title, description, city, phoneNumber, price, quantity, iconFileName, createdDate, eventDate, owner, new ArrayList<>());
+    public String getReservationQuantityDetails(){
+        if(unlimited){
+            return "∞";
+        }
+        return assignedUser.size() + "/" + quantity;
     }
 
-    /**
-     * This is constructor for {@link Offer} class.
-     *
-     * @param title
-     * @param description
-     * @param city
-     * @param phoneNumber
-     * @param price
-     * @param quantity
-     * @param iconFileName
-     * @param createdDate
-     * @param eventDate
-     * @param owner
-     * @param offerTypeEna
-     */
-    public Offer(String title,
-                 String description,
-                 String city,
-                 String phoneNumber,
-                 BigDecimal price,
-                 int quantity,
-                 String iconFileName,
-                 LocalDateTime createdDate,
-                 LocalDateTime eventDate,
-                 User owner,
-                 List<OfferDetailsTypes> offerDetailsTypes) {
-
+    public Offer(String title, String description, String city, String phoneNumber, Price price, int quantity, boolean unlimited, String iconFileName, LocalDateTime createdDate, LocalDateTime eventDate, User owner, List<User> assignedUser, List<OfferDetailsTypes> offerDetailsTypes, List<OfferDetailsTypes> offerTypes) {
         this.title = title;
         this.description = description;
         this.city = city;
         this.phoneNumber = phoneNumber;
         this.price = price;
         this.quantity = quantity;
+        this.unlimited = unlimited;
         this.iconFileName = iconFileName;
         this.createdDate = createdDate;
         this.eventDate = eventDate;
         this.owner = owner;
+        this.assignedUser = assignedUser;
         this.offerDetailsTypes = offerDetailsTypes;
-    }
-
-
-    /**
-     * This method create string for reservation details view.
-     *
-     * @return reservation quantity details "assignedUser/quantity"
-     */
-    public String getReservationQuantityDetails(){
-        return assignedUser.size() + "/" + quantity;
+        this.offerTypes = offerTypes;
     }
 }

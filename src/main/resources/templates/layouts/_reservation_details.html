@@ -1,17 +1,16 @@
-<div th:fragment="reservation_details(offer)">
+<div th:fragment="reservation_details(offer)" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="col-md-11 col-sm-6 col-md-offset-1">
         <div class="row panel panel-default margin-bottom">
             <div class="panel-heading">
-                <h3 class="panel-title text-left">
-                    <i class="glyphicon glyphicon-info-sign"></i>  Deatils</h3>
+                <h3 class="panel-title text-left" th:utext="#{offer.details.title}">[offer.details.title]</h3>
             </div>
             <div class="panel-body">
-                <div class="row">
+                <div class="row margin-bottom">
                     <div class="col-xs-6">
-                        <p th:text="${offer.price}" class="price">[offer.price]</p>
+                        <span th:text="${@currencyServiceImpl.getCalculatedPrice(offer)}" class="price">[offer.price]</span>
                     </div>
                     <div class="col-xs-6 client-img">
-                        <p th:text="${offer.getReservationQuantityDetails()}" class="price">[offer.assigned]/[offer.quantity]</p>
+                        <span th:text="${offer.getReservationQuantityDetails()}" class="price">[offer.assigned]/[offer.quantity]</span>
                     </div>
                 </div>
                 <div class="row">
@@ -29,12 +28,14 @@
                         </table>
                     </div>
                 </div>
-                <div class="row top-buffer-10">
+                <div class="row padding-10" th:if="${!@offerServiceImpl.isOfferOwner(offer)}">
                     <div class="col-xs-offset-6 col-xs-6">
-                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-primary btn-lg pull-right">
-                            <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>  OmOm
-                        </a>
+                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-primary btn-lg pull-right">OmOm!</a>
                     </div>
+                </div>
+                <div class="row padding-10 pull-right" th:if="${@offerServiceImpl.isOfferOwner(offer)}">
+                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-primary btn-lg">Edit</a>
+                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-danger btn-lg">Remove</a>
                 </div>
             </div>
         </div>

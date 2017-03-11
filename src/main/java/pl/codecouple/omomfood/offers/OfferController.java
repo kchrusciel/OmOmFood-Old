@@ -12,12 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.messages.Message;
 import pl.codecouple.omomfood.messages.MessageService;
+import pl.codecouple.omomfood.offers.currency.CurrencyService;
 import pl.codecouple.omomfood.utils.UserDetailsService;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.Currency;
+import java.util.Locale;
 
 @Slf4j
 @Controller
@@ -54,6 +57,8 @@ public class OfferController {
     /** {@link MessageService} message service instance. */
     private MessageService messageService;
 
+    private CurrencyService currencyService;
+
     /**
      * Constructor of {@link OfferController} class.
      *
@@ -65,10 +70,12 @@ public class OfferController {
     @Autowired
     public OfferController(final OfferService offerService,
                            final UserDetailsService userDetailsService,
-                           final MessageService messageService) {
+                           final MessageService messageService,
+                           final CurrencyService currencyService) {
         this.offerService = offerService;
         this.userDetailsService = userDetailsService;
         this.messageService = messageService;
+        this.currencyService = currencyService;
     }
 
 
@@ -194,6 +201,7 @@ public class OfferController {
             model.addAttribute("message", "Empty or wrong offer ID");
             return TEMPLATE_NAME_MESSAGES;
         }
+        model.addAttribute("price", currencyService.getCalculatedPrice(offer));
         model.addAttribute("offer", offerService.getOfferById(offerID));
         model.addAttribute("user", userDetailsService.getLoggedUser());
         return TEMPLATE_NAME_OFFER_OFFER;

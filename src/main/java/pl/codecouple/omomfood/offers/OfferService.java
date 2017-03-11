@@ -85,4 +85,6 @@ public interface OfferService {
      */
     void deleteOffers();
 
+    boolean isOfferOwner(Offer offer);
+
 }
