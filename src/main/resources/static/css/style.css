@@ -176,6 +176,10 @@ td{
 
 .padding-10 { padding:10px; }
 
+.margin-top {
+    margin-top: 10px;
+}
+
 .offer-img {
     width: 150px;
     height: 150px;

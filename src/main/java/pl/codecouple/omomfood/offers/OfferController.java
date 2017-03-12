@@ -218,7 +218,8 @@ public class OfferController {
             method = RequestMethod.POST)
     public String sendMessageToOffer(final @Valid Message message,
                                      final BindingResult bindingResult,
-                                     final @PathVariable("offerID") long offerID){
+                                     final @PathVariable("offerID") long offerID,
+                                     final Model model){
         if(bindingResult.hasErrors()){
             return null;
         }
@@ -228,7 +229,11 @@ public class OfferController {
         message.setRecipient(userDetailsService.getLoggedUser());
         message.setCreationDate(LocalDateTime.now());
         messageService.sendMessage(message);
-        return TEMPLATE_NAME_OFFER_OFFERS;
+        model.addAttribute("price", currencyService.getCalculatedPrice(offerForMessage));
+        model.addAttribute("offer", offerService.getOfferById(offerID));
+        model.addAttribute("user", userDetailsService.getLoggedUser());
+        model.addAttribute("message", new Message());
+        return TEMPLATE_NAME_OFFER_OFFER;
     }
 
 }

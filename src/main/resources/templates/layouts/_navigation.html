@@ -1,4 +1,5 @@
-<nav th:fragment="navigation" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<nav th:fragment="navigation" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+     xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
@@ -15,7 +16,9 @@
             <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <div class="btn-group navbar-btn">
-                        <a th:href="@{/offers/new}" role="button" class="btn btn-success">Add offer  <i class="glyphicon glyphicon glyphicon-plus"></i></a>
+                        <a th:href="@{/offers/new}" role="button" class="btn btn-success">
+                            <span th:text="#{navigation.add.offer}">navigation.add.offer</span>
+                            <i class="glyphicon glyphicon glyphicon-plus"></i></a>
                     </div>
                     <div class="btn-group navbar-btn">
                         <button class="btn btn-primary" sec:authentication="name">[User]</button>
@@ -37,7 +40,10 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div class="btn-group navbar-btn">
-                            <a href="/offers/new" role="button" class="btn btn-success btn-space">Add offer  <i class="glyphicon glyphicon glyphicon-plus"></i></a>
+                            <a href="/offers/new" role="button" class="btn btn-success btn-space">
+                                <span th:text="#{navigation.add.offer}">navigation.add.offer</span>
+                                <i class="glyphicon glyphicon glyphicon-plus"></i>
+                            </a>
                         </div>
                     </li>
                     <li>

@@ -28,14 +28,14 @@
                         </table>
                     </div>
                 </div>
-                <div class="row padding-10" th:if="${!@offerServiceImpl.isOfferOwner(offer)}">
+                <div class="row margin-top" th:if="${!@offerServiceImpl.isOfferOwner(offer)}">
                     <div class="col-xs-offset-6 col-xs-6">
-                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-primary btn-lg pull-right">OmOm!</a>
+                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-primary pull-right">OmOm!</a>
                     </div>
                 </div>
                 <div class="row padding-10 pull-right" th:if="${@offerServiceImpl.isOfferOwner(offer)}">
-                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-primary btn-lg">Edit</a>
-                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-danger btn-lg">Remove</a>
+                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-primary">Edit</a>
+                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-danger ">Remove</a>
                 </div>
             </div>
         </div>

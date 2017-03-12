@@ -41,10 +41,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
 
         http.formLogin()
+                .loginProcessingUrl("/login")
                 .loginPage("/login")
                 .successHandler(successHandler())
                 .and().headers().frameOptions().disable()
-                .and().logout().logoutSuccessUrl("/").logoutSuccessHandler(logoutSuccessHandler())
+                .and().logout().logoutSuccessUrl("/")
+                .logoutSuccessHandler(logoutSuccessHandler())
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .and().authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/",
@@ -73,6 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 authenticationSuccessHandler(successHandler());
 
         http.exceptionHandling().accessDeniedPage("/403");
+
     }
 
 
@@ -95,7 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
-        return new CustomAuthenticationSuccessHandler();
+        return new CustomAuthenticationSuccessHandler("/");
     }
 
     @Bean

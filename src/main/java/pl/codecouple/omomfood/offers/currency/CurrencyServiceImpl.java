@@ -1,9 +1,8 @@
 package pl.codecouple.omomfood.offers.currency;
 
-import org.json.JSONObject;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import pl.codecouple.omomfood.offers.Offer;
 
 import java.util.Currency;
@@ -25,6 +24,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
+    @Cacheable("prices")
     public String getCalculatedPrice(Offer offer) {
         Currency localeCurrency = getCurrency();
         final String offerBaseCurrencyCode = offer.getPrice().getCurrencyCode();
@@ -34,13 +34,15 @@ public class CurrencyServiceImpl implements CurrencyService {
             return String.valueOf(offer.getPrice().getValue().intValue()) + localeCurrency.getSymbol();
         }
 
-        final String uri = "http://api.fixer.io/latest?base=" + offerBaseCurrencyCode + "&symbols=" + localeCurrencyCode;
+        return "200zł";
 
-        RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(uri, String.class);
-        JSONObject object = new JSONObject(result);
-
-        return String.valueOf(offer.getPrice().getValue().multiply(object.getJSONObject("rates").getBigDecimal(localeCurrencyCode)).intValue()) + localeCurrency.getSymbol();
+//        final String uri = "http://api.fixer.io/latest?base=" + offerBaseCurrencyCode + "&symbols=" + localeCurrencyCode;
+//
+//        RestTemplate restTemplate = new RestTemplate();
+//        String result = restTemplate.getForObject(uri, String.class);
+//        JSONObject object = new JSONObject(result);
+//
+//        return String.valueOf(offer.getPrice().getValue().multiply(object.getJSONObject("rates").getBigDecimal(localeCurrencyCode)).intValue()) + localeCurrency.getSymbol();
     }
 
     @Override

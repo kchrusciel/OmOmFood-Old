@@ -7,7 +7,8 @@ $(document).ready(function () {
     $('#datetimepicker1').datetimepicker({
         format: 'DD/MM/YYYY HH:mm',
         minDate: new Date(),
-        stepping: 10
+        stepping: 10,
+        locale: getLang()
     });
 
     $("#free").click(enable_cb);
@@ -59,6 +60,14 @@ $(document).ready(function () {
     });
 
 });
+
+function getLang()
+{
+    if (navigator.languages != undefined)
+        return navigator.languages[0];
+    else
+        return navigator.language;
+}
 
 function enable_cb() {
     if (this.checked) {
