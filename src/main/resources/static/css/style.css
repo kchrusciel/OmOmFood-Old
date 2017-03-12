@@ -186,6 +186,12 @@ td{
     margin-bottom: 5px;
 }
 
+.reference-img {
+    float: left;
+    margin-left: 5px;
+    width: 45px;
+    height: 45px;
+}
 
 .offer-type {
     width:25px;
@@ -196,6 +202,7 @@ td{
     border-bottom: 1px solid #ddd;
     padding:5px;
 }
+
 
 
 .offer-img-details{
@@ -233,6 +240,20 @@ td{
     vertical-align: middle;
     width:30px;
     height:30px;
+}
+
+/** ACCOUNT */
+
+/** ACCOUNT SETTINGS */
+.account-settings-details label{
+    float:left;
+}
+.account-settings-avatar{
+    margin-bottom: 10px;
+}
+.account-settings-avatar img {
+    width: 200px;
+    height: 200px;
 }
 
 /* REFERENCES */

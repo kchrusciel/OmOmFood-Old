@@ -3,13 +3,53 @@
     <div class="container site_box">
         <form action="#" th:action="@{/settings}" th:object="${settingsForm}" enctype="multipart/form-data" method="post">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-md-8 col-sm-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Account Settings</h3>
+                            <h3 class="panel-title" th:text="#{settings.form.title}">[settings.form.title]</h3>
+                        </div>
+                        <div class="panel-body account-settings-details">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="settingsFormFirstName" th:text="#{settings.form.first.name.label}">[settings.form.first.name.label]</label>
+                                    <input type="text" name="name" id="settingsFormFirstName" class="form-control" th:value="${settingsForm.firstName}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="settingsFormLastName" th:text="#{settings.form.last.name.label}">[settings.form.last.name.label]</label>
+                                    <input type="text" name="surname" id="settingsFormLastName" class="form-control" th:value="${settingsForm.lastName}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="settingsFormEmail" th:text="#{settings.form.email.label}">[settings.form.email.label]</label>
+                                    <input type="email" name="email" id="settingsFormEmail" class="form-control" th:value="${settingsForm.email}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="settingsFormPassword" th:text="#{settings.form.password.label}">[settings.form.password.label]</label>
+                                    <input type="text" name="password" id="settingsFormPassword" class="form-control" />
+                                </div>
+                                <button type="submit" th:text="#{settings.form.save.button}" class="btn btn-primary pull-right">[settings.form.save.button]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title" th:text="#{settings.form.profile.title}">[settings.form.profile.title]</h3>
                         </div>
                         <div class="panel-body">
-                            <p>Settings</p>
+                            <div class="col-sm-12">
+                                <div class="account-settings-avatar">
+                                   <img th:src="@{/images/} + ${settingsForm.avatarFileName}" class="img-circle user-avatar"/>
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-group-btn">
+                                            <span class="btn btn-primary" th:utext="#{settings.form.choose.avatar.button}">
+                                                [settings.form.choose.avatar.button]
+                                            </span>
+                                    </label>
+                                    <input type="text" class="form-control" th:readonly="true" readonly="readonly"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
