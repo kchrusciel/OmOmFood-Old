@@ -2,29 +2,37 @@ package pl.codecouple.omomfood.offers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.messages.Message;
 import pl.codecouple.omomfood.messages.MessageService;
 import pl.codecouple.omomfood.offers.currency.CurrencyService;
+import pl.codecouple.omomfood.offers.search.OfferCities;
 import pl.codecouple.omomfood.utils.UserDetailsService;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.Currency;
-import java.util.Locale;
+import java.util.List;
 
 @Slf4j
 @Controller
 public class OfferController {
+
+    @Value("${solr.autocomplete.cities}")
+    private boolean autoCompleteCities;
 
     /** Template name which is returned after registration.*/
     public static final String TEMPLATE_NAME_MESSAGES = "messages";
@@ -156,15 +164,20 @@ public class OfferController {
         modelAndView.addObject(MODEL_PAGE_ID, page);
         modelAndView.setViewName(TEMPLATE_NAME_OFFER_OFFERS);
 
-//        RestTemplate restTemplate = new RestTemplate();
-//        ResponseEntity<List<OfferCities>> rateResponse =
-//                restTemplate.exchange("http://localhost:8082/offers/cities",
-//                        HttpMethod.GET, null, new ParameterizedTypeReference<List<OfferCities>>() {
-//                        });
-//        List<OfferCities> rates = rateResponse.getBody();
-//        modelAndView.addObject("offerCities", rates);
         modelAndView.addObject("offerCities", Collections.emptyList());
+
+        if(autoCompleteCities){
+            List<OfferCities> rates = getCities().getBody();
+            modelAndView.addObject("offerCities", rates);
+        }
+
         return modelAndView;
+    }
+
+    private ResponseEntity<List<OfferCities>> getCities() {
+        return new RestTemplate().exchange("http://localhost:8082/offers/cities",
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<OfferCities>>() {
+                });
     }
 
 
