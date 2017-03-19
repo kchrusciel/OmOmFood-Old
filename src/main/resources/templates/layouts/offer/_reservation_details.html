@@ -5,12 +5,12 @@
                 <h3 class="panel-title text-left" th:utext="#{offer.details.title}">[offer.details.title]</h3>
             </div>
             <div class="panel-body">
-                <div class="row margin-bottom">
+                <div class="row margin-bottom padding-5">
                     <div class="col-xs-6">
-                        <span th:text="${@currencyServiceImpl.getCalculatedPrice(offer)}" class="price">[offer.price]</span>
+                        <span th:text="${@currencyServiceImpl.getCalculatedPrice(offer)}" class="price label label-success">[offer.price]</span>
                     </div>
                     <div class="col-xs-6 client-img">
-                        <span th:text="${offer.getReservationQuantityDetails()}" class="price">[offer.assigned]/[offer.quantity]</span>
+                        <span th:text="${offer.getReservationQuantityDetails()}" class="price label label-primary">[offer.assigned]/[offer.quantity]</span>
                     </div>
                 </div>
                 <div class="row">
@@ -21,7 +21,7 @@
                                 <td th:inline="text">
                                     <span th:if="${offer.offerDetailsTypes.contains(offerType)}" class="label label-success"><i class="glyphicon glyphicon-ok-sign"></i></span>
                                     <span th:if="${!offer.offerDetailsTypes.contains(offerType)}" class="label label-danger"><i class="glyphicon glyphicon-remove-sign"></i></span>
-                                    [[${offerType.type}]]
+                                    [[#{${offerType.type}}]]
                                 </td>
                             </tr>
                             </tbody>
@@ -34,8 +34,13 @@
                     </div>
                 </div>
                 <div class="row padding-10 pull-right" th:if="${@offerServiceImpl.isOfferOwner(offer)}">
-                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-primary">Edit</a>
-                        <a th:href="'/offer/' + ${offer.id} + '/partake'" class="btn btn-danger ">Remove</a>
+                    <div th:if="${!offer.assignedUsers.isEmpty()}" class="modal fade" id="assignedUsers" role="dialog" th:include="modals/_remove_offer :: removeOfferModal"/>
+                        <button class="btn btn-primary"
+                           th:text="#{offer.button.edit}"
+                           data-toggle="modal" data-target="#assignedUsers">[offer.button.edit]</button>
+                        <button class="btn btn-danger"
+                           th:text="#{offer.button.remove}"
+                           data-toggle="modal" data-target="#assignedUsers">[offer.button.remove]</button>
                 </div>
             </div>
         </div>

@@ -128,20 +128,20 @@
                                             <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                                             <div class="input-group">
                                                 <div class="input-group-addon">$</div>
-                                                <input type="text" th:field="*{price}" class="form-control" id="exampleInputAmount" placeholder="00"/>
+                                                <input type="text" th:field="*{price.value}" class="form-control" id="exampleInputAmount" placeholder="00"/>
                                                 <div class="input-group-addon">.00</div>
                                             </div>
                                         </div>
                                         <div class="alert alert-danger"
                                              role="alert"
                                              th:if="${#fields.hasErrors('price')}"
-                                             th:errors="*{price}">
+                                             th:errors="*{price.value}">
                                             [price.error]
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="input-group spinner">
-                                            <input type="text" id="offerQuantity" th:field="*{quantity}" class="form-control" th:value="1" value="1"/>
+                                            <input type="text" id="offerQuantity" th:field="*{quantity.quantity}" class="form-control" th:value="1" value="1"/>
                                             <div class="input-group-btn-vertical">
                                                 <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
                                                 <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
@@ -150,19 +150,19 @@
                                         <div class="alert alert-danger"
                                              role="alert"
                                              th:if="${#fields.hasErrors('quantity')}"
-                                             th:errors="*{quantity}">
+                                             th:errors="*{quantity.quantity}">
                                             [quantity.error]
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <input type="checkbox" id="free"/>
-                                        <label for="free">Free</label>
+                                        <input type="checkbox" id="free" th:field="*{price.free}"/>
+                                        <label for="free" th:text="#{offer.new.free}">[offer.new.free]</label>
                                     </div>
                                     <div class="col-xs-6">
-                                        <input type="checkbox" id="unlimited" th:field="*{unlimited}" />
-                                        <label for="unlimited">Unlimited</label>
+                                        <input type="checkbox" id="unlimited" th:field="*{quantity.unlimited}" />
+                                        <label for="unlimited" th:text="#{offer.new.unlimited}">[offer.new.unlimited]</label>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -172,7 +172,7 @@
                                             <tr th:each="offerType:${T(pl.codecouple.omomfood.offers.types.OfferDetailsTypes).values()}" >
                                                 <td>
                                                     <img th:src="@{/images/offer-type/} + ${offerType} + '.svg'" class="offer-type"/>
-                                                    <label th:text="${offerType.type}" th:for="${#ids.next('offerDetailsTypes')}">[offerType.type]</label>
+                                                    <label th:text="#{${offerType.type}}" th:for="${#ids.next('offerDetailsTypes')}">[offerType.type]</label>
                                                 </td>
                                                 <td>
                                                     <input type="checkbox"

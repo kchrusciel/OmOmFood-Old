@@ -3,15 +3,15 @@
 <div layout:fragment="content">
     <div class="container site_box">
         <div class="col-md-8 col-sm-12">
-            <div th:include="layouts/_offer :: offer(${offer})" class="row"/>
-            <div th:if="${user==null} OR ${offer.owner.email != user.email}" th:include="layouts/_conversation :: conversation" class="row"/>
+            <div th:include="layouts/offer/_offer :: offer(${offer})" class="row"/>
+            <div th:if="${user==null} OR ${offer.owner.email != user.email}" th:include="layouts/offer/_conversation :: conversation" class="row"/>
+            <div th:if="${@offerServiceImpl.isOfferOwner(offer)}" th:include="layouts/offer/users/_users :: assignedUsers" class="row"/>
         </div>
         <div class="col-md-4 col-sm-12">
             <div class="row">
-                <div th:include="layouts/_reservation_details :: reservation_details(${offer})" />
-                <div th:if="${user==null} OR ${offer.owner.email != user.email}" th:include="layouts/_references :: references(${offer})"/>
+                <div th:include="layouts/offer/_reservation_details :: reservation_details(${offer})" />
+                <div th:if="${user==null} OR ${offer.owner.email != user.email}" th:include="layouts/offer/references/_references :: references(${offer})"/>
             </div>
-
         </div>
     </div>
 </div>

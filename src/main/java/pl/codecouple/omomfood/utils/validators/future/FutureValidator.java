@@ -1,4 +1,4 @@
-package pl.codecouple.omomfood.utils.validators;
+package pl.codecouple.omomfood.utils.validators.future;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.codecouple.omomfood.account.roles.Role;
 import pl.codecouple.omomfood.account.roles.RoleEnum;
 import pl.codecouple.omomfood.account.users.references.Reference;
 import pl.codecouple.omomfood.messages.Message;
@@ -85,8 +84,8 @@ public class User implements UserDetails {
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="owner")
     private List<Offer> offers;
     /** List of assigned {@link pl.codecouple.omomfood.offers.Offer}'s. */
-    @ManyToMany(mappedBy = "assignedUser")
-    private List<Offer> assignedOffer;
+    @ManyToMany(mappedBy = "assignedUsers")
+    private List<Offer> assignedOffers;
 
     /** List of written {@link Reference}'s. */
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="author")

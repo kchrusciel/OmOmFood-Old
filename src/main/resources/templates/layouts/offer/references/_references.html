@@ -4,7 +4,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title text-left" th:utext="#{offer.references.title}">[offer.references.title]</h3>
             </div>
-            <div th:include="layouts/_reference :: reference(${offer})" class="panel-body"/>
+            <div th:include="layouts/offer/references/_reference :: reference(${offer})" class="panel-body"/>
         </div>
     </div>
 </div>

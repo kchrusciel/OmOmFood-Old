@@ -16,7 +16,6 @@ import pl.codecouple.omomfood.storage.StorageService;
 @EnableCaching
 public class OmOmFood implements CommandLineRunner{
 
-
     @Autowired
     StorageService storageService;
 
@@ -28,6 +27,5 @@ public class OmOmFood implements CommandLineRunner{
     public void run(String... strings) throws Exception {
         storageService.deleteAll();
         storageService.init();
-
     }
 }

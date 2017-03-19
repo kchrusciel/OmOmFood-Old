@@ -1,5 +1,6 @@
 package pl.codecouple.omomfood.offers.price;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
 public class Price {
 
@@ -23,6 +25,6 @@ public class Price {
 
     private String currencyCode;
 
-
+    private boolean free;
 
 }

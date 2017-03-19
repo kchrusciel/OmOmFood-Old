@@ -1,0 +1,33 @@
+<div th:fragment="assignedUsers" id="assignedUsers" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title text-left" th:utext="#{offer.users.title}">[offer.users.title]</h3>
+        </div>
+        <div th:if="!${offer.assignedUsers.isEmpty()}" class="panel-body offer-assigned-user-panel">
+            <table class="table table-striped">
+                <tbody>
+                <tr th:each="assignedUser:${offer.assignedUsers}">
+                    <td th:inline="text">
+                        <img th:src="@{/images/} + ${assignedUser.avatarFileName}" class="offer-assigned-user-avatar"/>
+                    </td>
+                    <td th:inline="text">
+                        [[${assignedUser.firstName}]]
+                    </td>
+                    <td th:inline="text">
+                        [[${assignedUser.lastName}]]
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${offer.assignedUsers.isEmpty()}" class="panel-body offer-assigned-user-panel">
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td th:text="#{offer.users.empty.list}">[offer.users.empty.list]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

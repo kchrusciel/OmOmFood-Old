@@ -4,10 +4,10 @@
         <div class="col-md-8 col-sm-12">
             <!--/*@thymesVar id="offers" type="java.util.List"*/-->
             <div class="row margin-bottom" th:if="${offers.isEmpty()}">
-                <div th:include="layouts/_empty_offer :: empty-offer"/>
+                <div th:include="layouts/offer/_empty_offer :: empty-offer"/>
             </div>
             <div class="row margin-bottom" th:each="offer:${offers}">
-                <div th:include="layouts/_offer :: offer(${offer})"/>
+                <div th:include="layouts/offer/_offer :: offer(${offer})"/>
             </div>
         </div>
         <div class="col-md-4 col-sm-12">

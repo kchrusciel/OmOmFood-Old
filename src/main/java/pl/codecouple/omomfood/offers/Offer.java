@@ -7,9 +7,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import pl.codecouple.omomfood.account.users.User;
 import pl.codecouple.omomfood.offers.price.Price;
+import pl.codecouple.omomfood.offers.quantity.Quantity;
 import pl.codecouple.omomfood.offers.types.OfferDetailsTypes;
-import pl.codecouple.omomfood.offers.types.OfferTypes;
-import pl.codecouple.omomfood.utils.validators.Future;
+import pl.codecouple.omomfood.offers.types.OfferType;
+import pl.codecouple.omomfood.utils.validators.future.Future;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -55,9 +56,9 @@ public class Offer {
     private Price price;
 
     /** Quantity of {@link Offer}. */
-    private int quantity;
-    /** {@link Boolean} flag which store information about quantity. */
-    private boolean unlimited;
+    @Embedded
+    private Quantity quantity;
+
     /** {@Link String } value with icon file name. */
     private String iconFileName;
     /** {@Link LocalDateTime} with {@link Offer} creation date. */
@@ -72,7 +73,7 @@ public class Offer {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "offer_user", joinColumns = @JoinColumn(name = "offer_is"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> assignedUser = new ArrayList<>();
+    private List<User> assignedUsers = new ArrayList<>();
 
     @Column
     @Enumerated(EnumType.STRING)
@@ -81,8 +82,7 @@ public class Offer {
 
     @Column
     @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = OfferTypes.class)
-    private List<OfferDetailsTypes> offerTypes;
+    private OfferType offerType;
 
     /**
      * This is default empty constructor for {@link Offer}.
@@ -96,26 +96,9 @@ public class Offer {
      * @return reservation quantity details "assignedUser/quantity"
      */
     public String getReservationQuantityDetails(){
-        if(unlimited){
+        if(getQuantity().isUnlimited()){
             return "∞";
         }
-        return assignedUser.size() + "/" + quantity;
-    }
-
-    public Offer(String title, String description, String city, String phoneNumber, Price price, int quantity, boolean unlimited, String iconFileName, LocalDateTime createdDate, LocalDateTime eventDate, User owner, List<User> assignedUser, List<OfferDetailsTypes> offerDetailsTypes, List<OfferDetailsTypes> offerTypes) {
-        this.title = title;
-        this.description = description;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-        this.price = price;
-        this.quantity = quantity;
-        this.unlimited = unlimited;
-        this.iconFileName = iconFileName;
-        this.createdDate = createdDate;
-        this.eventDate = eventDate;
-        this.owner = owner;
-        this.assignedUser = assignedUser;
-        this.offerDetailsTypes = offerDetailsTypes;
-        this.offerTypes = offerTypes;
+        return assignedUsers.size() + "/" + quantity.getQuantity();
     }
 }
